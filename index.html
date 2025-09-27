@@ -1,0 +1,532 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Chatters — OnlyFans Chatting Agency</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+<link rel="icon" href="FAVICON_URL" type="image/png">
+<style>
+html{scroll-behavior:smooth}
+
+:root{ --brand:#4dbdff; --accent:#ff7dbf; --bg:#0b0f1a; --text:#e8f1f8; --muted:#a9bdd1; }
+*{box-sizing:border-box}
+body{margin:0; font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial; background:
+  radial-gradient(60% 80% at 20% 10%, rgba(77,189,255,.12), transparent 60%),
+  radial-gradient(60% 80% at 80% 0%, rgba(255,125,191,.12), transparent 60%),
+  linear-gradient(180deg,#0b0f1a 0%,#101624 50%,#0d1220 100%); color:var(--text)}
+a{color:inherit; text-decoration:none}
+.container{max-width:1100px; margin:0 auto; padding:0 20px}
+.header{position:sticky; top:0; backdrop-filter:saturate(180%) blur(8px); background:rgba(11,15,26,.7); border-bottom:1px solid rgba(255,255,255,.06); z-index:50}
+.nav{display:flex; align-items:center; justify-content:space-between; height:68px}
+.logo{display:flex; align-items:center; gap:12px}
+.logo img{height:40px; width:auto; filter:drop-shadow(0 0 10px rgba(77,189,255,.5))}
+.badge{font-weight:700; letter-spacing:.5px; font-size:14px; padding:6px 10px; border:1px solid rgba(255,255,255,.12); border-radius:999px; color:var(--accent)}
+.navlinks{display:flex; gap:22px}
+.cta{display:inline-flex; align-items:center; gap:10px; background:linear-gradient(135deg,var(--brand),var(--accent)); color:#001219; font-weight:700; padding:12px 18px; border-radius:12px; box-shadow:0 8px 22px rgba(77,189,255,.35), 0 0 0 0 rgba(255,125,191,.0); transition:transform .15s ease, box-shadow .3s ease}
+.cta:hover{transform:translateY(-2px); box-shadow:0 14px 36px rgba(77,189,255,.45), 0 0 24px 6px rgba(255,125,191,.15)}
+.btn{display:inline-flex; align-items:center; gap:10px; border:1px solid rgba(255,255,255,.12); padding:12px 16px; border-radius:12px; background:rgba(255,255,255,.04); transition:transform .2s ease, background .2s, border-color .2s}
+.btn:hover{transform:translateY(-2px); background:rgba(255,255,255,.06); border-color:rgba(255,255,255,.2)}
+.hero{min-height:calc(100vh - 140px); padding:88px 0 40px; text-align:center; display:flex; flex-direction:column; justify-content:center}
+.kicker{color:var(--accent); font-weight:700; letter-spacing:.12em; text-transform:uppercase; font-size:13px}
+.h1{font-family:Poppins,Inter,system-ui; font-size:clamp(34px,5vw,48px); line-height:1.05; margin:16px 0}
+.h1 strong{color:var(--brand); text-shadow:0 0 24px rgba(77,189,255,.35)}
+.sub{font-size:18px; color:var(--muted); max-width:780px; margin:0 auto}
+.buttons{display:flex; justify-content:center; gap:12px; margin-top:22px; flex-wrap:wrap}
+
+/* Offer bar & modal */
+.offerbar{position:sticky; top:68px; z-index:49; background:linear-gradient(90deg, rgba(77,189,255,.15), rgba(255,125,191,.15)); border-top:1px solid rgba(255,255,255,.08); border-bottom:1px solid rgba(255,255,255,.08)}
+.offerwrap{max-width:1100px; margin:0 auto; padding:10px 20px; display:flex; align-items:center; gap:12px; justify-content:center; flex-wrap:wrap}
+.offertext{font-weight:800; letter-spacing:.3px}
+.pulse{position:relative}
+.pulse::before{content:""; position:absolute; inset:-6px; border-radius:12px; box-shadow:0 0 0 0 rgba(77,189,255,.6); animation:pulse 1.8s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(77,189,255,.45)}70%{box-shadow:0 0 0 18px rgba(77,189,255,0)}100%{box-shadow:0 0 0 0 rgba(77,189,255,0)}}
+
+#offerModal{position:fixed; inset:0; background:rgba(0,0,0,.6); display:none; align-items:center; justify-content:center; z-index:9999}
+.offerCard{background:#0b0f1a; border:1px solid rgba(255,255,255,.1); border-radius:18px; max-width:720px; width:92%; padding:22px; box-shadow:0 30px 80px rgba(0,0,0,.55)}
+.offerCard h3{margin:0 0 8px; font-size:24px}
+.offerCard p{margin:0 0 12px; color:var(--muted)}
+
+/* Subtle highlight + interactivity on EVERY copy box */
+.copybox{position:relative; background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.06); border-radius:16px; padding:20px; text-align:center;
+  box-shadow:inset 0 0 0 1px rgba(77,189,255,.08), 0 6px 24px rgba(0,0,0,.18);
+  transition:transform .25s ease, box-shadow .25s ease, border-color .25s ease, background .25s}
+.copybox::after{content:""; position:absolute; inset:-1px; border-radius:inherit;
+  background:radial-gradient(140px 140px at var(--mx,50%) var(--my,50%), rgba(77,189,255,.18), rgba(255,125,191,.12) 32%, transparent 60%); opacity:0; transition:opacity .25s}
+.copybox:hover{transform:translateY(-6px); box-shadow:0 14px 44px rgba(77,189,255,.18), 0 0 60px rgba(255,125,191,.14)}
+.copybox:hover::after{opacity:1}
+
+.section{padding:56px 0}
+.grid-3{display:grid; grid-template-columns:repeat(3,1fr); gap:18px}
+.grid-2{display:grid; grid-template-columns:repeat(2,1fr); gap:18px}
+
+.card h4{margin:0 0 8px; font-size:16px; color:var(--accent)}
+.card p{margin:0; color:var(--muted); font-size:14px}
+.feature h3{margin:10px 0; font-size:18px; color:var(--brand)}
+.feature p{margin:0; color:var(--muted)}
+.kpis{display:grid; grid-template-columns:repeat(3,1fr); gap:18px; margin-top:16px}
+.kpi .big{font-weight:800; font-size:28px; color:var(--accent)}
+.faq details{border-radius:16px}
+.faq summary{font-weight:700; color:var(--brand)}
+.footer{padding:32px 0; border-top:1px solid rgba(255,255,255,.06); color:var(--muted); font-size:14px; text-align:center}
+.tag{display:inline-block; padding:6px 10px; border-radius:999px; background:rgba(77,189,255,.15); color:var(--brand); font-weight:600; font-size:12px}
+
+@media (max-width:900px){
+ .h1{font-size:36px}
+ .grid-3,.grid-2,.kpis{grid-template-columns:1fr}
+ .offerwrap{justify-content:flex-start}
+}
+.hotpill{position:relative; font-weight:800}
+.hotpill::after{content:'HOT'; position:absolute; top:-10px; right:-18px; font-size:10px; padding:3px 6px; border-radius:999px; background:linear-gradient(135deg, var(--accent), var(--brand)); color:#001219}
+.popstat .big{font-size:32px}
+.ribbon{position:relative}
+.ribbon::before{content:""; position:absolute; inset:-1px; border-radius:16px; background:linear-gradient(135deg, rgba(77,189,255,.22), rgba(255,125,191,.22)); filter:blur(18px); opacity:.35; z-index:-1}
+
+/* Testimonials */
+.carousel{position:relative}
+.carTrack{display:grid; grid-auto-flow:column; grid-auto-columns:100%; overflow:hidden}
+.testi{margin:0 4px; text-align:left}
+.testi .row{display:flex; gap:12px; align-items:center; margin-bottom:8px}
+.avatar{width:40px; height:40px; border-radius:999px; object-fit:cover; border:1px solid rgba(255,255,255,.15)}
+.name{font-weight:700}
+.role{opacity:.7; font-weight:600; margin-left:6px; font-size:12px}
+.stars{color:#ffd166; letter-spacing:2px; font-size:14px}
+.pill{display:inline-block; margin-top:8px; padding:6px 10px; border-radius:999px; background:rgba(77,189,255,.15); color:#8bdcff; font-weight:700; font-size:12px}
+.carBtn{position:absolute; top:50%; transform:translateY(-50%); background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.12); color:#fff; width:34px; height:34px; border-radius:10px}
+.carBtn.prev{left:-6px}
+.carBtn.next{right:-6px}
+@media (max-width:900px){.carBtn{display:none}.carTrack{scroll-snap-type:x mandatory; overflow-x:auto}.testi{scroll-snap-align:center}}
+</style>
+</head>
+<body>
+<header class="header">
+  <div class="container nav">
+    <div class="logo">
+      <img src="LOGO_URL" alt="Chatters logo">
+      <span class="badge">Chatters</span>
+    </div>
+    <nav class="navlinks">
+      <a href="#how">How it works</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#why">Why us</a>
+      <a href="#results">Results</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <a class="btn" id="bookCall">Book a Call 📅</a>
+    <a class="cta" href="https://t.me/TELEGRAM_USERNAME" target="_blank" rel="noopener">Apply on Telegram 💬</a>
+  </div>
+</header>
+
+<!-- Performance-only offer bar -->
+<div class="offerbar">
+  <div class="offerwrap">
+    <span class="offertext">🔥 <strong>No fee on your current earnings</strong> — we only get paid on the <em>extra revenue</em> we bring you.</span>
+    <a class="btn pulse" id="claimOffer">Claim Offer</a>
+    <a class="btn" id="learnOffer">Learn more</a>
+  </div>
+</div>
+
+<section class="hero container">
+  <div class="kicker">💬 OnlyFans Chatting Agency</div>
+  <h1 class="h1">We <strong>chat, convert & grow</strong> your page 🚀</h1>
+  <p class="sub">Chatters is a premium 24/7 chatting service built for models & agencies. We increase PPV sales, boost retention, and maximize revenue while keeping your boundaries safe.</p>
+  <div class="buttons">
+    <a class="cta" href="#apply">Work With Us 🤝</a>
+    <a class="btn" id="bookCallHero">Book a Call 📅</a>
+  </div>
+</section>
+
+<section class="section container" id="how">
+  <span class="tag">How it works</span>
+  <div class="grid-3" style="margin-top:16px">
+    <div class="card copybox"><h4>🔍 Audit</h4><p>We review your page and find missed revenue opportunities.</p></div>
+    <div class="card copybox"><h4>⚙️ Setup (Same‑Day)</h4><p>Same‑day onboarding with model scripts, PPV menus & trainings.</p></div>
+    <div class="card copybox"><h4>🚀 Scale</h4><p>Trained chatters handle sales & upsells 24/7 across time zones.</p></div>
+  </div>
+  <div class="feature copybox" style="margin-top:18px">
+    <h3>🌍 Built for Models & Agencies</h3>
+    <p>UK & USA‑based only chatters. Native tone, cultural context, and professional standards for premium brands.</p>
+  </div>
+</section>
+
+<section class="section container" id="why">
+  <span class="tag">Why creators choose Chatters</span>
+  <div class="grid-3" style="margin-top:16px">
+    <div class="feature copybox"><h3>💸 Conversion Focused</h3><p>We don’t just talk — we sell. Every message is crafted to convert.</p></div>
+    <div class="feature copybox"><h3>🤝 Respect First</h3><p>Your boundaries & brand voice are always protected. We build genuine connections so fans <em>want</em> to spend — not just desire.</p></div>
+    <div class="feature copybox"><h3>🐳 Whale Ops</h3><p>VIP segmentation, spend scoring, and proactive concierge flows to identify, warm & retain whales better than any agency.</p></div>
+  </div>
+</section>
+
+<section class="section container" id="effective">
+  <span class="tag">Why our chat is so effective</span>
+  <div class="grid-2" style="margin-top:16px">
+    <div class="feature copybox">
+      <h3>🎯 Intent-led scripting</h3>
+      <p>We classify each fan by intent (lurker, casual, payer, whale) and use branching scripts that progress them through micro‑commitments: reply → qualify → value → close. No spam blasts—just calibrated moves that protect brand and boost ARPPU.</p>
+    </div>
+    <div class="feature copybox">
+      <h3>📊 Live KPI feedback</h3>
+      <p>Chat cadence, offer timing, and PPV angles adjust in real time based on open rates, CTR, and hit‑rate. We A/B test hooks, price points, and framing to steadily lift conversion without fatiguing fans.</p>
+    </div>
+  </div>
+  <div class="grid-3" style="margin-top:16px">
+    <div class="card copybox"><h4>🧬 Persona memory</h4><p>Notes on kinks, budget, boundaries, and previous purchases so every chat feels personal.</p></div>
+    <div class="card copybox"><h4>⏱️ Timing rules</h4><p>Local‑time windows, cooling‑off gaps, and session streaks to maximize response probability.</p></div>
+    <div class="card copybox"><h4>🛡️ Brand safety</h4><p>Hard boundaries, approval flows, and compliance training keep you protected.</p></div>
+  </div>
+</section>
+
+<section class="section container" id="standout">
+  <span class="tag">What makes us stand out</span>
+  <div class="grid-3" style="margin-top:16px">
+    <div class="feature copybox"><h3>🇬🇧🇺🇸 Native teams</h3><p>UK & USA‑based chatters with native tone and cultural context for premium audiences.</p></div>
+    <div class="feature copybox"><h3>📈 Same‑day start</h3><p>Onboard in a day with pre‑built model scripts, PPV menus, and training.</p></div>
+    <div class="feature copybox"><h3>🐳 Whale care</h3><p>Early whale detection, VIP lanes, and concierge retention programs.</p></div>
+  </div>
+</section>
+
+<section class="section container" id="platforms">
+  <span class="tag">Platforms we chat on</span>
+  <div class="grid-2" style="margin-top:16px; align-items:center">
+    <div class="feature copybox" style="display:flex;gap:12px;align-items:center;justify-content:center">
+      <img src="LOGO_OF_URL" alt="OnlyFans" style="height:36px"> <strong>OnlyFans</strong>
+    </div>
+    <div class="feature copybox" style="display:flex;gap:12px;align-items:center;justify-content:center">
+      <img src="LOGO_FANSLY_URL" alt="Fansly" style="height:36px"> <strong>Fansly</strong>
+    </div>
+  </div>
+</section>
+
+<section class="section container" id="results">
+  <span class="tag">📈 Recent Results</span>
+  <div class="kpis">
+    <div class="kpi copybox popstat" data-target="80"><div class="big"><span class="count">0</span>%</div><div>Higher PPV sales</div></div>
+    <div class="kpi copybox popstat" data-target="4"><div class="big"><span class="count">0</span>×</div><div>More average revenue per fan</div></div>
+    <div class="kpi copybox popstat" data-target="1" data-suffix=":9"><div class="big"><span class="count">1</span>:9</div><div>Avg active chat ratio</div></div>
+  </div>
+  <div class="grid-3" style="margin-top:18px">
+    <div class="feature copybox ribbon"><h3>+41% in 14 days</h3><p>After persona re‑write + PPV calendar, creator moved from £12k → £17k/month.</p></div>
+    <div class="feature copybox ribbon"><h3>4.6× PPV</h3><p>Whale tagging + concierge upsells turned 3 payers into 2 whales in 30 days.</p></div>
+    <div class="feature copybox ribbon"><h3>-27% churn</h3><p>Renewal hooks + timing windows reduced paid sub drop‑off.</p></div>
+  </div>
+</section>
+
+<section class="section container" id="testimonials">
+  <span class="tag">What creators & partners say</span>
+  <div class="carousel" style="margin-top:16px">
+    <button class="carBtn prev" aria-label="Previous">‹</button>
+    <div class="carTrack">
+      <article class="testi copybox">
+        <div class="row">
+          <img class="avatar" src="AVATAR_1_URL" alt="Creator avatar" onerror="this.style.display='none'">
+          <div>
+            <div class="name">Maya L. <span class="role">Creator</span></div>
+            <div class="stars">★★★★★</div>
+          </div>
+        </div>
+        <p>“Day 2 they rebuilt my scripts. Week 1 PPV doubled. I finally feel like chats aren’t being wasted.”</p>
+        <div class="pill">+92% PPV in 30 days</div>
+      </article>
+      <article class="testi copybox">
+        <div class="row">
+          <img class="avatar" src="AVATAR_2_URL" alt="Agency partner" onerror="this.style.display='none'">
+          <div>
+            <div class="name">BrightFox Media <span class="role">Agency Partner</span></div>
+            <div class="stars">★★★★★</div>
+          </div>
+        </div>
+        <p>“We plugged them in for night coverage. Tone matched perfectly, whales got concierge treatment, and revenue rose without extra content.”</p>
+        <div class="pill">1.8× weekend revenue</div>
+      </article>
+      <article class="testi copybox">
+        <div class="row">
+          <img class="avatar" src="AVATAR_3_URL" alt="Creator avatar" onerror="this.style.display='none'">
+          <div>
+            <div class="name">Aria V. <span class="role">Top 0.1% Creator</span></div>
+            <div class="stars">★★★★★</div>
+          </div>
+        </div>
+        <p>“They respect my boundaries and still sell. My fans feel seen, not spammed.”</p>
+        <div class="pill">-22% churn</div>
+      </article>
+          <article class="testi copybox">
+        <div class="row">
+          <img class="avatar" src="AVATAR_NICOLE_URL" alt="Nicole Valentine" onerror="this.style.display='none'">
+          <div>
+            <div class="name">Nicole Valentine <span class="role">Model • Top Creator</span></div>
+            <div class="stars">★★★★★</div>
+          </div>
+        </div>
+        <p>“These chats finally sound like me. Fans are spending without me being online 24/7.”</p>
+        <div class="pill">+58% tips in 21 days</div>
+      </article>
+      <article class="testi copybox">
+        <div class="row">
+          <img class="avatar" src="AVATAR_ICON_URL" alt="ICON Agency" onerror="this.style.display='none'">
+          <div>
+            <div class="name">ICON Agency <span class="role">Agency Partner</span></div>
+            <div class="stars">★★★★★</div>
+          </div>
+        </div>
+        <p>“Plug‑and‑play night coverage. Tone matched, whales handled like VIPs, and revenue up without extra content.”</p>
+        <div class="pill">+34% weekend ARPPU</div>
+      </article>
+      <article class="testi copybox">
+        <div class="row">
+          <img class="avatar" src="AVATAR_AURA_URL" alt="Aura" onerror="this.style.display='none'">
+          <div>
+            <div class="name">Aura <span class="role">Creator</span></div>
+            <div class="stars">★★★★★</div>
+          </div>
+        </div>
+        <p>“Boundaries respected, sales up. Fans feel looked after—not spammed.”</p>
+        <div class="pill">-19% churn</div>
+      </article>
+</div>
+    <button class="carBtn next" aria-label="Next">›</button>
+  </div>
+</section>
+
+<section class="section container" id="pricing">
+  <span class="tag">Pricing</span>
+  <div class="grid-2" style="margin-top:16px">
+    <div class="feature copybox" style="text-align:left">
+      <h3>🔥 Performance‑only hook</h3>
+      <p><strong>No fee on your current earnings.</strong> We only earn from the <em>extra revenue</em> we add on top of your baseline.</p>
+      <p style="margin-top:8px">Baseline is your last 30 days, verified. Above that, our share is a flat <strong>22% of additional earnings</strong>. Simple, transparent, aligned.</p>
+    </div>
+    <div class="feature copybox" style="text-align:left">
+      <h3>💡 Example</h3>
+      <p>Your baseline: £10,000. Month 1 with us: £16,000 → uplift £6,000. Our fee: 22% × £6,000 = £1,320. You keep £14,680.</p>
+      <div style="margin-top:10px"><a class="btn" href="#apply">Claim this pricing →</a></div>
+    </div>
+  </div>
+</section>
+
+<section class="section container" id="included">
+  <span class="tag">What’s included</span>
+  <div class="grid-3" style="margin-top:16px">
+    <div class="card copybox"><h4>⏳ Save time</h4><p>We handle chats, upsells, and re‑engagement so you can create.</p></div>
+    <div class="card copybox"><h4>🛡️ Risk‑free</h4><p>Pay from uplift only. If we don’t grow you, we don’t get paid.</p></div>
+    <div class="card copybox"><h4>📈 Earn more</h4><p>PPV systems, offer timing, and whale flows increase ARPPU.</p></div>
+    <div class="card copybox"><h4>🧭 Account management</h4><p>Dedicated manager + weekly strategy and KPI reviews.</p></div>
+    <div class="card copybox"><h4>🔒 100% secure</h4><p>Seat access, approval rules, and hard boundary enforcement.</p></div>
+    <div class="card copybox"><h4>🎓 Content guides & training</h4><p>Creator playbooks, scripting, and PPV calendars that convert.</p></div>
+    <div class="card copybox"><h4>🕑 24/7 chatting</h4><p>UK & USA‑based teams across time zones for nonstop coverage.</p></div>
+    <div class="card copybox"><h4>🤝 24/7 guaranteed support</h4><p>Priority response SLA for creators and partner agencies.</p></div>
+  </div>
+</section>
+
+<section class="section container" id="apply">
+  <span class="tag">Work With Us</span>
+  <h3 style="margin:10px 0 8px;text-align:center">Apply in 60 seconds ⏱️</h3>
+  <p class="sub" style="text-align:center">Fill this out and we’ll reply the same day.</p>
+  <form id="leadForm" style="margin-top:20px;max-width:600px;margin-left:auto;margin-right:auto">
+    <div style="display:grid; gap:10px;">
+      <input class="copybox" required name="name" placeholder="Your name" style="padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.04);color:#fff">
+      <input class="copybox" required name="instagram" placeholder="Instagram @handle" style="padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.04);color:#fff">
+      <input class="copybox" name="telegram" placeholder="Telegram @username (optional)" style="padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.04);color:#fff">
+      <input class="copybox" name="of" placeholder="OnlyFans link (optional)" style="padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.04);color:#fff">
+      <input class="copybox" name="revenue" placeholder="Current monthly revenue (£ / $)" inputmode="decimal" style="padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.04);color:#fff">
+      <textarea class="copybox" required name="goals" placeholder="Your goals & current issues..." rows="4" style="padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.04);color:#fff"></textarea>
+    </div>
+    <div style="display:flex; justify-content:center; gap:12px; margin-top:12px">
+      <button class="cta" type="submit">Submit 🚀</button>
+      <a class="btn" href="https://t.me/TELEGRAM_USERNAME" target="_blank" rel="noopener">Chat on Telegram 💬</a>
+      <a class="btn" id="bookCallCTA">Book a Call 📅</a>
+    </div>
+    <p id="msg" style="color:var(--accent);margin-top:8px;display:none;text-align:center">Thanks! We’ll be in touch shortly 🎉</p>
+  </form>
+</section>
+
+<section class="section container" id="about">
+  <span class="tag">About us</span>
+  <div class="grid-2" style="margin-top:16px">
+    <div class="feature copybox" style="text-align:left">
+      <h3>Built by chatters, not marketers</h3>
+      <p>We started as a small UK team, covering chats for a handful of creators who demanded premium tone and boundaries. Word spread. We partnered with US chatters to cover all time zones, refined our scripts, trained relentlessly—and today we manage for <strong>0.01%‑tier creators</strong> you’re already watching.</p>
+      <p>Our edge is simple: <em>native tone + intent‑led sales.</em> We don’t spam. We build genuine connection, protect your brand, and turn fans into long‑term payers.</p>
+    </div>
+    <div class="feature copybox" style="text-align:left">
+      <h3>UK & USA only</h3>
+      <p>Every chatter is UK or USA‑based, vetted, and trained on compliance, boundaries, and persona voice. Clear approvals, weekly KPI reviews, and live reporting keep you fully in control.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section container faq" id="faq">
+  <span class="tag">❓ FAQ</span>
+  <div style="display:grid; gap:12px; margin-top:16px">
+    <details class="copybox"><summary>💰 What % do you take?</summary><p style="margin-top:8px;color:var(--muted)">Performance‑only: <strong>0% on current earnings</strong>. We take <strong>22% of additional earnings</strong> above your verified 30‑day baseline.</p></details>
+    <details class="copybox"><summary>🆓 Does it matter if I have a free page?</summary><p style="margin-top:8px;color:var(--muted)">Free, paid, or hybrid—we optimize either. On free, we focus on PPV sequencing, bundles, and whale care; on paid, we balance renewals with high‑margin PPVs.</p></details>
+    <details class="copybox"><summary>⚡ How quickly can you onboard?</summary><p style="margin-top:8px;color:var(--muted)"><strong>Same‑day</strong> possible. Typical setup is 1–3 days for persona sheets, boundaries, scripts, and PPV calendar.</p></details>
+    <details class="copybox"><summary>👥 I already have a team—can you work with them?</summary><p style="margin-top:8px;color:var(--muted)">Yes. We can slot in as overflow, nights/weekends, or take full coverage. We’ll share scripts and QA so tone stays consistent.</p></details>
+    <details class="copybox"><summary>🔐 Do you need my login?</summary><p style="margin-top:8px;color:var(--muted)">We use secure seat access where possible, with approval rules and hard boundaries agreed upfront.</p></details>
+    <details class="copybox"><summary>🧾 How do you prove “additional earnings”?</summary><p style="margin-top:8px;color:var(--muted)">We baseline against your trailing 30‑day revenue. Uplift is tracked in weekly reports (subs, renewals, PPV, tips). You’ll see the math transparently.</p></details>
+    <details class="copybox"><summary>🔄 Can I leave anytime?</summary><p style="margin-top:8px;color:var(--muted)">No lock‑in. We earn only when we grow you. Cancel anytime with notice so we can hand over scripts and notes cleanly.</p></details>
+    <details class="copybox"><summary>🧰 Which platforms?</summary><p style="margin-top:8px;color:var(--muted)">OnlyFans and Fansly (see the Platforms section). We’ll advise which model is best for your audience.</p></details>
+  </div>
+</section>
+
+<footer class="footer">
+  © <span id="year"></span> Chatters. All rights reserved.
+</footer>
+
+<!-- Offer Modal -->
+<div id="offerModal">
+  <div class="offerCard copybox" style="text-align:left">
+    <h3>Performance‑Only Pricing 💥</h3>
+    <p><strong>No fee on your current earnings.</strong> Our compensation comes only from the <em>incremental revenue</em> we generate (PPV, tips, renewals, upsells). If we don’t grow you, we don’t get paid.</p>
+    <ul style="margin:12px 0 16px 18px; color:var(--muted)">
+      <li>Baseline = your verifiable trailing 30‑day earnings</li>
+      <li>We share in the uplift above that baseline at a flat <strong>22% of additional earnings</strong></li>
+      <li>Transparent weekly reports & dashboards</li>
+    </ul>
+    <div style="display:flex; gap:10px; flex-wrap:wrap">
+      <a class="cta" href="#apply" id="applyOfferBtn">Apply now — risk‑free 🚀</a>
+      <a class="btn" id="closeOffer">Not now</a>
+    </div>
+  </div>
+</div>
+
+<!-- Calendly Modal -->
+<div id="calModal" style="position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;z-index:9999">
+  <div style="background:#0b0f1a;border:1px solid rgba(255,255,255,.08);border-radius:16px;max-width:900px;width:95%;height:80%;position:relative;box-shadow:0 20px 60px rgba(0,0,0,.5)">
+    <button id="closeCal" style="position:absolute;top:10px;right:10px;background:rgba(255,255,255,.08);color:#fff;border:none;border-radius:10px;padding:8px 10px;cursor:pointer">Close</button>
+    <iframe src="CALENDLY_URL" style="width:100%;height:100%;border:0;border-radius:16px"></iframe>
+  </div>
+</div>
+
+<script>
+document.getElementById('year').textContent = new Date().getFullYear();
+
+// Lead form — webhook or friendly prompt (no email fallback)
+const leadForm = document.getElementById('leadForm');
+leadForm.addEventListener('submit', async (e)=>{
+  e.preventDefault();
+  const data = Object.fromEntries(new FormData(e.target).entries());
+  const endpoint = 'FORM_ENDPOINT';
+  if(endpoint && endpoint.startsWith('http')) {
+    try { const res = await fetch(endpoint, {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(data)});
+      if(!res.ok) throw new Error('Network');
+      e.target.reset(); document.getElementById('msg').style.display='block';
+    } catch(err){ alert('There was an issue. Please WhatsApp us or book a call.'); }
+  } else {
+    alert("Thanks! We've received your details. Please book a call or WhatsApp us to confirm.");
+  }
+});
+
+// Calendly modal
+const calModal = document.getElementById('calModal');
+const openCal = ()=> calModal.style.display='flex';
+['bookCall','bookCallHero','bookCallCTA'].forEach(id=> document.getElementById(id)?.addEventListener('click', openCal));
+document.getElementById('closeCal').addEventListener('click', ()=> calModal.style.display='none');
+
+// Pointer‑tracked glow for all copy boxes
+function attachGlow(el){
+  el.addEventListener('pointermove', (e)=>{
+    const r = el.getBoundingClientRect();
+    el.style.setProperty('--mx', `${e.clientX - r.left}px`);
+    el.style.setProperty('--my', `${e.clientY - r.top}px`);
+  });
+}
+Array.from(document.querySelectorAll('.copybox')).forEach(attachGlow);
+
+// Animate KPIs
+function animateCounts(){
+  document.querySelectorAll('.popstat').forEach(box=>{
+    const target = parseFloat(box.dataset.target||'0');
+    const suffix = box.dataset.suffix||'';
+    const num = box.querySelector('.count');
+    if(!num) return;
+    let start = 0; const dur = 1100; const t0 = performance.now();
+    function step(t){
+      const p = Math.min(1, (t - t0)/dur);
+      const val = suffix? target : Math.floor(target*p + (suffix?0:0));
+      num.textContent = suffix? target : val;
+      if(p<1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  });
+}
+const kpiObserver = new IntersectionObserver((ents)=>{
+  ents.forEach(en=>{ if(en.isIntersecting){ animateCounts(); kpiObserver.disconnect(); }});
+},{threshold:.2});
+document.querySelectorAll('#results .kpi').forEach(el=>kpiObserver.observe(el));
+
+// Simple carousel
+(function(){
+  const track = document.querySelector('#testimonials .carTrack');
+  const prev = document.querySelector('#testimonials .prev');
+  const next = document.querySelector('#testimonials .next');
+  if(!track) return;
+  let index = 0; const slides = track.children.length;
+  function go(i){ index = (i+slides)%slides; track.style.transform = `translateX(-${index*100}%)`; }
+  prev?.addEventListener('click', ()=>go(index-1));
+  next?.addEventListener('click', ()=>go(index+1));
+  setInterval(()=>go(index+1), 6000);
+})();
+
+// Ensure popup buttons route to Apply form
+const applyBtn = document.getElementById('applyOfferBtn');
+if(applyBtn){
+  applyBtn.addEventListener('click', (e)=>{
+    e.preventDefault();
+    closeOffer();
+    document.querySelector('#apply')?.scrollIntoView({behavior:'smooth'});
+  });
+}
+
+
+// Offer logic
+const offerModal = document.getElementById('offerModal');
+const openOffer = ()=> offerModal.style.display='flex';
+const closeOffer = ()=> offerModal.style.display='none';
+document.getElementById('learnOffer')?.addEventListener('click', openOffer);
+document.getElementById('closeOffer')?.addEventListener('click', closeOffer);
+// Timed open after 12s (once per user)
+if(!localStorage.getItem('ch_offer_seen')){
+  setTimeout(()=>{ openOffer(); localStorage.setItem('ch_offer_seen','1'); }, 12000);
+}
+// Exit‑intent (desktop)
+document.addEventListener('mouseout', (e)=>{
+  if(!e.toElement && !e.relatedTarget && e.clientY < 10 && !localStorage.getItem('ch_offer_exit')){
+    openOffer(); localStorage.setItem('ch_offer_exit','1');
+  }
+});
+// Claim offer scroll
+const claim = ()=> document.querySelector('#apply')?.scrollIntoView({behavior:'smooth'});
+document.getElementById('claimOffer')?.addEventListener('click', claim);
+</script>
+<script>
+// Universal in-page navigation: make ALL # links smooth-scroll and update hash
+function goTo(id){
+  const el = document.querySelector(id);
+  if(!el) return;
+  el.scrollIntoView({behavior:'smooth', block:'start'});
+  // hash update fallback so browser history works
+  setTimeout(()=>{ if(location.hash !== id) location.hash = id; }, 450);
+}
+// Convert every anchor with href^="#" into smooth scroll
+Array.from(document.querySelectorAll('a[href^="#"]')).forEach(a=>{
+  a.addEventListener('click', (e)=>{
+    const href = a.getAttribute('href');
+    if(href && href.startsWith('#')){ e.preventDefault(); goTo(href); }
+  });
+});
+// Belt-and-braces: ensure critical buttons always work
+['claimOffer','applyOfferBtn'].forEach(id=>{
+  const el = document.getElementById(id);
+  if(el){ el.addEventListener('click', (e)=>{ e.preventDefault(); try{ closeOffer(); }catch{} goTo('#apply'); }); }
+});
+// Make floating pricing pill and nav Pricing always scroll correctly
+['pricing'].forEach(id=>{
+  document.querySelectorAll(`a[href="#${id}"]`).forEach(a=>{
+    a.addEventListener('click', (e)=>{ e.preventDefault(); goTo('#'+id); });
+  });
+});
+</script>
+</body>
+</html>
