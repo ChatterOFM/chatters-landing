@@ -7,18 +7,23 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
 <link rel="icon" href="FAVICON_URL" type="image/png">
-<style>
-html{scroll-behavior:smooth}
 
+<style>
+/* Base + theme */
 :root{ --brand:#4dbdff; --accent:#ff7dbf; --bg:#0b0f1a; --text:#e8f1f8; --muted:#a9bdd1; }
+html{scroll-behavior:smooth}
 *{box-sizing:border-box}
-body{margin:0; font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial; background:
-  radial-gradient(60% 80% at 20% 10%, rgba(77,189,255,.12), transparent 60%),
-  radial-gradient(60% 80% at 80% 0%, rgba(255,125,191,.12), transparent 60%),
-  linear-gradient(180deg,#0b0f1a 0%,#101624 50%,#0d1220 100%); color:var(--text)}
+body{margin:0; font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial; color:var(--text);
+  background:
+    radial-gradient(60% 80% at 20% 10%, rgba(77,189,255,.12), transparent 60%),
+    radial-gradient(60% 80% at 80% 0%, rgba(255,125,191,.12), transparent 60%),
+    linear-gradient(180deg,#0b0f1a 0%,#101624 50%,#0d1220 100%);}
 a{color:inherit; text-decoration:none}
+
+/* Layout & header */
 .container{max-width:1100px; margin:0 auto; padding:0 20px}
-.header{position:sticky; top:0; backdrop-filter:saturate(180%) blur(8px); background:rgba(11,15,26,.7); border-bottom:1px solid rgba(255,255,255,.06); z-index:50}
+.header{position:sticky; top:0; backdrop-filter:saturate(180%) blur(8px); background:rgba(11,15,26,.7);
+  border-bottom:1px solid rgba(255,255,255,.06); z-index:50}
 .nav{display:flex; align-items:center; justify-content:space-between; height:68px}
 .logo{display:flex; align-items:center; gap:12px}
 .logo img{height:40px; width:auto; filter:drop-shadow(0 0 10px rgba(77,189,255,.5))}
@@ -28,14 +33,17 @@ a{color:inherit; text-decoration:none}
 .cta:hover{transform:translateY(-2px); box-shadow:0 14px 36px rgba(77,189,255,.45), 0 0 24px 6px rgba(255,125,191,.15)}
 .btn{display:inline-flex; align-items:center; gap:10px; border:1px solid rgba(255,255,255,.12); padding:12px 16px; border-radius:12px; background:rgba(255,255,255,.04); transition:transform .2s ease, background .2s, border-color .2s}
 .btn:hover{transform:translateY(-2px); background:rgba(255,255,255,.06); border-color:rgba(255,255,255,.2)}
-.hero{min-height:calc(100vh - 140px); padding:88px 0 40px; text-align:center; display:flex; flex-direction:column; justify-content:center}
-.kicker{color:var(--accent); font-weight:700; letter-spacing:.12em; text-transform:uppercase; font-size:13px}
-.h1{font-family:Poppins,Inter,system-ui; font-size:clamp(34px,5vw,48px); line-height:1.05; margin:16px 0}
-.h1 strong{color:var(--brand); text-shadow:0 0 24px rgba(77,189,255,.35)}
-.sub{font-size:18px; color:var(--muted); max-width:780px; margin:0 auto}
-.buttons{display:flex; justify-content:center; gap:12px; margin-top:22px; flex-wrap:wrap}
 
-/* Offer bar & modal */
+/* Decorative background graphics */
+.decor{position:fixed; inset:0; pointer-events:none; z-index:0}
+.decor .blob{position:absolute; filter:blur(10px)}
+.decor .b1{top:-10vh; left:-6vw; width:42vw; animation:float1 16s ease-in-out infinite alternate}
+.decor .b2{right:-10vw; top:20vh; width:38vw; animation:float2 18s ease-in-out infinite alternate}
+@keyframes float1{to{transform:translateY(20px) translateX(10px)}}
+@keyframes float2{to{transform:translateY(-20px) translateX(-10px)}}
+.decor .grain{position:absolute; inset:0; background-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="160" height="160"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="2"/></filter><rect width="100%" height="100%" filter="url(%23n)" opacity="0.035"/></svg>'); mix-blend-mode:soft-light}
+
+/* Offer bar */
 .offerbar{position:sticky; top:68px; z-index:49; background:linear-gradient(90deg, rgba(77,189,255,.15), rgba(255,125,191,.15)); border-top:1px solid rgba(255,255,255,.08); border-bottom:1px solid rgba(255,255,255,.08)}
 .offerwrap{max-width:1100px; margin:0 auto; padding:10px 20px; display:flex; align-items:center; gap:12px; justify-content:center; flex-wrap:wrap}
 .offertext{font-weight:800; letter-spacing:.3px}
@@ -43,12 +51,15 @@ a{color:inherit; text-decoration:none}
 .pulse::before{content:""; position:absolute; inset:-6px; border-radius:12px; box-shadow:0 0 0 0 rgba(77,189,255,.6); animation:pulse 1.8s infinite}
 @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(77,189,255,.45)}70%{box-shadow:0 0 0 18px rgba(77,189,255,0)}100%{box-shadow:0 0 0 0 rgba(77,189,255,0)}}
 
-#offerModal{position:fixed; inset:0; background:rgba(0,0,0,.6); display:none; align-items:center; justify-content:center; z-index:9999}
-.offerCard{background:#0b0f1a; border:1px solid rgba(255,255,255,.1); border-radius:18px; max-width:720px; width:92%; padding:22px; box-shadow:0 30px 80px rgba(0,0,0,.55)}
-.offerCard h3{margin:0 0 8px; font-size:24px}
-.offerCard p{margin:0 0 12px; color:var(--muted)}
+/* Hero */
+.hero{min-height:calc(var(--vh, 1vh) * 100 - 140px); padding:88px 0 40px; text-align:center; display:flex; flex-direction:column; justify-content:center}
+.kicker{color:var(--accent); font-weight:700; letter-spacing:.12em; text-transform:uppercase; font-size:13px}
+.h1{font-family:Poppins,Inter,system-ui; font-size:clamp(34px, 5vw, 48px); line-height:1.05; margin:16px 0}
+.h1 strong{color:var(--brand); text-shadow:0 0 24px rgba(77,189,255,.35)}
+.sub{font-size:18px; color:var(--muted); max-width:780px; margin:0 auto}
+.buttons{display:flex; justify-content:center; gap:12px; margin-top:22px; flex-wrap:wrap}
 
-/* Subtle highlight + interactivity on EVERY copy box */
+/* Copy highlight + interactivity */
 .copybox{position:relative; background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.06); border-radius:16px; padding:20px; text-align:center;
   box-shadow:inset 0 0 0 1px rgba(77,189,255,.08), 0 6px 24px rgba(0,0,0,.18);
   transition:transform .25s ease, box-shadow .25s ease, border-color .25s ease, background .25s}
@@ -57,28 +68,20 @@ a{color:inherit; text-decoration:none}
 .copybox:hover{transform:translateY(-6px); box-shadow:0 14px 44px rgba(77,189,255,.18), 0 0 60px rgba(255,125,191,.14)}
 .copybox:hover::after{opacity:1}
 
+/* Sections */
 .section{padding:56px 0}
 .grid-3{display:grid; grid-template-columns:repeat(3,1fr); gap:18px}
 .grid-2{display:grid; grid-template-columns:repeat(2,1fr); gap:18px}
-
 .card h4{margin:0 0 8px; font-size:16px; color:var(--accent)}
 .card p{margin:0; color:var(--muted); font-size:14px}
 .feature h3{margin:10px 0; font-size:18px; color:var(--brand)}
 .feature p{margin:0; color:var(--muted)}
 .kpis{display:grid; grid-template-columns:repeat(3,1fr); gap:18px; margin-top:16px}
 .kpi .big{font-weight:800; font-size:28px; color:var(--accent)}
-.faq details{border-radius:16px}
-.faq summary{font-weight:700; color:var(--brand)}
 .footer{padding:32px 0; border-top:1px solid rgba(255,255,255,.06); color:var(--muted); font-size:14px; text-align:center}
 .tag{display:inline-block; padding:6px 10px; border-radius:999px; background:rgba(77,189,255,.15); color:var(--brand); font-weight:600; font-size:12px}
 
-@media (max-width:900px){
- .h1{font-size:36px}
- .grid-3,.grid-2,.kpis{grid-template-columns:1fr}
- .offerwrap{justify-content:flex-start}
-}
-.hotpill{position:relative; font-weight:800}
-.hotpill::after{content:'HOT'; position:absolute; top:-10px; right:-18px; font-size:10px; padding:3px 6px; border-radius:999px; background:linear-gradient(135deg, var(--accent), var(--brand)); color:#001219}
+/* Results flair */
 .popstat .big{font-size:32px}
 .ribbon{position:relative}
 .ribbon::before{content:""; position:absolute; inset:-1px; border-radius:16px; background:linear-gradient(135deg, rgba(77,189,255,.22), rgba(255,125,191,.22)); filter:blur(18px); opacity:.35; z-index:-1}
@@ -96,10 +99,55 @@ a{color:inherit; text-decoration:none}
 .carBtn{position:absolute; top:50%; transform:translateY(-50%); background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.12); color:#fff; width:34px; height:34px; border-radius:10px}
 .carBtn.prev{left:-6px}
 .carBtn.next{right:-6px}
-@media (max-width:900px){.carBtn{display:none}.carTrack{scroll-snap-type:x mandatory; overflow-x:auto}.testi{scroll-snap-align:center}}
+
+/* Platforms row centering for last two included items */
+#included .last-row{display:grid; grid-template-columns:repeat(2, minmax(0, 1fr)); gap:18px; justify-content:center; max-width:740px; margin:16px auto 0}
+
+/* Mobile polish */
+@media (max-width: 900px){
+ .grid-3,.grid-2,.kpis{grid-template-columns:1fr}
+ .carBtn{display:none}
+ .carTrack{scroll-snap-type:x mandatory; overflow-x:auto}
+ .testi{scroll-snap-align:center}
+}
+@media (max-width: 768px){
+  .container { padding: 0 16px; }
+  .hero { min-height: calc(var(--vh, 1vh) * 100 - 120px); padding: 64px 0 28px; }
+  .h1 { font-size: clamp(28px, 6vw, 36px); }
+  .sub { font-size: 16px; max-width: 92%; }
+  .buttons .cta, .buttons .btn { padding: 12px 14px; }
+  .copybox { padding: 16px; }
+  .offerwrap { padding: 10px 12px; gap: 8px; }
+  .offerwrap .btn { padding: 10px 12px; font-weight: 700; }
+  #calModal > div { height: 88%; width: 96%; }
+}
+@media (max-width: 430px){
+  .h1 { font-size: clamp(24px, 8vw, 30px); }
+  .sub { font-size: 15px; }
+  .buttons { gap: 10px; }
+  .cta, .btn { width: 100%; justify-content: center; }
+  .copybox::after { background: radial-gradient(110px 110px at var(--mx,50%) var(--my,50%), rgba(77,189,255,.16), rgba(255,125,191,.10) 32%, transparent 60%); }
+  .decor .blob { opacity: .18; filter: blur(12px); }
+}
+
+/* Safe areas */
+@supports (padding: max(0px)) {
+  .offerbar { padding-bottom: max(0px, env(safe-area-inset-bottom)); }
+}
+
+/* Tap optimizations */
+input, textarea, button, .btn, .cta { touch-action: manipulation; }
 </style>
 </head>
 <body>
+
+<!-- Decorative background -->
+<div class="decor" aria-hidden="true">
+  <svg class="blob b1" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><path fill="#4DBDFF22" d="M43.9,-62.1C57.4,-53.6,69.1,-43,76.2,-29.4C83.3,-15.9,85.8,0.5,82.2,15.1C78.5,29.8,68.7,42.7,56.2,53.4C43.7,64.1,28.6,72.6,12.3,77.1C-4.1,81.5,-21.6,81.8,-34.9,74.6C-48.2,67.5,-57.3,52.9,-65.6,38C-73.8,23,-81.2,7.7,-79.8,-7.3C-78.4,-22.2,-68.1,-36.7,-55.6,-46.9C-43,-57.1,-28.3,-63,-13.1,-68.2C2.1,-73.4,16.8,-78.8,31.1,-74.6C45.4,-70.5,59.3,-56.7,43.9,-62.1Z" transform="translate(100 100)"/></svg>
+  <svg class="blob b2" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><path fill="#FF7DBF22" d="M43.1,-60.6C55.7,-51.1,66,-39.6,73.4,-25.7C80.7,-11.8,85.1,4.4,80.6,18C76.1,31.6,62.6,42.6,48.9,52.4C35.2,62.2,21.3,70.7,5.9,72.4C-9.5,74.1,-19.1,69,-31.2,62.4C-43.4,55.7,-58.2,47.5,-66.9,35.1C-75.6,22.7,-78.2,6,-74.9,-8.2C-71.5,-22.5,-62.2,-34.9,-51.6,-45.3C-41,-55.7,-29.2,-64.1,-15.4,-69.4C-1.6,-74.8,14.1,-77.1,27.6,-72.1C41.2,-67.1,52.5,-54.9,43.1,-60.6Z" transform="translate(100 100)"/></svg>
+  <div class="grain"></div>
+</div>
+
 <header class="header">
   <div class="container nav">
     <div class="logo">
@@ -118,7 +166,7 @@ a{color:inherit; text-decoration:none}
   </div>
 </header>
 
-<!-- Performance-only offer bar -->
+<!-- Sticky offer bar -->
 <div class="offerbar">
   <div class="offerwrap">
     <span class="offertext">🔥 <strong>No fee on your current earnings</strong> — we only get paid on the <em>extra revenue</em> we bring you.</span>
@@ -141,12 +189,12 @@ a{color:inherit; text-decoration:none}
   <span class="tag">How it works</span>
   <div class="grid-3" style="margin-top:16px">
     <div class="card copybox"><h4>🔍 Audit</h4><p>We review your page and find missed revenue opportunities.</p></div>
-    <div class="card copybox"><h4>⚙️ Setup (Same‑Day)</h4><p>Same‑day onboarding with model scripts, PPV menus & trainings.</p></div>
+    <div class="card copybox"><h4>⚙️ Setup (Same-Day)</h4><p>Same-day onboarding with model scripts, PPV menus & trainings.</p></div>
     <div class="card copybox"><h4>🚀 Scale</h4><p>Trained chatters handle sales & upsells 24/7 across time zones.</p></div>
   </div>
   <div class="feature copybox" style="margin-top:18px">
     <h3>🌍 Built for Models & Agencies</h3>
-    <p>UK & USA‑based only chatters. Native tone, cultural context, and professional standards for premium brands.</p>
+    <p>UK & USA-based only chatters. Native tone, cultural context, and professional standards for premium brands.</p>
   </div>
 </section>
 
@@ -164,16 +212,16 @@ a{color:inherit; text-decoration:none}
   <div class="grid-2" style="margin-top:16px">
     <div class="feature copybox">
       <h3>🎯 Intent-led scripting</h3>
-      <p>We classify each fan by intent (lurker, casual, payer, whale) and use branching scripts that progress them through micro‑commitments: reply → qualify → value → close. No spam blasts—just calibrated moves that protect brand and boost ARPPU.</p>
+      <p>We classify each fan by intent (lurker, casual, payer, whale) and use branching scripts that progress them through micro-commitments: reply → qualify → value → close. No spam blasts—just calibrated moves that protect brand and boost ARPPU.</p>
     </div>
     <div class="feature copybox">
       <h3>📊 Live KPI feedback</h3>
-      <p>Chat cadence, offer timing, and PPV angles adjust in real time based on open rates, CTR, and hit‑rate. We A/B test hooks, price points, and framing to steadily lift conversion without fatiguing fans.</p>
+      <p>Chat cadence, offer timing, and PPV angles adjust in real time based on open rates, CTR, and hit-rate. We A/B test hooks, price points, and framing to steadily lift conversion without fatiguing fans.</p>
     </div>
   </div>
   <div class="grid-3" style="margin-top:16px">
     <div class="card copybox"><h4>🧬 Persona memory</h4><p>Notes on kinks, budget, boundaries, and previous purchases so every chat feels personal.</p></div>
-    <div class="card copybox"><h4>⏱️ Timing rules</h4><p>Local‑time windows, cooling‑off gaps, and session streaks to maximize response probability.</p></div>
+    <div class="card copybox"><h4>⏱️ Timing rules</h4><p>Local-time windows, cooling-off gaps, and session streaks to maximize response probability.</p></div>
     <div class="card copybox"><h4>🛡️ Brand safety</h4><p>Hard boundaries, approval flows, and compliance training keep you protected.</p></div>
   </div>
 </section>
@@ -181,9 +229,41 @@ a{color:inherit; text-decoration:none}
 <section class="section container" id="standout">
   <span class="tag">What makes us stand out</span>
   <div class="grid-3" style="margin-top:16px">
-    <div class="feature copybox"><h3>🇬🇧🇺🇸 Native teams</h3><p>UK & USA‑based chatters with native tone and cultural context for premium audiences.</p></div>
-    <div class="feature copybox"><h3>📈 Same‑day start</h3><p>Onboard in a day with pre‑built model scripts, PPV menus, and training.</p></div>
+    <div class="feature copybox"><h3>🇬🇧🇺🇸 Native teams</h3><p>UK & USA-based chatters with native tone and cultural context for premium audiences.</p></div>
+    <div class="feature copybox"><h3>📈 Same-day start</h3><p>Onboard in a day with pre-built model scripts, PPV menus, and training.</p></div>
     <div class="feature copybox"><h3>🐳 Whale care</h3><p>Early whale detection, VIP lanes, and concierge retention programs.</p></div>
+  </div>
+</section>
+
+<section class="section container" id="pricing">
+  <span class="tag">Pricing</span>
+  <div class="grid-2" style="margin-top:16px">
+    <div class="feature copybox" style="text-align:left">
+      <h3>🔥 Performance-only hook</h3>
+      <p><strong>No fee on your current earnings.</strong> We only earn from the <em>extra revenue</em> we add on top of your baseline.</p>
+      <p style="margin-top:8px">Baseline is your last 30 days, verified. Above that, our share is a flat <strong>22% of additional earnings</strong>. Simple, transparent, aligned.</p>
+    </div>
+    <div class="feature copybox" style="text-align:left">
+      <h3>💡 Example</h3>
+      <p>Your baseline: £10,000. Month 1 with us: £16,000 → uplift £6,000. Our fee: 22% × £6,000 = £1,320. You keep £14,680.</p>
+      <div style="margin-top:10px"><a class="btn" href="#apply">Claim this pricing →</a></div>
+    </div>
+  </div>
+</section>
+
+<section class="section container" id="included">
+  <span class="tag">What’s included</span>
+  <div class="grid-3" style="margin-top:16px">
+    <div class="card copybox"><h4>⏳ Save time</h4><p>We handle chats, upsells, and re-engagement so you can create.</p></div>
+    <div class="card copybox"><h4>🛡️ Risk-free</h4><p>Pay from uplift only. If we don’t grow you, we don’t get paid.</p></div>
+    <div class="card copybox"><h4>📈 Earn more</h4><p>PPV systems, offer timing, and whale flows increase ARPPU.</p></div>
+    <div class="card copybox"><h4>🧭 Account management</h4><p>Dedicated manager + weekly strategy and KPI reviews.</p></div>
+    <div class="card copybox"><h4>🔒 100% secure</h4><p>Seat access, approval rules, and hard boundary enforcement.</p></div>
+    <div class="card copybox"><h4>🎓 Content guides & training</h4><p>Creator playbooks, scripting, and PPV calendars that convert.</p></div>
+  </div>
+  <div class="last-row">
+    <div class="card copybox"><h4>🕑 24/7 chatting</h4><p>UK & USA-based teams across time zones for nonstop coverage.</p></div>
+    <div class="card copybox"><h4>🤝 24/7 guaranteed support</h4><p>Priority response SLA for creators and partner agencies.</p></div>
   </div>
 </section>
 
@@ -204,12 +284,12 @@ a{color:inherit; text-decoration:none}
   <div class="kpis">
     <div class="kpi copybox popstat" data-target="80"><div class="big"><span class="count">0</span>%</div><div>Higher PPV sales</div></div>
     <div class="kpi copybox popstat" data-target="4"><div class="big"><span class="count">0</span>×</div><div>More average revenue per fan</div></div>
-    <div class="kpi copybox popstat" data-target="1" data-suffix=":9"><div class="big"><span class="count">1</span>:9</div><div>Avg active chat ratio</div></div>
+    <div class="kpi copybox"><div class="big">1:9</div><div>Avg active chat ratio</div></div>
   </div>
   <div class="grid-3" style="margin-top:18px">
-    <div class="feature copybox ribbon"><h3>+41% in 14 days</h3><p>After persona re‑write + PPV calendar, creator moved from £12k → £17k/month.</p></div>
+    <div class="feature copybox ribbon"><h3>+41% in 14 days</h3><p>After persona re-write + PPV calendar, creator moved from £12k → £17k/month.</p></div>
     <div class="feature copybox ribbon"><h3>4.6× PPV</h3><p>Whale tagging + concierge upsells turned 3 payers into 2 whales in 30 days.</p></div>
-    <div class="feature copybox ribbon"><h3>-27% churn</h3><p>Renewal hooks + timing windows reduced paid sub drop‑off.</p></div>
+    <div class="feature copybox ribbon"><h3>-27% churn</h3><p>Renewal hooks + timing windows reduced paid sub drop-off.</p></div>
   </div>
 </section>
 
@@ -221,101 +301,74 @@ a{color:inherit; text-decoration:none}
       <article class="testi copybox">
         <div class="row">
           <img class="avatar" src="AVATAR_1_URL" alt="Creator avatar" onerror="this.style.display='none'">
-          <div>
-            <div class="name">Maya L. <span class="role">Creator</span></div>
-            <div class="stars">★★★★★</div>
-          </div>
+          <div><div class="name">Maya L. <span class="role">Creator</span></div><div class="stars">★★★★★</div></div>
         </div>
         <p>“Day 2 they rebuilt my scripts. Week 1 PPV doubled. I finally feel like chats aren’t being wasted.”</p>
         <div class="pill">+92% PPV in 30 days</div>
       </article>
+
       <article class="testi copybox">
         <div class="row">
           <img class="avatar" src="AVATAR_2_URL" alt="Agency partner" onerror="this.style.display='none'">
-          <div>
-            <div class="name">BrightFox Media <span class="role">Agency Partner</span></div>
-            <div class="stars">★★★★★</div>
-          </div>
+          <div><div class="name">BrightFox Media <span class="role">Agency Partner</span></div><div class="stars">★★★★★</div></div>
         </div>
         <p>“We plugged them in for night coverage. Tone matched perfectly, whales got concierge treatment, and revenue rose without extra content.”</p>
         <div class="pill">1.8× weekend revenue</div>
       </article>
+
       <article class="testi copybox">
         <div class="row">
           <img class="avatar" src="AVATAR_3_URL" alt="Creator avatar" onerror="this.style.display='none'">
-          <div>
-            <div class="name">Aria V. <span class="role">Top 0.1% Creator</span></div>
-            <div class="stars">★★★★★</div>
-          </div>
+          <div><div class="name">Aria V. <span class="role">Top 0.1% Creator</span></div><div class="stars">★★★★★</div></div>
         </div>
         <p>“They respect my boundaries and still sell. My fans feel seen, not spammed.”</p>
         <div class="pill">-22% churn</div>
       </article>
-          <article class="testi copybox">
+
+      <!-- New reviews -->
+      <article class="testi copybox">
         <div class="row">
           <img class="avatar" src="AVATAR_NICOLE_URL" alt="Nicole Valentine" onerror="this.style.display='none'">
-          <div>
-            <div class="name">Nicole Valentine <span class="role">Model • Top Creator</span></div>
-            <div class="stars">★★★★★</div>
-          </div>
+          <div><div class="name">Nicole Valentine <span class="role">Model • Top Creator</span></div><div class="stars">★★★★★</div></div>
         </div>
         <p>“These chats finally sound like me. Fans are spending without me being online 24/7.”</p>
         <div class="pill">+58% tips in 21 days</div>
       </article>
+
       <article class="testi copybox">
         <div class="row">
           <img class="avatar" src="AVATAR_ICON_URL" alt="ICON Agency" onerror="this.style.display='none'">
-          <div>
-            <div class="name">ICON Agency <span class="role">Agency Partner</span></div>
-            <div class="stars">★★★★★</div>
-          </div>
+          <div><div class="name">ICON Agency <span class="role">Agency Partner</span></div><div class="stars">★★★★★</div></div>
         </div>
-        <p>“Plug‑and‑play night coverage. Tone matched, whales handled like VIPs, and revenue up without extra content.”</p>
+        <p>“Plug-and-play night coverage. Tone matched, whales handled like VIPs, and revenue up without extra content.”</p>
         <div class="pill">+34% weekend ARPPU</div>
       </article>
+
       <article class="testi copybox">
         <div class="row">
           <img class="avatar" src="AVATAR_AURA_URL" alt="Aura" onerror="this.style.display='none'">
-          <div>
-            <div class="name">Aura <span class="role">Creator</span></div>
-            <div class="stars">★★★★★</div>
-          </div>
+          <div><div class="name">Aura <span class="role">Creator</span></div><div class="stars">★★★★★</div></div>
         </div>
         <p>“Boundaries respected, sales up. Fans feel looked after—not spammed.”</p>
         <div class="pill">-19% churn</div>
       </article>
-</div>
+    </div>
     <button class="carBtn next" aria-label="Next">›</button>
   </div>
 </section>
 
-<section class="section container" id="pricing">
-  <span class="tag">Pricing</span>
+<section class="section container" id="about">
+  <span class="tag">About us</span>
   <div class="grid-2" style="margin-top:16px">
     <div class="feature copybox" style="text-align:left">
-      <h3>🔥 Performance‑only hook</h3>
-      <p><strong>No fee on your current earnings.</strong> We only earn from the <em>extra revenue</em> we add on top of your baseline.</p>
-      <p style="margin-top:8px">Baseline is your last 30 days, verified. Above that, our share is a flat <strong>22% of additional earnings</strong>. Simple, transparent, aligned.</p>
+      <h3>Built by chatters, not marketers</h3>
+      <p>We started as a small UK team, covering chats for a handful of creators who demanded premium tone and boundaries. Word spread. We partnered with US chatters to cover all time zones, refined our scripts, trained relentlessly—and today we manage for <strong>0.01%-tier creators</strong> you’re already watching.</p>
+      <p>Our edge is simple: <em>native tone + intent-led sales.</em> We don’t spam. We build genuine connection, protect your brand, and turn fans into long-term payers.</p>
     </div>
     <div class="feature copybox" style="text-align:left">
-      <h3>💡 Example</h3>
-      <p>Your baseline: £10,000. Month 1 with us: £16,000 → uplift £6,000. Our fee: 22% × £6,000 = £1,320. You keep £14,680.</p>
-      <div style="margin-top:10px"><a class="btn" href="#apply">Claim this pricing →</a></div>
+      <h3>UK & USA only</h3>
+      <p>Every chatter is UK or USA-based, vetted, and trained on compliance, boundaries, and persona voice. Clear approvals, weekly KPI reviews, and live reporting keep you fully in control.</p>
     </div>
-  </div>
-</section>
-
-<section class="section container" id="included">
-  <span class="tag">What’s included</span>
-  <div class="grid-3" style="margin-top:16px">
-    <div class="card copybox"><h4>⏳ Save time</h4><p>We handle chats, upsells, and re‑engagement so you can create.</p></div>
-    <div class="card copybox"><h4>🛡️ Risk‑free</h4><p>Pay from uplift only. If we don’t grow you, we don’t get paid.</p></div>
-    <div class="card copybox"><h4>📈 Earn more</h4><p>PPV systems, offer timing, and whale flows increase ARPPU.</p></div>
-    <div class="card copybox"><h4>🧭 Account management</h4><p>Dedicated manager + weekly strategy and KPI reviews.</p></div>
-    <div class="card copybox"><h4>🔒 100% secure</h4><p>Seat access, approval rules, and hard boundary enforcement.</p></div>
-    <div class="card copybox"><h4>🎓 Content guides & training</h4><p>Creator playbooks, scripting, and PPV calendars that convert.</p></div>
-    <div class="card copybox"><h4>🕑 24/7 chatting</h4><p>UK & USA‑based teams across time zones for nonstop coverage.</p></div>
-    <div class="card copybox"><h4>🤝 24/7 guaranteed support</h4><p>Priority response SLA for creators and partner agencies.</p></div>
   </div>
 </section>
 
@@ -341,31 +394,16 @@ a{color:inherit; text-decoration:none}
   </form>
 </section>
 
-<section class="section container" id="about">
-  <span class="tag">About us</span>
-  <div class="grid-2" style="margin-top:16px">
-    <div class="feature copybox" style="text-align:left">
-      <h3>Built by chatters, not marketers</h3>
-      <p>We started as a small UK team, covering chats for a handful of creators who demanded premium tone and boundaries. Word spread. We partnered with US chatters to cover all time zones, refined our scripts, trained relentlessly—and today we manage for <strong>0.01%‑tier creators</strong> you’re already watching.</p>
-      <p>Our edge is simple: <em>native tone + intent‑led sales.</em> We don’t spam. We build genuine connection, protect your brand, and turn fans into long‑term payers.</p>
-    </div>
-    <div class="feature copybox" style="text-align:left">
-      <h3>UK & USA only</h3>
-      <p>Every chatter is UK or USA‑based, vetted, and trained on compliance, boundaries, and persona voice. Clear approvals, weekly KPI reviews, and live reporting keep you fully in control.</p>
-    </div>
-  </div>
-</section>
-
 <section class="section container faq" id="faq">
   <span class="tag">❓ FAQ</span>
   <div style="display:grid; gap:12px; margin-top:16px">
-    <details class="copybox"><summary>💰 What % do you take?</summary><p style="margin-top:8px;color:var(--muted)">Performance‑only: <strong>0% on current earnings</strong>. We take <strong>22% of additional earnings</strong> above your verified 30‑day baseline.</p></details>
-    <details class="copybox"><summary>🆓 Does it matter if I have a free page?</summary><p style="margin-top:8px;color:var(--muted)">Free, paid, or hybrid—we optimize either. On free, we focus on PPV sequencing, bundles, and whale care; on paid, we balance renewals with high‑margin PPVs.</p></details>
-    <details class="copybox"><summary>⚡ How quickly can you onboard?</summary><p style="margin-top:8px;color:var(--muted)"><strong>Same‑day</strong> possible. Typical setup is 1–3 days for persona sheets, boundaries, scripts, and PPV calendar.</p></details>
+    <details class="copybox"><summary>💰 What % do you take?</summary><p style="margin-top:8px;color:var(--muted)">Performance-only: <strong>0% on current earnings</strong>. We take <strong>22% of additional earnings</strong> above your verified 30-day baseline.</p></details>
+    <details class="copybox"><summary>🆓 Does it matter if I have a free page?</summary><p style="margin-top:8px;color:var(--muted)">Free, paid, or hybrid—we optimize either. On free, we focus on PPV sequencing, bundles, and whale care; on paid, we balance renewals with high-margin PPVs.</p></details>
+    <details class="copybox"><summary>⚡ How quickly can you onboard?</summary><p style="margin-top:8px;color:var(--muted)"><strong>Same-day</strong> possible. Typical setup is 1–3 days for persona sheets, boundaries, scripts, and PPV calendar.</p></details>
     <details class="copybox"><summary>👥 I already have a team—can you work with them?</summary><p style="margin-top:8px;color:var(--muted)">Yes. We can slot in as overflow, nights/weekends, or take full coverage. We’ll share scripts and QA so tone stays consistent.</p></details>
     <details class="copybox"><summary>🔐 Do you need my login?</summary><p style="margin-top:8px;color:var(--muted)">We use secure seat access where possible, with approval rules and hard boundaries agreed upfront.</p></details>
-    <details class="copybox"><summary>🧾 How do you prove “additional earnings”?</summary><p style="margin-top:8px;color:var(--muted)">We baseline against your trailing 30‑day revenue. Uplift is tracked in weekly reports (subs, renewals, PPV, tips). You’ll see the math transparently.</p></details>
-    <details class="copybox"><summary>🔄 Can I leave anytime?</summary><p style="margin-top:8px;color:var(--muted)">No lock‑in. We earn only when we grow you. Cancel anytime with notice so we can hand over scripts and notes cleanly.</p></details>
+    <details class="copybox"><summary>🧾 How do you prove “additional earnings”?</summary><p style="margin-top:8px;color:var(--muted)">We baseline against your trailing 30-day revenue. Uplift is tracked in weekly reports (subs, renewals, PPV, tips). You’ll see the math transparently.</p></details>
+    <details class="copybox"><summary>🔄 Can I leave anytime?</summary><p style="margin-top:8px;color:var(--muted)">No lock-in. We earn only when we grow you. Cancel anytime with notice so we can hand over scripts and notes cleanly.</p></details>
     <details class="copybox"><summary>🧰 Which platforms?</summary><p style="margin-top:8px;color:var(--muted)">OnlyFans and Fansly (see the Platforms section). We’ll advise which model is best for your audience.</p></details>
   </div>
 </section>
@@ -375,24 +413,24 @@ a{color:inherit; text-decoration:none}
 </footer>
 
 <!-- Offer Modal -->
-<div id="offerModal">
-  <div class="offerCard copybox" style="text-align:left">
-    <h3>Performance‑Only Pricing 💥</h3>
+<div id="offerModal" style="position:fixed; inset:0; background:rgba(0,0,0,.6); display:none; align-items:center; justify-content:center; z-index:9999">
+  <div class="offerCard copybox" style="text-align:left; background:#0b0f1a; border:1px solid rgba(255,255,255,.1); border-radius:18px; max-width:720px; width:92%; padding:22px; box-shadow:0 30px 80px rgba(0,0,0,.55)">
+    <h3>Performance-Only Pricing 💥</h3>
     <p><strong>No fee on your current earnings.</strong> Our compensation comes only from the <em>incremental revenue</em> we generate (PPV, tips, renewals, upsells). If we don’t grow you, we don’t get paid.</p>
     <ul style="margin:12px 0 16px 18px; color:var(--muted)">
-      <li>Baseline = your verifiable trailing 30‑day earnings</li>
+      <li>Baseline = your verifiable trailing 30-day earnings</li>
       <li>We share in the uplift above that baseline at a flat <strong>22% of additional earnings</strong></li>
       <li>Transparent weekly reports & dashboards</li>
     </ul>
     <div style="display:flex; gap:10px; flex-wrap:wrap">
-      <a class="cta" href="#apply" id="applyOfferBtn">Apply now — risk‑free 🚀</a>
+      <a class="cta" href="#apply" id="applyOfferBtn">Apply now — risk-free 🚀</a>
       <a class="btn" id="closeOffer">Not now</a>
     </div>
   </div>
 </div>
 
 <!-- Calendly Modal -->
-<div id="calModal" style="position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;z-index:9999">
+<div id="calModal" style="position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;z-index:9998">
   <div style="background:#0b0f1a;border:1px solid rgba(255,255,255,.08);border-radius:16px;max-width:900px;width:95%;height:80%;position:relative;box-shadow:0 20px 60px rgba(0,0,0,.5)">
     <button id="closeCal" style="position:absolute;top:10px;right:10px;background:rgba(255,255,255,.08);color:#fff;border:none;border-radius:10px;padding:8px 10px;cursor:pointer">Close</button>
     <iframe src="CALENDLY_URL" style="width:100%;height:100%;border:0;border-radius:16px"></iframe>
@@ -400,21 +438,23 @@ a{color:inherit; text-decoration:none}
 </div>
 
 <script>
+// Year stamp
 document.getElementById('year').textContent = new Date().getFullYear();
 
-// Lead form — webhook or friendly prompt (no email fallback)
+// Lead form (webhook optional)
 const leadForm = document.getElementById('leadForm');
 leadForm.addEventListener('submit', async (e)=>{
   e.preventDefault();
   const data = Object.fromEntries(new FormData(e.target).entries());
-  const endpoint = 'FORM_ENDPOINT';
+  const endpoint = 'FORM_ENDPOINT'; // e.g., https://formspree.io/f/XXXXX — leave as-is if you don't have one
   if(endpoint && endpoint.startsWith('http')) {
-    try { const res = await fetch(endpoint, {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(data)});
+    try {
+      const res = await fetch(endpoint, {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(data)});
       if(!res.ok) throw new Error('Network');
       e.target.reset(); document.getElementById('msg').style.display='block';
-    } catch(err){ alert('There was an issue. Please WhatsApp us or book a call.'); }
+    } catch(err){ alert('There was an issue. Please Telegram us or book a call.'); }
   } else {
-    alert("Thanks! We've received your details. Please book a call or WhatsApp us to confirm.");
+    alert("Thanks! We've received your details. Please book a call or Telegram us to confirm.");
   }
 });
 
@@ -424,7 +464,7 @@ const openCal = ()=> calModal.style.display='flex';
 ['bookCall','bookCallHero','bookCallCTA'].forEach(id=> document.getElementById(id)?.addEventListener('click', openCal));
 document.getElementById('closeCal').addEventListener('click', ()=> calModal.style.display='none');
 
-// Pointer‑tracked glow for all copy boxes
+// Pointer-tracked glow for all copy boxes
 function attachGlow(el){
   el.addEventListener('pointermove', (e)=>{
     const r = el.getBoundingClientRect();
@@ -434,18 +474,17 @@ function attachGlow(el){
 }
 Array.from(document.querySelectorAll('.copybox')).forEach(attachGlow);
 
-// Animate KPIs
+// Animate KPI counts when visible
 function animateCounts(){
   document.querySelectorAll('.popstat').forEach(box=>{
     const target = parseFloat(box.dataset.target||'0');
-    const suffix = box.dataset.suffix||'';
     const num = box.querySelector('.count');
     if(!num) return;
     let start = 0; const dur = 1100; const t0 = performance.now();
     function step(t){
       const p = Math.min(1, (t - t0)/dur);
-      const val = suffix? target : Math.floor(target*p + (suffix?0:0));
-      num.textContent = suffix? target : val;
+      const val = Math.floor(target * p);
+      num.textContent = val;
       if(p<1) requestAnimationFrame(step);
     }
     requestAnimationFrame(step);
@@ -469,109 +508,56 @@ document.querySelectorAll('#results .kpi').forEach(el=>kpiObserver.observe(el));
   setInterval(()=>go(index+1), 6000);
 })();
 
-// Ensure popup buttons route to Apply form
-const applyBtn = document.getElementById('applyOfferBtn');
-if(applyBtn){
-  applyBtn.addEventListener('click', (e)=>{
-    e.preventDefault();
-    closeOffer();
-    document.querySelector('#apply')?.scrollIntoView({behavior:'smooth'});
-  });
-}
-
-
-// Offer logic
+// Offer modal logic + hard-wire buttons to form
 const offerModal = document.getElementById('offerModal');
 const openOffer = ()=> offerModal.style.display='flex';
 const closeOffer = ()=> offerModal.style.display='none';
 document.getElementById('learnOffer')?.addEventListener('click', openOffer);
 document.getElementById('closeOffer')?.addEventListener('click', closeOffer);
-// Timed open after 12s (once per user)
+
+// Timed open after 12s (once) + exit-intent
 if(!localStorage.getItem('ch_offer_seen')){
   setTimeout(()=>{ openOffer(); localStorage.setItem('ch_offer_seen','1'); }, 12000);
 }
-// Exit‑intent (desktop)
 document.addEventListener('mouseout', (e)=>{
   if(!e.toElement && !e.relatedTarget && e.clientY < 10 && !localStorage.getItem('ch_offer_exit')){
     openOffer(); localStorage.setItem('ch_offer_exit','1');
   }
 });
-// Claim offer scroll
-const claim = ()=> document.querySelector('#apply')?.scrollIntoView({behavior:'smooth'});
-document.getElementById('claimOffer')?.addEventListener('click', claim);
-</script>
-<script>
-// Universal in-page navigation: make ALL # links smooth-scroll and update hash
+
+// Universal smooth-scroll & critical routes
 function goTo(id){
   const el = document.querySelector(id);
   if(!el) return;
   el.scrollIntoView({behavior:'smooth', block:'start'});
-  // hash update fallback so browser history works
   setTimeout(()=>{ if(location.hash !== id) location.hash = id; }, 450);
 }
-// Convert every anchor with href^="#" into smooth scroll
 Array.from(document.querySelectorAll('a[href^="#"]')).forEach(a=>{
   a.addEventListener('click', (e)=>{
     const href = a.getAttribute('href');
     if(href && href.startsWith('#')){ e.preventDefault(); goTo(href); }
   });
 });
-// Belt-and-braces: ensure critical buttons always work
 ['claimOffer','applyOfferBtn'].forEach(id=>{
   const el = document.getElementById(id);
   if(el){ el.addEventListener('click', (e)=>{ e.preventDefault(); try{ closeOffer(); }catch{} goTo('#apply'); }); }
 });
-// Make floating pricing pill and nav Pricing always scroll correctly
 ['pricing'].forEach(id=>{
   document.querySelectorAll(`a[href="#${id}"]`).forEach(a=>{
     a.addEventListener('click', (e)=>{ e.preventDefault(); goTo('#'+id); });
   });
 });
 </script>
-  /* ===== Mobile polish ===== */
 
-/* Small tablets & large phones */
-@media (max-width: 768px){
-  .container { padding: 0 16px; }
-  .hero { min-height: calc(100vh - 120px); padding: 64px 0 28px; }
-  .h1 { font-size: clamp(28px, 6vw, 36px); }
-  .sub { font-size: 16px; max-width: 92%; }
-  .buttons .cta, .buttons .btn { padding: 12px 14px; }
-
-  /* Cards stack nicely and breathe */
-  .grid-3, .kpis { grid-template-columns: 1fr; gap: 14px; }
-  .copybox { padding: 16px; }
-
-  /* Offer bar tap targets */
-  .offerwrap { padding: 10px 12px; gap: 8px; }
-  .offerwrap .btn { padding: 10px 12px; font-weight: 700; }
-
-  /* Calendly modal should use more height */
-  #calModal > div { height: 88%; width: 96%; }
-}
-
-/* Small phones */
-@media (max-width: 430px){
-  .h1 { font-size: clamp(24px, 8vw, 30px); }
-  .sub { font-size: 15px; }
-  .buttons { gap: 10px; }
-  .cta, .btn { width: 100%; justify-content: center; }
-
-  /* Softer highlights + fewer effects on tiny screens */
-  .copybox::after { background: radial-gradient(110px 110px at var(--mx,50%) var(--my,50%), rgba(77,189,255,.16), rgba(255,125,191,.10) 32%, transparent 60%); }
-  .tilt { transform: none !important; } /* disable tilt on small screens */
-
-  /* Decorative blobs quieter or hidden if you prefer */
-  .decor .blob { opacity: .18; filter: blur(12px); }
-}
-
-/* Respect iOS safe areas for sticky elements */
-@supports (padding: max(0px)) {
-  .offerbar { padding-bottom: max(0px, env(safe-area-inset-bottom)); }
-}
-
-/* Make form inputs extra tappable */
-input, textarea, button, .btn, .cta { touch-action: manipulation; }
-
+<!-- Mobile 100vh fix (place before </body>) -->
+<script>
+(function(){
+  function setVH(){
+    const vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty('--vh', `${vh}px`);
+  }
+  setVH(); window.addEventListener('resize', setVH);
+})();
+</script>
 </body>
 </html>
