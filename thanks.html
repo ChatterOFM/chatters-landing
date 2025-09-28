@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Thanks — We got your application</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+
+<!-- Plausible (same build you selected) -->
+<script defer data-domain="onlyfanschatters.co" src="https://plausible.io/js/script.outbound-links.tagged-events.js"></script>
+<script>window.plausible = window.plausible || function(){(window.plausible.q=window.plausible.q||[]).push(arguments)}</script>
+
+<style>
+:root{ --bg:#0b0f1a; --brand:#4dbdff; --text:#e8f1f8; --muted:#a9bdd1; --accent:#ff7dbf; }
+*{box-sizing:border-box} body{margin:0; font-family:Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial; background:linear-gradient(180deg,#0b0f1a 0%,#101624 50%,#0d1220 100%); color:var(--text);}
+.wrap{min-height:100vh; display:flex; align-items:center; justify-content:center; padding:24px}
+.card{max-width:720px; width:100%; background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08); border-radius:16px; padding:28px; text-align:center; box-shadow:0 12px 40px rgba(0,0,0,.35);}
+h1{margin:0 0 8px; font-size:28px;}
+p{margin:8px 0; color:var(--muted)}
+.actions{display:flex; gap:10px; flex-wrap:wrap; justify-content:center; margin-top:14px}
+a.btn{display:inline-block; padding:12px 18px; border-radius:12px; background:linear-gradient(135deg,#4dbdff,#ff7dbf); color:#001219; font-weight:800; text-decoration:none}
+.small{font-size:13px; color:var(--muted); margin-top:12px}
+.logo{display:flex; justify-content:center; margin-bottom:8px}
+.logo img{height:40px; width:auto; filter:drop-shadow(0 0 10px rgba(77,189,255,.5))}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card">
+    <div class="logo"><img src="/assets/logo.png" alt="Chatters"></div>
+    <h1>Thanks — application received 🎉</h1>
+    <p>We’ll reply the same day. Want to speed it up?</p>
+    <div class="actions">
+      <a class="btn" href="https://t.me/AlexanderSterlingOFM" target="_blank" rel="noopener">Message on Telegram 💬</a>
+      <a class="btn" href="https://calendly.com/chattersagencycall/30min" target="_blank" rel="noopener">Book a call 📅</a>
+      <a class="btn" href="/">Back to site ↩</a>
+    </div>
+    <p class="small">Auto-redirecting back to the form…</p>
+  </div>
+</div>
+
+<script>
+// Fire the Plausible goal for conversion
+window.plausible && plausible('Form Submitted');
+// Optional: redirect back to the form after 2.5s
+setTimeout(()=>{ location.href='/?submitted=1#apply'; }, 2500);
+</script>
+</body>
+</html>
