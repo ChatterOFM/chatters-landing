@@ -169,7 +169,7 @@ html,body{ height:auto; overflow-x:hidden; }
 input, textarea, button, .btn, .cta{ touch-action:manipulation; }
 </style>
 
-<!-- Plausible (your chosen build) -->
+<!-- Plausible -->
 <script defer data-domain="onlyfanschatters.co" src="https://plausible.io/js/script.outbound-links.tagged-events.js"></script>
 <script>window.plausible = window.plausible || function(){ (window.plausible.q = window.plausible.q || []).push(arguments) }</script>
 </head>
@@ -435,7 +435,6 @@ input, textarea, button, .btn, .cta{ touch-action:manipulation; }
   <h3 style="margin:10px 0 8px;text-align:center">Apply in 60 seconds ⏱️</h3>
   <p class="sub" style="text-align:center">Fill this out and we’ll reply the same day.</p>
 
-  <!-- POSTS TO /thanks.html -->
   <form id="leadForm" name="apply" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/thanks.html">
     <input type="hidden" name="form-name" value="apply">
     <p style="display:none"><label>Don’t fill this out: <input name="bot-field"></label></p>
@@ -598,7 +597,9 @@ document.querySelectorAll('a[href^="https://t.me/"]').forEach(el=>{
   el.addEventListener('click', ()=> window.plausible && plausible('Click: Telegram'));
 });
 
-/* ===== LIVE REVENUE TICKER — cloud-synced via Netlify Function ===== */
+/* ===== LIVE REVENUE TICKER — cloud-synced via Netlify Function =====
+   Backend endpoint: /.netlify/functions/counter
+   (Ensure you've set UPSTASH_REDIS_REST_URL and UPSTASH_REDIS_REST_TOKEN in Netlify env if using the Upstash version.) */
 (function(){
   const el = document.getElementById('revNum'); if(!el) return;
 
@@ -606,13 +607,11 @@ document.querySelectorAll('a[href^="https://t.me/"]').forEach(el=>{
   const toasts = document.getElementById('toasts');
   const fmtUSD = (n)=> n.toLocaleString('en-US',{style:'currency',currency:'USD'});
 
-  // Render helper
   const render = (val)=>{
     const p = Number(val).toFixed(2).split('.');
     el.innerHTML = `$${Number(p[0]).toLocaleString('en-US')}<span class="blink">.</span>${p[1]}`;
   };
 
-  // Server state
   let serverTotal = 12389493.29;
 
   async function fetchTotal(){
@@ -639,11 +638,11 @@ document.querySelectorAll('a[href^="https://t.me/"]').forEach(el=>{
     }catch(e){}
   }
 
-  // Initial load + poll every 10s to stay in sync across devices
+  // Initial load + poll every 10s to sync across devices
   fetchTotal();
   setInterval(fetchTotal, 10000);
 
-  // Event catalog (same as before)
+  // Event catalog
   const events = [
     { tag:'PPV opened', emoji:'📩', min:15,  max:75,  weight:6 },
     { tag:'Tip',        emoji:'💸', min:20,  max:250, weight:4 },
@@ -666,9 +665,7 @@ document.querySelectorAll('a[href^="https://t.me/"]').forEach(el=>{
     node.innerHTML = `<span>${emoji}</span><span class="tag">${tag}</span><span class="amt">+${fmtUSD(amt)}</span>`;
     toasts.prepend(node);
     requestAnimationFrame(()=> node.classList.add('show'));
-    // Update server (source of truth)
-    postDelta(amt);
-    // Cleanup visuals
+    postDelta(amt); // update server
     setTimeout(()=>{ node.classList.remove('show'); setTimeout(()=> node.remove(), 350); }, 4200);
     while(toasts.children.length>4) toasts.lastElementChild?.remove();
   }
@@ -715,7 +712,7 @@ document.querySelectorAll('a[href^="https://t.me/"]').forEach(el=>{
 (function(){ function setVH(){ const vh = window.innerHeight * 0.01; document.documentElement.style.setProperty('--vh', `${vh}px`); } setVH(); window.addEventListener('resize', setVH); })();
 </script>
 
-<!-- Hidden fallback form so Netlify detects "apply" at build (safe to keep or remove later) -->
+<!-- Hidden fallback form so Netlify detects "apply" at build -->
 <form name="apply" data-netlify="true" netlify-honeypot="bot-field" hidden>
   <input type="hidden" name="form-name" value="apply">
   <input name="name">
@@ -723,4 +720,5 @@ document.querySelectorAll('a[href^="https://t.me/"]').forEach(el=>{
 
 </body>
 </html>
+
 
