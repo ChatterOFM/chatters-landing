@@ -17,8 +17,7 @@ html{ scroll-behavior:smooth; }
 body{
   margin:0; color:var(--text);
   font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial;
-  background:
-    linear-gradient(180deg,#0b0f1a 0%,#101624 50%,#0d1220 100%);
+  background:linear-gradient(180deg,#0b0f1a 0%,#101624 50%,#0d1220 100%);
 }
 a{ color:inherit; text-decoration:none; }
 
@@ -35,7 +34,10 @@ a{ color:inherit; text-decoration:none; }
 .logo{ display:flex; align-items:center; gap:12px; }
 .logo img{ height:40px; width:auto; filter:drop-shadow(0 0 10px rgba(77,189,255,.5)); }
 .badge{ font-weight:700; letter-spacing:.5px; font-size:14px; padding:6px 10px; border:1px solid rgba(255,255,255,.12); border-radius:999px; color:var(--accent); }
+
+/* Desktop nav */
 .navlinks{ display:flex; gap:18px; flex-wrap:wrap; }
+.nav-cta{ display:flex; align-items:center; gap:10px; }
 .cta{
   display:inline-flex; align-items:center; gap:10px;
   background:linear-gradient(135deg,var(--brand),var(--accent)); color:#001219; font-weight:700;
@@ -51,8 +53,39 @@ a{ color:inherit; text-decoration:none; }
 }
 .btn:hover{ transform:translateY(-2px); background:rgba(255,255,255,.06); border-color:rgba(255,255,255,.2); }
 
+/* ===== MOBILE HEADER (hamburger + drawer) ===== */
+.hamburger{
+  display:none; position:relative; width:40px; height:40px; border-radius:10px;
+  border:1px solid rgba(255,255,255,.12); background:rgba(255,255,255,.04); cursor:pointer;
+}
+.hamburger span{
+  position:absolute; left:9px; right:9px; height:2px; background:#fff; border-radius:2px;
+  transition:transform .2s ease, opacity .2s ease, top .2s ease;
+}
+.hamburger span:nth-child(1){ top:12px; }
+.hamburger span:nth-child(2){ top:19px; }
+.hamburger span:nth-child(3){ top:26px; }
+.hamburger.is-open span:nth-child(1){ top:19px; transform:rotate(45deg); }
+.hamburger.is-open span:nth-child(2){ opacity:0; }
+.hamburger.is-open span:nth-child(3){ top:19px; transform:rotate(-45deg); }
+
+.mnav{
+  position:sticky; top:68px; z-index:49;
+  display:grid; gap:10px; padding:14px 20px;
+  background:rgba(11,15,26,.95); border-bottom:1px solid rgba(255,255,255,.08);
+}
+.mnav a{ padding:12px; border:1px solid rgba(255,255,255,.08); border-radius:12px; text-align:center; background:rgba(255,255,255,.04); }
+
+/* Hide desktop nav / show hamburger on small screens */
+@media (max-width: 900px){
+  .nav-desktop{ display:none; }
+  .nav-cta > .btn,
+  .nav-cta > .cta{ display:none; }  /* shown inside drawer */
+  .hamburger{ display:inline-block; }
+}
+
 /* ===== OFFER BAR ===== */
-.offerbar{ position:sticky; top:68px; z-index:49; background:linear-gradient(90deg, rgba(77,189,255,.15), rgba(255,125,191,.15)); border-top:1px solid rgba(255,255,255,.08); border-bottom:1px solid rgba(255,255,255,.08); }
+.offerbar{ position:sticky; top:68px; z-index:48; background:linear-gradient(90deg, rgba(77,189,255,.15), rgba(255,125,191,.15)); border-top:1px solid rgba(255,255,255,.08); border-bottom:1px solid rgba(255,255,255,.08); }
 .offerwrap{ max-width:1100px; margin:0 auto; padding:10px 20px; display:flex; align-items:center; gap:12px; justify-content:center; flex-wrap:wrap; }
 .offertext{ font-weight:800; letter-spacing:.3px; }
 .pulse{ position:relative; }
@@ -184,16 +217,37 @@ input, textarea, button, .btn, .cta{ touch-action:manipulation; }
     <div class="logo">
       <img src="LOGO_URL" alt="Chatters logo"><span class="badge">Chatters</span>
     </div>
-    <nav class="navlinks">
+
+    <!-- Desktop nav -->
+    <nav class="navlinks nav-desktop">
       <a href="#how">How it works</a>
       <a href="#pricing">Pricing</a>
       <a href="#why">Why us</a>
       <a href="#results">Results</a>
       <a href="#faq">FAQ</a>
     </nav>
-    <a class="btn" id="bookCall">Book a Call 📅</a>
-    <a class="cta" href="https://t.me/TELEGRAM_USERNAME" target="_blank" rel="noopener">Apply on Telegram 💬</a>
+
+    <div class="nav-cta">
+      <a class="btn" id="bookCall">Book a Call 📅</a>
+      <a class="cta" href="https://t.me/TELEGRAM_USERNAME" target="_blank" rel="noopener">Apply on Telegram 💬</a>
+
+      <!-- Mobile hamburger -->
+      <button id="menuBtn" class="hamburger" aria-label="Menu" aria-controls="mobileNav" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
   </div>
+
+  <!-- Mobile drawer -->
+  <nav id="mobileNav" class="mnav" hidden>
+    <a href="#how">How it works</a>
+    <a href="#pricing">Pricing</a>
+    <a href="#why">Why us</a>
+    <a href="#results">Results</a>
+    <a href="#faq">FAQ</a>
+    <a class="btn" id="bookCallMobile">Book a Call 📅</a>
+    <a class="cta" href="https://t.me/TELEGRAM_USERNAME" target="_blank" rel="noopener">Apply on Telegram 💬</a>
+  </nav>
 </header>
 
 <!-- OFFER BAR -->
@@ -568,6 +622,25 @@ Array.from(document.querySelectorAll('a[href^="#"]')).forEach(a=>{
 // Timed + exit-intent offer (once)
 if(!localStorage.getItem('ch_offer_seen')){ setTimeout(()=>{ openOffer(); localStorage.setItem('ch_offer_seen','1'); }, 12000); }
 document.addEventListener('mouseout', (e)=>{ if(!e.toElement && !e.relatedTarget && e.clientY < 10 && !localStorage.getItem('ch_offer_exit')){ openOffer(); localStorage.setItem('ch_offer_exit','1'); } });
+
+// Mobile menu toggle
+const menuBtn = document.getElementById('menuBtn');
+const mobileNav = document.getElementById('mobileNav');
+function closeMenu(){
+  if(!mobileNav) return;
+  mobileNav.hidden = true;
+  menuBtn?.classList.remove('is-open');
+  menuBtn?.setAttribute('aria-expanded','false');
+}
+menuBtn?.addEventListener('click', ()=>{
+  const open = mobileNav.hidden;
+  mobileNav.hidden = !open;
+  menuBtn.classList.toggle('is-open', open);
+  menuBtn.setAttribute('aria-expanded', String(open));
+});
+mobileNav?.querySelectorAll('a').forEach(a=> a.addEventListener('click', ()=> closeMenu()));
+document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') closeMenu(); });
+document.getElementById('bookCallMobile')?.addEventListener('click', ()=>{ closeMenu(); document.getElementById('calModal').style.display='flex'; });
 </script>
 
 <!-- Mobile 100vh fix -->
