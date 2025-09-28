@@ -169,7 +169,7 @@ html,body{ height:auto; overflow-x:hidden; }
 input, textarea, button, .btn, .cta{ touch-action:manipulation; }
 </style>
 
-<!-- Plausible -->
+<!-- Plausible (optional analytics) -->
 <script defer data-domain="onlyfanschatters.co" src="https://plausible.io/js/script.outbound-links.tagged-events.js"></script>
 <script>window.plausible = window.plausible || function(){ (window.plausible.q = window.plausible.q || []).push(arguments) }</script>
 </head>
@@ -435,6 +435,7 @@ input, textarea, button, .btn, .cta{ touch-action:manipulation; }
   <h3 style="margin:10px 0 8px;text-align:center">Apply in 60 seconds ⏱️</h3>
   <p class="sub" style="text-align:center">Fill this out and we’ll reply the same day.</p>
 
+  <!-- POSTS TO /thanks.html -->
   <form id="leadForm" name="apply" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/thanks.html">
     <input type="hidden" name="form-name" value="apply">
     <p style="display:none"><label>Don’t fill this out: <input name="bot-field"></label></p>
@@ -597,52 +598,22 @@ document.querySelectorAll('a[href^="https://t.me/"]').forEach(el=>{
   el.addEventListener('click', ()=> window.plausible && plausible('Click: Telegram'));
 });
 
-/* ===== LIVE REVENUE TICKER — cloud-synced via Netlify Function =====
-   Backend endpoint: /.netlify/functions/counter
-   (Ensure you've set UPSTASH_REDIS_REST_URL and UPSTASH_REDIS_REST_TOKEN in Netlify env if using the Upstash version.) */
+/* ===== LOCAL-ONLY LIVE REVENUE TICKER (no server) ===== */
 (function(){
-  const el = document.getElementById('revNum'); if(!el) return;
-
-  const API = '/.netlify/functions/counter';
+  const el = document.getElementById('revNum'); 
   const toasts = document.getElementById('toasts');
-  const fmtUSD = (n)=> n.toLocaleString('en-US',{style:'currency',currency:'USD'});
+  if(!el || !toasts) return;
 
+  function parseUSD(s){ return Number(String(s).replace(/[^0-9.]/g,'')); }
+  let total = parseUSD(el.textContent || '12389493.29');
+
+  const fmtUSD = (n)=> n.toLocaleString('en-US',{style:'currency',currency:'USD'});
   const render = (val)=>{
     const p = Number(val).toFixed(2).split('.');
     el.innerHTML = `$${Number(p[0]).toLocaleString('en-US')}<span class="blink">.</span>${p[1]}`;
   };
+  render(total);
 
-  let serverTotal = 12389493.29;
-
-  async function fetchTotal(){
-    try{
-      const r = await fetch(API, { method:'GET', credentials:'omit' });
-      if(!r.ok) return;
-      const { total } = await r.json();
-      serverTotal = Number(total);
-      render(serverTotal);
-    }catch(e){}
-  }
-
-  async function postDelta(delta){
-    try{
-      const r = await fetch(API, {
-        method:'POST',
-        headers:{ 'Content-Type':'application/json' },
-        body: JSON.stringify({ delta })
-      });
-      if(!r.ok) return;
-      const { total } = await r.json();
-      serverTotal = Number(total);
-      render(serverTotal);
-    }catch(e){}
-  }
-
-  // Initial load + poll every 10s to sync across devices
-  fetchTotal();
-  setInterval(fetchTotal, 10000);
-
-  // Event catalog
   const events = [
     { tag:'PPV opened', emoji:'📩', min:15,  max:75,  weight:6 },
     { tag:'Tip',        emoji:'💸', min:20,  max:250, weight:4 },
@@ -651,13 +622,12 @@ document.querySelectorAll('a[href^="https://t.me/"]').forEach(el=>{
     { tag:'Whale gift', emoji:'🐳', min:200, max:800, weight:1 },
   ];
 
-  // Rolling 60s ledger for local pacing (30–200 per minute)
-  const ledger = [];
-  const trimLedger = ()=>{ const cutoff = Date.now()-60_000; while(ledger.length && ledger[0].t < cutoff) ledger.shift(); };
-  const sum60 = ()=>{ trimLedger(); return ledger.reduce((s,e)=> s+e.amt, 0); };
-
   const pick = (arr)=>{ const tw = arr.reduce((a,b)=> a+b.weight,0); let r=Math.random()*tw; for(const e of arr){ r-=e.weight; if(r<=0) return e; } return arr[0]; };
   const randAmt = (min,max)=>{ let v = Math.floor(Math.random()*(max-min+1))+min; if(Math.random()<.15 && v>10) v = v-1+0.99; return v; };
+
+  const ledger = [];
+  const trimLedger = ()=>{ const cutoff = Date.now()-60_000; while(ledger.length && ledger[0].t<cutoff) ledger.shift(); };
+  const sum60 = ()=>{ trimLedger(); return ledger.reduce((s,e)=> s+e.amt, 0); };
 
   function makeToastAndIncrement(amt, tag, emoji){
     const node = document.createElement('div');
@@ -665,9 +635,11 @@ document.querySelectorAll('a[href^="https://t.me/"]').forEach(el=>{
     node.innerHTML = `<span>${emoji}</span><span class="tag">${tag}</span><span class="amt">+${fmtUSD(amt)}</span>`;
     toasts.prepend(node);
     requestAnimationFrame(()=> node.classList.add('show'));
-    postDelta(amt); // update server
     setTimeout(()=>{ node.classList.remove('show'); setTimeout(()=> node.remove(), 350); }, 4200);
     while(toasts.children.length>4) toasts.lastElementChild?.remove();
+
+    total = +(total + amt).toFixed(2);
+    render(total);
   }
 
   function scheduleRandom(){
@@ -695,7 +667,7 @@ document.querySelectorAll('a[href^="https://t.me/"]').forEach(el=>{
   }
   scheduleRandom();
 
-  // Watchdog: ensure $30–$200 in any 60s
+  // Watchdog to ensure $30–$200 in any 60s
   setInterval(()=>{
     const MIN=30, MAX=200, s=sum60();
     if(s < MIN){
@@ -720,5 +692,4 @@ document.querySelectorAll('a[href^="https://t.me/"]').forEach(el=>{
 
 </body>
 </html>
-
 
