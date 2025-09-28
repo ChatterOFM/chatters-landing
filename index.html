@@ -23,14 +23,7 @@
 
 <style>
 /* ===== THEME / BASE ===== */
-:root{
-  --brand:#4dbdff; --accent:#ff7dbf; --bg:#0b0f1a; --text:#e8f1f8; --muted:#a9bdd1;
-  --headerH:96px;         /* desktop header height */
-  --offerH:54px;          /* offer bar approx height */
-}
-@media (max-width:900px){
-  :root{ --headerH:84px; } /* mobile header height */
-}
+:root{ --brand:#4dbdff; --accent:#ff7dbf; --bg:#0b0f1a; --text:#e8f1f8; --muted:#a9bdd1; }
 html{ scroll-behavior:smooth; }
 *{ box-sizing:border-box; }
 body{
@@ -44,22 +37,22 @@ a{ color:inherit; text-decoration:none; }
 .container{ max-width:1100px; margin:0 auto; padding:0 20px; }
 .section{ padding:56px 0; }
 
-/* Header */
+/* Header (back to original 80px) */
 .header{
   position:sticky; top:0; z-index:50;
   backdrop-filter:saturate(180%) blur(8px);
   background:rgba(11,15,26,.7);
   border-bottom:1px solid rgba(255,255,255,.06);
 }
-.nav{ display:flex; align-items:center; justify-content:space-between; height:var(--headerH); gap:16px; }
-.logo{ display:flex; align-items:center; gap:12px; }
+.nav{ display:flex; align-items:center; justify-content:space-between; height:80px; gap:16px; }
+.logo{ display:flex; align-items:center; gap:12px; max-width:420px; }
 .logo img{
-  height:88px; width:auto; display:block;
+  max-height:72px; /* fills header height with a little breathing room */
+  height:auto; width:auto; display:block;
   filter:drop-shadow(0 0 10px rgba(77,189,255,.5));
+  object-fit:contain;
 }
-@media (max-width:900px){
-  .logo img{ height:64px; }
-}
+@media (max-width:900px){ .logo img{ max-height:56px; } }
 
 /* Desktop nav */
 .navlinks{ display:flex; gap:18px; flex-wrap:wrap; }
@@ -81,7 +74,7 @@ a{ color:inherit; text-decoration:none; }
 }
 .btn:hover{ transform:translateY(-2px); background:rgba(255,255,255,.06); border-color:rgba(255,255,255,.2); }
 
-/* ===== MOBILE HEADER (mobile-only hamburger + drawer) ===== */
+/* ===== MOBILE HEADER (hamburger + drawer) ===== */
 .hamburger{ display:none; position:relative; width:40px; height:40px; border-radius:10px; border:1px solid rgba(255,255,255,.12); background:rgba(255,255,255,.04); cursor:pointer; }
 .hamburger span{ position:absolute; left:9px; right:9px; height:2px; background:#fff; border-radius:2px; transition:transform .2s ease, opacity .2s ease, top .2s ease; }
 .hamburger span:nth-child(1){ top:12px; } .hamburger span:nth-child(2){ top:19px; } .hamburger span:nth-child(3){ top:26px; }
@@ -97,7 +90,7 @@ a{ color:inherit; text-decoration:none; }
   .nav-cta > .btn, .nav-cta > .cta{ display:none; }
   .hamburger{ display:inline-block; }
   .mnav{
-    position:sticky; top:var(--headerH); z-index:49;
+    position:sticky; top:80px; z-index:49;
     display:grid; gap:10px; padding:14px 20px;
     background:rgba(11,15,26,.95); border-bottom:1px solid rgba(255,255,255,.08);
   }
@@ -113,12 +106,8 @@ a{ color:inherit; text-decoration:none; }
   #menuBtn{ display:none !important; }
 }
 
-/* ===== OFFER BAR ===== */
-.offerbar{
-  position:sticky; top:var(--headerH); z-index:48;
-  background:linear-gradient(90deg, rgba(77,189,255,.15), rgba(255,125,191,.15));
-  border-top:1px solid rgba(255,255,255,.08); border-bottom:1px solid rgba(255,255,255,.08);
-}
+/* ===== OFFER BAR (sticks under 80px header) ===== */
+.offerbar{ position:sticky; top:80px; z-index:48; background:linear-gradient(90deg, rgba(77,189,255,.15), rgba(255,125,191,.15)); border-top:1px solid rgba(255,255,255,.08); border-bottom:1px solid rgba(255,255,255,.08); }
 .offerwrap{ max-width:1100px; margin:0 auto; padding:10px 20px; display:flex; align-items:center; gap:12px; justify-content:center; flex-wrap:wrap; }
 .offertext{ font-weight:800; letter-spacing:.3px; }
 .pulse{ position:relative; }
@@ -127,7 +116,7 @@ a{ color:inherit; text-decoration:none; }
 
 /* ===== HERO ===== */
 .hero{
-  min-height:calc(var(--vh, 1vh) * 100 - (var(--headerH) + var(--offerH) + 22px));
+  min-height:calc(var(--vh, 1vh) * 100 - 156px);
   padding:88px 0 28px;
   text-align:center; display:flex; flex-direction:column; justify-content:center;
 }
@@ -152,9 +141,9 @@ a{ color:inherit; text-decoration:none; }
 .revnum .blink{ animation:blink 1.3s ease infinite; }
 @keyframes blink{ 0%,65%{ opacity:1 } 66%,100%{ opacity:.35 } }
 
-/* Toasts */
+/* Toasts (position aligns with 80px header + offer) */
 .toasts{
-  position:fixed; right:18px; top:calc(var(--headerH) + var(--offerH) + 14px);
+  position:fixed; right:18px; top:calc(80px + 54px + 14px);
   display:flex; flex-direction:column; gap:10px; z-index:60;
 }
 .toast{
@@ -233,7 +222,7 @@ details.copybox[open]{ box-shadow:0 14px 44px rgba(77,189,255,.14), 0 0 60px rgb
 .footer{ padding:32px 0 56px; border-top:1px solid rgba(255,255,255,.06); color:var(--muted); font-size:14px; text-align:center; }
 
 /* ===== RESPONSIVE ===== */
-@media (min-width: 769px){ .hero{ min-height: calc(100vh - (var(--headerH) + var(--offerH) + 22px)); } }
+@media (min-width: 769px){ .hero{ min-height: calc(100vh - 156px); } }
 @media (max-width: 900px){
   .grid-3,.grid-2,.kpis{ grid-template-columns:1fr; }
   .carBtn{ display:none; }
@@ -242,7 +231,7 @@ details.copybox[open]{ box-shadow:0 14px 44px rgba(77,189,255,.14), 0 0 60px rgb
 }
 @media (max-width: 768px){
   .container{ padding:0 16px; }
-  .hero{ min-height: calc(var(--vh, 1vh) * 100 - (var(--headerH) + var(--offerH) + 16px)); padding:64px 0 20px; }
+  .hero{ min-height: calc(var(--vh, 1vh) * 100 - 136px); padding:64px 0 20px; }
   .h1{ font-size: clamp(28px, 6vw, 36px); }
   .sub{ font-size:16px; max-width:92%; }
   .buttons .cta, .buttons .btn{ padding:12px 14px; }
@@ -289,14 +278,14 @@ input, textarea, button, .btn, .cta{ touch-action:manipulation; }
       <a class="btn" id="bookCall">Book a Call 📅</a>
       <a class="cta" href="https://t.me/AlexanderSterlingOFM" target="_blank" rel="noopener">Apply on Telegram 💬</a>
 
-      <!-- Mobile hamburger (hidden on desktop by CSS) -->
+      <!-- Mobile hamburger -->
       <button id="menuBtn" class="hamburger" aria-label="Menu" aria-controls="mobileNav" aria-expanded="false">
         <span></span><span></span><span></span>
       </button>
     </div>
   </div>
 
-  <!-- Mobile drawer (hidden on desktop by CSS) -->
+  <!-- Mobile drawer -->
   <nav id="mobileNav" class="mnav" hidden>
     <a href="#how">How it works</a>
     <a href="#pricing">Pricing</a>
@@ -716,7 +705,7 @@ Array.from(document.querySelectorAll('a[href^="#"]')).forEach(a=>{
 if(!localStorage.getItem('ch_offer_seen')){ setTimeout(()=>{ openOffer(); localStorage.setItem('ch_offer_seen','1'); }, 12000); }
 document.addEventListener('mouseout', (e)=>{ if(!e.toElement && !e.relatedTarget && e.clientY < 10 && !localStorage.getItem('ch_offer_exit')){ openOffer(); localStorage.setItem('ch_offer_exit','1'); } });
 
-// Mobile menu (mobile-only; CSS hides on desktop)
+// Mobile menu
 const menuBtn = document.getElementById('menuBtn');
 const mobileNav = document.getElementById('mobileNav');
 function closeMenu(){
@@ -858,7 +847,6 @@ document.getElementById('bookCallMobile')?.addEventListener('click', ()=>{ close
     const MIN = 30, MAX = 200;
     const s = sum60();
     if (s < MIN) {
-      // Force a PPV-style top-up toast to reach MIN–(MIN+30) without exceeding MAX
       const neededMin = Math.max(5, MIN - s);
       const neededMax = Math.min(MAX - s, neededMin + 30);
       const amt = Math.max(5, Math.floor(neededMin + Math.random()*(Math.max(neededMax-neededMin, 1))));
@@ -891,4 +879,3 @@ document.getElementById('bookCallMobile')?.addEventListener('click', ()=>{ close
 </script>
 </body>
 </html>
-
