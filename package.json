@@ -2,7 +2,8 @@
   "name": "chatters-site",
   "version": "1.0.0",
   "private": true,
+  "type": "module",
   "dependencies": {
-    "@netlify/blobs": "^5.0.0"
+    "@netlify/blobs": "^6.1.0"
   }
 }
