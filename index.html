@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>OnlyFans Chatting Agency — UK & USA Chatters | Performance-Only</title>
 <meta name="description" content="UK & USA-based OnlyFans chatters for models & agencies. No fee on your current earnings—22% only on additional revenue. Whale ops, same-day onboarding, 24/7 coverage.">
+<link rel="canonical" href="https://onlyfanschatters.co/">
+
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
 
@@ -14,16 +16,23 @@
 <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
 <meta name="theme-color" content="#0b0f1a">
 
-<!-- Social share (optional) -->
+<!-- Social share -->
 <meta property="og:title" content="OnlyFans Chatting Agency — UK & USA Chatters">
 <meta property="og:description" content="Performance-only pricing, whale handling, PPV growth, same-day onboarding.">
-<meta property="og:image" content="assets/og-cover.jpg">
+<meta property="og:image" content="https://onlyfanschatters.co/assets/og-cover.jpg">
+<meta property="og:url" content="https://onlyfanschatters.co/">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="OnlyFans Chatting Agency — UK & USA Chatters">
+<meta name="twitter:description" content="Performance-only pricing, whale handling, PPV growth, same-day onboarding.">
+<meta name="twitter:image" content="https://onlyfanschatters.co/assets/og-cover.jpg">
 
 <style>
 /* ===== THEME / BASE ===== */
-:root{ --brand:#4dbdff; --accent:#ff7dbf; --bg:#0b0f1a; --text:#e8f1f8; --muted:#a9bdd1; }
+:root{
+  --brand:#4dbdff; --accent:#ff7dbf; --bg:#0b0f1a; --text:#e8f1f8; --muted:#a9bdd1;
+  --btnH:44px; /* Make logo match CTA height */
+}
 html{ scroll-behavior:smooth; }
 *{ box-sizing:border-box; }
 body{
@@ -37,7 +46,7 @@ a{ color:inherit; text-decoration:none; }
 .container{ max-width:1100px; margin:0 auto; padding:0 20px; }
 .section{ padding:56px 0; }
 
-/* Header (back to original 80px) */
+/* Header (80px) */
 .header{
   position:sticky; top:0; z-index:50;
   backdrop-filter:saturate(180%) blur(8px);
@@ -47,34 +56,35 @@ a{ color:inherit; text-decoration:none; }
 .nav{ display:flex; align-items:center; justify-content:space-between; height:80px; gap:16px; }
 .logo{ display:flex; align-items:center; gap:12px; max-width:420px; }
 .logo img{
-  max-height:72px; /* fills header height with a little breathing room */
-  height:auto; width:auto; display:block;
+  height:var(--btnH); max-height:var(--btnH) !important; width:auto; display:block;
   filter:drop-shadow(0 0 10px rgba(77,189,255,.5));
   object-fit:contain;
 }
-@media (max-width:900px){ .logo img{ max-height:56px; } }
 
 /* Desktop nav */
 .navlinks{ display:flex; gap:18px; flex-wrap:wrap; }
 .nav-cta{ display:flex; align-items:center; gap:10px; }
 
 /* Buttons */
-.cta{
+.cta,.btn{
   display:inline-flex; align-items:center; gap:10px;
+  min-height:var(--btnH);
+  border-radius:12px;
+}
+.cta{
   background:linear-gradient(135deg,var(--brand),var(--accent)); color:#001219; font-weight:700;
-  padding:12px 18px; border-radius:12px;
+  padding:12px 18px;
   box-shadow:0 8px 22px rgba(77,189,255,.35), 0 0 0 0 rgba(255,125,191,.0);
   transition:transform .15s ease, box-shadow .3s ease;
 }
 .cta:hover{ transform:translateY(-2px); box-shadow:0 14px 36px rgba(77,189,255,.45), 0 0 24px 6px rgba(255,125,191,.15); }
 .btn{
-  display:inline-flex; align-items:center; gap:10px;
-  border:1px solid rgba(255,255,255,.12); padding:12px 16px; border-radius:12px; background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.12); padding:12px 16px; background:rgba(255,255,255,.04);
   transition:transform .2s ease, background .2s, border-color .2s;
 }
 .btn:hover{ transform:translateY(-2px); background:rgba(255,255,255,.06); border-color:rgba(255,255,255,.2); }
 
-/* ===== MOBILE HEADER (hamburger + drawer) ===== */
+/* ===== MOBILE HEADER ===== */
 .hamburger{ display:none; position:relative; width:40px; height:40px; border-radius:10px; border:1px solid rgba(255,255,255,.12); background:rgba(255,255,255,.04); cursor:pointer; }
 .hamburger span{ position:absolute; left:9px; right:9px; height:2px; background:#fff; border-radius:2px; transition:transform .2s ease, opacity .2s ease, top .2s ease; }
 .hamburger span:nth-child(1){ top:12px; } .hamburger span:nth-child(2){ top:19px; } .hamburger span:nth-child(3){ top:26px; }
@@ -84,7 +94,7 @@ a{ color:inherit; text-decoration:none; }
 /* Drawer OFF by default */
 .mnav{ display:none; }
 
-/* Mobile ≤900px: show hamburger and drawer; hide desktop nav/CTAs in bar */
+/* Mobile ≤900px */
 @media (max-width: 900px){
   .nav-desktop{ display:none; }
   .nav-cta > .btn, .nav-cta > .cta{ display:none; }
@@ -100,13 +110,13 @@ a{ color:inherit; text-decoration:none; }
   }
 }
 
-/* Desktop ≥901px: force-hide mobile UI */
+/* Desktop ≥901px */
 @media (min-width: 901px){
   #mobileNav{ display:none !important; }
   #menuBtn{ display:none !important; }
 }
 
-/* ===== OFFER BAR (sticks under 80px header) ===== */
+/* ===== OFFER BAR ===== */
 .offerbar{ position:sticky; top:80px; z-index:48; background:linear-gradient(90deg, rgba(77,189,255,.15), rgba(255,125,191,.15)); border-top:1px solid rgba(255,255,255,.08); border-bottom:1px solid rgba(255,255,255,.08); }
 .offerwrap{ max-width:1100px; margin:0 auto; padding:10px 20px; display:flex; align-items:center; gap:12px; justify-content:center; flex-wrap:wrap; }
 .offertext{ font-weight:800; letter-spacing:.3px; }
@@ -141,7 +151,7 @@ a{ color:inherit; text-decoration:none; }
 .revnum .blink{ animation:blink 1.3s ease infinite; }
 @keyframes blink{ 0%,65%{ opacity:1 } 66%,100%{ opacity:.35 } }
 
-/* Toasts (position aligns with 80px header + offer) */
+/* Toasts */
 .toasts{
   position:fixed; right:18px; top:calc(80px + 54px + 14px);
   display:flex; flex-direction:column; gap:10px; z-index:60;
@@ -222,7 +232,6 @@ details.copybox[open]{ box-shadow:0 14px 44px rgba(77,189,255,.14), 0 0 60px rgb
 .footer{ padding:32px 0 56px; border-top:1px solid rgba(255,255,255,.06); color:var(--muted); font-size:14px; text-align:center; }
 
 /* ===== RESPONSIVE ===== */
-@media (min-width: 769px){ .hero{ min-height: calc(100vh - 156px); } }
 @media (max-width: 900px){
   .grid-3,.grid-2,.kpis{ grid-template-columns:1fr; }
   .carBtn{ display:none; }
@@ -815,10 +824,10 @@ document.getElementById('bookCallMobile')?.addEventListener('click', ()=>{ close
     total += amt;
     render(total);
     localStorage.setItem(KEYS.total, String(total));
-    localStorage.setItem(KEYS.lastAt, String(nowMs()));
+    localStorage.setItem(KEYS.lastAt, String(Date.now()));
 
     // Record for 60s window
-    ledger.push({ t: nowMs(), amt });
+    ledger.push({ t: Date.now(), amt });
 
     // Cleanup
     setTimeout(()=>{
@@ -863,7 +872,7 @@ document.getElementById('bookCallMobile')?.addEventListener('click', ()=>{ close
 
       total += amt; render(total);
       localStorage.setItem(KEYS.total, String(total));
-      ledger.push({ t: nowMs(), amt });
+      ledger.push({ t: Date.now(), amt });
 
       setTimeout(()=>{
         node.classList.remove('show');
