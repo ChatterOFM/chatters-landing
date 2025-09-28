@@ -2,7 +2,6 @@
   publish = "/"
   functions = "netlify/functions"
 
-# Helpful CORS headers for the function (belt & braces; we also set them in code)
 [[headers]]
   for = "/.netlify/functions/*"
   [headers.values]
