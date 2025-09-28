@@ -536,7 +536,10 @@ input, textarea, button, .btn, .cta{ touch-action:manipulation; }
   <span class="tag">Work With Us</span>
   <h3 style="margin:10px 0 8px;text-align:center">Apply in 60 seconds ⏱️</h3>
   <p class="sub" style="text-align:center">Fill this out and we’ll reply the same day.</p>
-  <form id="leadForm" style="margin-top:20px;max-width:600px;margin-left:auto;margin-right:auto">
+  <form id="leadForm" name="apply" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/#apply">
+    <input type="hidden" name="form-name" value="apply">
+    <p style="display:none"><label>Don’t fill this out: <input name="bot-field"></label></p>
+
     <div style="display:grid; gap:10px;">
       <input class="copybox" required name="name" placeholder="Your name" style="padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.04);color:#fff">
       <input class="copybox" required name="instagram" placeholder="Instagram @handle" style="padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.04);color:#fff">
@@ -616,7 +619,7 @@ input, textarea, button, .btn, .cta{ touch-action:manipulation; }
 <div id="calModal" style="position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;z-index:9998">
   <div style="background:#0b0f1a;border:1px solid rgba(255,255,255,.08);border-radius:16px;max-width:900px;width:95%;height:80%;position:relative;box-shadow:0 20px 60px rgba(0,0,0,.5)">
     <button id="closeCal" style="position:absolute;top:10px;right:10px;background:rgba(255,255,255,.08);color:#fff;border:none;border-radius:10px;padding:8px 10px;cursor:pointer">Close</button>
-    <iframe src="CALENDLY_URL" style="width:100%;height:100%;border:0;border-radius:16px" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    <iframe src="https://calendly.com/chattersagencycall/30min" style="width:100%;height:100%;border:0;border-radius:16px" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
   </div>
 </div>
 
@@ -626,29 +629,6 @@ input, textarea, button, .btn, .cta{ touch-action:manipulation; }
 <script>
 // Year
 document.getElementById('year').textContent = new Date().getFullYear();
-
-// Lead form
-const leadForm = document.getElementById('leadForm');
-leadForm.addEventListener('submit', async (e)=>{
-  e.preventDefault();
-  const data = Object.fromEntries(new FormData(e.target).entries());
-  const endpoint = 'FORM_ENDPOINT'; // optional
-  if(endpoint && endpoint.startsWith('http')){
-    try{
-      const res = await fetch(endpoint, {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(data)});
-      if(!res.ok) throw new Error('Network');
-      e.target.reset(); document.getElementById('msg').style.display='block';
-    }catch(err){ alert('There was an issue. Please Telegram us or book a call.'); }
-  }else{
-    alert("Thanks! We've received your details. Please book a call or Telegram us to confirm.");
-  }
-});
-
-// Calendly modal
-const calModal = document.getElementById('calModal');
-const openCal = ()=> calModal.style.display='flex';
-['bookCall','bookCallHero','bookCallCTA'].forEach(id=> document.getElementById(id)?.addEventListener('click', openCal));
-document.getElementById('closeCal').addEventListener('click', ()=> calModal.style.display='none');
 
 // Glow follow
 function attachGlow(el){
@@ -710,9 +690,11 @@ Array.from(document.querySelectorAll('a[href^="#"]')).forEach(a=>{
   a.addEventListener('click',(e)=>{ const href = a.getAttribute('href'); if(href && href.startsWith('#')){ e.preventDefault(); goTo(href); } });
 });
 
-// Timed + exit-intent offer (once)
-if(!localStorage.getItem('ch_offer_seen')){ setTimeout(()=>{ openOffer(); localStorage.setItem('ch_offer_seen','1'); }, 12000); }
-document.addEventListener('mouseout', (e)=>{ if(!e.toElement && !e.relatedTarget && e.clientY < 10 && !localStorage.getItem('ch_offer_exit')){ openOffer(); localStorage.setItem('ch_offer_exit','1'); } });
+// Calendly modal openers
+const calModal = document.getElementById('calModal');
+const openCal = ()=> calModal.style.display='flex';
+['bookCall','bookCallHero','bookCallCTA','bookCallMobile'].forEach(id=> document.getElementById(id)?.addEventListener('click', openCal));
+document.getElementById('closeCal').addEventListener('click', ()=> calModal.style.display='none');
 
 // Mobile menu
 const menuBtn = document.getElementById('menuBtn');
