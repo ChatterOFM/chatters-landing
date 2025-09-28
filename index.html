@@ -435,7 +435,7 @@ input, textarea, button, .btn, .cta{ touch-action:manipulation; }
   <h3 style="margin:10px 0 8px;text-align:center">Apply in 60 seconds ⏱️</h3>
   <p class="sub" style="text-align:center">Fill this out and we’ll reply the same day.</p>
 
-  <!-- UPDATED: action goes to thanks.html -->
+  <!-- POSTS TO /thanks.html -->
   <form id="leadForm" name="apply" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/thanks.html">
     <input type="hidden" name="form-name" value="apply">
     <p style="display:none"><label>Don’t fill this out: <input name="bot-field"></label></p>
@@ -593,21 +593,57 @@ document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') closeMenu(); })
 window.addEventListener('resize', ()=>{ if(window.innerWidth>900) closeMenu(); });
 document.getElementById('bookCallMobile')?.addEventListener('click', ()=>{ closeMenu(); calModal.style.display='flex'; });
 
-// Track Telegram clicks (redundant to outbound-links but good as a goal)
+// Track Telegram clicks
 document.querySelectorAll('a[href^="https://t.me/"]').forEach(el=>{
   el.addEventListener('click', ()=> window.plausible && plausible('Click: Telegram'));
 });
 
-/* ===== LIVE REVENUE TICKER — events-only increments + 60s range enforcement ===== */
+/* ===== LIVE REVENUE TICKER — cloud-synced via Netlify Function ===== */
 (function(){
   const el = document.getElementById('revNum'); if(!el) return;
-  const BASE = 12389493.29; const KEY = 'rev_total';
-  let total = Number(localStorage.getItem(KEY) || BASE.toFixed(2));
-  const render = (val)=>{ const p = Number(val).toFixed(2).split('.'); el.innerHTML = `$${Number(p[0]).toLocaleString('en-US')}<span class="blink">.</span>${p[1]}`; };
-  render(total);
 
+  const API = '/.netlify/functions/counter';
   const toasts = document.getElementById('toasts');
   const fmtUSD = (n)=> n.toLocaleString('en-US',{style:'currency',currency:'USD'});
+
+  // Render helper
+  const render = (val)=>{
+    const p = Number(val).toFixed(2).split('.');
+    el.innerHTML = `$${Number(p[0]).toLocaleString('en-US')}<span class="blink">.</span>${p[1]}`;
+  };
+
+  // Server state
+  let serverTotal = 12389493.29;
+
+  async function fetchTotal(){
+    try{
+      const r = await fetch(API, { method:'GET', credentials:'omit' });
+      if(!r.ok) return;
+      const { total } = await r.json();
+      serverTotal = Number(total);
+      render(serverTotal);
+    }catch(e){}
+  }
+
+  async function postDelta(delta){
+    try{
+      const r = await fetch(API, {
+        method:'POST',
+        headers:{ 'Content-Type':'application/json' },
+        body: JSON.stringify({ delta })
+      });
+      if(!r.ok) return;
+      const { total } = await r.json();
+      serverTotal = Number(total);
+      render(serverTotal);
+    }catch(e){}
+  }
+
+  // Initial load + poll every 10s to stay in sync across devices
+  fetchTotal();
+  setInterval(fetchTotal, 10000);
+
+  // Event catalog (same as before)
   const events = [
     { tag:'PPV opened', emoji:'📩', min:15,  max:75,  weight:6 },
     { tag:'Tip',        emoji:'💸', min:20,  max:250, weight:4 },
@@ -615,30 +651,64 @@ document.querySelectorAll('a[href^="https://t.me/"]').forEach(el=>{
     { tag:'Renewal',    emoji:'♻️', min:5,   max:25,  weight:5 },
     { tag:'Whale gift', emoji:'🐳', min:200, max:800, weight:1 },
   ];
+
+  // Rolling 60s ledger for local pacing (30–200 per minute)
   const ledger = [];
   const trimLedger = ()=>{ const cutoff = Date.now()-60_000; while(ledger.length && ledger[0].t < cutoff) ledger.shift(); };
   const sum60 = ()=>{ trimLedger(); return ledger.reduce((s,e)=> s+e.amt, 0); };
+
   const pick = (arr)=>{ const tw = arr.reduce((a,b)=> a+b.weight,0); let r=Math.random()*tw; for(const e of arr){ r-=e.weight; if(r<=0) return e; } return arr[0]; };
   const randAmt = (min,max)=>{ let v = Math.floor(Math.random()*(max-min+1))+min; if(Math.random()<.15 && v>10) v = v-1+0.99; return v; };
 
-  function toast(forced){
-    trimLedger();
-    const CAP=200, s=sum60(); if(!forced && s>=CAP) return;
-    let e = pick(events); let amt = randAmt(e.min,e.max);
-    if(s+amt>CAP){ const room=Math.max(5,CAP-s); if(room<5) return; amt=room; if(amt<=40 && e.tag==='Whale gift') e={tag:'PPV opened',emoji:'📩'}; }
-
-    const node=document.createElement('div'); node.className='toast';
-    node.innerHTML = `<span>${e.emoji}</span><span class="tag">${e.tag}</span><span class="amt">+${fmtUSD(amt)}</span>`;
-    toasts.prepend(node); requestAnimationFrame(()=> node.classList.add('show'));
-
-    total += amt; render(total); localStorage.setItem(KEY, String(total));
-    ledger.push({t:Date.now(),amt});
+  function makeToastAndIncrement(amt, tag, emoji){
+    const node = document.createElement('div');
+    node.className = 'toast';
+    node.innerHTML = `<span>${emoji}</span><span class="tag">${tag}</span><span class="amt">+${fmtUSD(amt)}</span>`;
+    toasts.prepend(node);
+    requestAnimationFrame(()=> node.classList.add('show'));
+    // Update server (source of truth)
+    postDelta(amt);
+    // Cleanup visuals
     setTimeout(()=>{ node.classList.remove('show'); setTimeout(()=> node.remove(), 350); }, 4200);
     while(toasts.children.length>4) toasts.lastElementChild?.remove();
   }
 
-  (function loop(){ setTimeout(()=>{ if(document.visibilityState==='visible' && sum60()<200) toast(false); loop(); }, Math.floor(8000+Math.random()*8000)); })();
-  setInterval(()=>{ const MIN=30, MAX=200, s=sum60(); if(s<MIN){ const neededMin=Math.max(5,MIN-s), neededMax=Math.min(MAX-s,neededMin+30); const amt=Math.max(5, Math.floor(neededMin + Math.random()*Math.max(neededMax-neededMin,1))); const e={tag:'PPV opened',emoji:'📩'}; const node=document.createElement('div'); node.className='toast'; node.innerHTML=`<span>${e.emoji}</span><span class="tag">${e.tag}</span><span class="amt">+${fmtUSD(amt)}</span>`; toasts.prepend(node); requestAnimationFrame(()=> node.classList.add('show')); total+=amt; render(total); localStorage.setItem(KEY, String(total)); ledger.push({t:Date.now(),amt}); setTimeout(()=>{ node.classList.remove('show'); setTimeout(()=> node.remove(), 350); }, 3800); while(toasts.children.length>4) toasts.lastElementChild?.remove(); } }, 12_000);
+  function scheduleRandom(){
+    const delay = Math.floor(8000 + Math.random()*8000);
+    setTimeout(()=>{
+      const CAP = 200;
+      if(document.visibilityState === 'visible' && sum60() < CAP){
+        let e = pick(events);
+        let amt = randAmt(e.min, e.max);
+        const s = sum60();
+        if(s + amt > CAP){
+          const room = Math.max(5, CAP - s);
+          if(room >= 5){
+            amt = room;
+            if(amt <= 40 && e.tag === 'Whale gift') e = { tag:'PPV opened', emoji:'📩' };
+          } else {
+            return scheduleRandom();
+          }
+        }
+        ledger.push({ t: Date.now(), amt });
+        makeToastAndIncrement(amt, e.tag, e.emoji);
+      }
+      scheduleRandom();
+    }, delay);
+  }
+  scheduleRandom();
+
+  // Watchdog: ensure $30–$200 in any 60s
+  setInterval(()=>{
+    const MIN=30, MAX=200, s=sum60();
+    if(s < MIN){
+      const neededMin=Math.max(5, MIN-s);
+      const neededMax=Math.min(MAX-s, neededMin+30);
+      const amt=Math.max(5, Math.floor(neededMin + Math.random()*Math.max(neededMax-neededMin,1)));
+      ledger.push({ t: Date.now(), amt });
+      makeToastAndIncrement(amt, 'PPV opened', '📩');
+    }
+  }, 12000);
 })();
 
 // Mobile 100vh fix
@@ -653,3 +723,4 @@ document.querySelectorAll('a[href^="https://t.me/"]').forEach(el=>{
 
 </body>
 </html>
+
