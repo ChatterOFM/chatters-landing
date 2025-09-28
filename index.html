@@ -18,8 +18,6 @@ body{
   margin:0; color:var(--text);
   font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial;
   background:
-    radial-gradient(60% 80% at 20% 10%, rgba(77,189,255,.12), transparent 60%),
-    radial-gradient(60% 80% at 80% 0%, rgba(255,125,191,.12), transparent 60%),
     linear-gradient(180deg,#0b0f1a 0%,#101624 50%,#0d1220 100%);
 }
 a{ color:inherit; text-decoration:none; }
@@ -52,19 +50,6 @@ a{ color:inherit; text-decoration:none; }
   transition:transform .2s ease, background .2s, border-color .2s;
 }
 .btn:hover{ transform:translateY(-2px); background:rgba(255,255,255,.06); border-color:rgba(255,255,255,.2); }
-
-/* ===== DECOR ===== */
-.decor{ position:fixed; inset:0; pointer-events:none; z-index:0; }
-.decor .blob{ position:absolute; filter:blur(10px); }
-.decor .b1{ top:-10vh; left:-6vw; width:42vw; animation:float1 16s ease-in-out infinite alternate; }
-.decor .b2{ right:-10vw; top:20vh; width:38vw; animation:float2 18s ease-in-out infinite alternate; }
-@keyframes float1{ to{ transform:translateY(20px) translateX(10px); } }
-@keyframes float2{ to{ transform:translateY(-20px) translateX(-10px); } }
-.decor .grain{
-  position:absolute; inset:0;
-  background-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="160" height="160"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="2"/></filter><rect width="100%" height="100%" filter="url(%23n)" opacity="0.035"/></svg>');
-  mix-blend-mode:soft-light;
-}
 
 /* ===== OFFER BAR ===== */
 .offerbar{ position:sticky; top:68px; z-index:49; background:linear-gradient(90deg, rgba(77,189,255,.15), rgba(255,125,191,.15)); border-top:1px solid rgba(255,255,255,.08); border-bottom:1px solid rgba(255,255,255,.08); }
@@ -177,7 +162,6 @@ a{ color:inherit; text-decoration:none; }
   .copybox::after{
     background:radial-gradient(110px 110px at var(--mx,50%) var(--my,50%), rgba(77,189,255,.16), rgba(255,125,191,.10) 32%, transparent 60%);
   }
-  .decor .blob{ opacity:.18; filter:blur(12px); }
 }
 
 /* iOS safe area for sticky elements */
@@ -194,13 +178,6 @@ input, textarea, button, .btn, .cta{ touch-action:manipulation; }
 </style>
 </head>
 <body>
-
-<!-- DECOR -->
-<div class="decor" aria-hidden="true">
-  <svg class="blob b1" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><path fill="#4DBDFF22" d="M43.9,-62.1C57.4,-53.6,69.1,-43,76.2,-29.4C83.3,-15.9,85.8,0.5,82.2,15.1C78.5,29.8,68.7,42.7,56.2,53.4C43.7,64.1,28.6,72.6,12.3,77.1C-4.1,81.5,-21.6,81.8,-34.9,74.6C-48.2,67.5,-57.3,52.9,-65.6,38C-73.8,23,-81.2,7.7,-79.8,-7.3C-78.4,-22.2,-68.1,-36.7,-55.6,-46.9C-43,-57.1,-28.3,-63,-13.1,-68.2C2.1,-73.4,16.8,-78.8,31.1,-74.6C45.4,-70.5,59.3,-56.7,43.9,-62.1Z" transform="translate(100 100)"/></svg>
-  <svg class="blob b2" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><path fill="#FF7DBF22" d="M43.1,-60.6C55.7,-51.1,66,-39.6,73.4,-25.7C80.7,-11.8,85.1,4.4,80.6,18C76.1,31.6,62.6,42.6,48.9,52.4C35.2,62.2,21.3,70.7,5.9,72.4C-9.5,74.1,-19.1,69,-31.2,62.4C-43.4,55.7,-58.2,47.5,-66.9,35.1C-75.6,22.7,-78.2,6,-74.9,-8.2C-71.5,-22.5,-62.2,-34.9,-51.6,-45.3C-41,-55.7,-29.2,-64.1,-15.4,-69.4C-1.6,-74.8,14.1,-77.1,27.6,-72.1C41.2,-67.1,52.5,-54.9,43.1,-60.6Z" transform="translate(100 100)"/></svg>
-  <div class="grain"></div>
-</div>
 
 <header class="header">
   <div class="container nav">
@@ -602,3 +579,4 @@ document.addEventListener('mouseout', (e)=>{ if(!e.toElement && !e.relatedTarget
 </script>
 </body>
 </html>
+
