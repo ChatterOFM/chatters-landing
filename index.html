@@ -29,94 +29,46 @@
 
 <style>
 /* ===== THEME / BASE ===== */
-:root{
-  --brand:#4dbdff; --accent:#ff7dbf; --bg:#0b0f1a; --text:#e8f1f8; --muted:#a9bdd1;
-  --btnH:44px; /* Make logo match CTA height */
-}
-html{ scroll-behavior:smooth; }
-*{ box-sizing:border-box; }
-body{
-  margin:0; color:var(--text);
-  font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial;
-  background:linear-gradient(180deg,#0b0f1a 0%,#101624 50%,#0d1220 100%);
-}
+:root{ --brand:#4dbdff; --accent:#ff7dbf; --bg:#0b0f1a; --text:#e8f1f8; --muted:#a9bdd1; --btnH:44px; }
+html{ scroll-behavior:smooth; } *{ box-sizing:border-box; }
+body{ margin:0; color:var(--text); font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial; background:linear-gradient(180deg,#0b0f1a 0%,#101624 50%,#0d1220 100%); }
 a{ color:inherit; text-decoration:none; }
 
-/* ===== LAYOUT ===== */
 .container{ max-width:1100px; margin:0 auto; padding:0 20px; }
 .section{ padding:56px 0; }
 
-/* Header (80px) */
-.header{
-  position:sticky; top:0; z-index:50;
-  backdrop-filter:saturate(180%) blur(8px);
-  background:rgba(11,15,26,.7);
-  border-bottom:1px solid rgba(255,255,255,.06);
-}
+/* Header */
+.header{ position:sticky; top:0; z-index:50; backdrop-filter:saturate(180%) blur(8px); background:rgba(11,15,26,.7); border-bottom:1px solid rgba(255,255,255,.06); }
 .nav{ display:flex; align-items:center; justify-content:space-between; height:80px; gap:16px; }
 .logo{ display:flex; align-items:center; gap:12px; max-width:420px; }
-.logo img{
-  height:var(--btnH); max-height:var(--btnH) !important; width:auto; display:block;
-  filter:drop-shadow(0 0 10px rgba(77,189,255,.5));
-  object-fit:contain;
-}
+.logo img{ height:var(--btnH); max-height:var(--btnH)!important; width:auto; display:block; filter:drop-shadow(0 0 10px rgba(77,189,255,.5)); object-fit:contain; }
 
-/* Desktop nav */
 .navlinks{ display:flex; gap:18px; flex-wrap:wrap; }
 .nav-cta{ display:flex; align-items:center; gap:10px; }
-
-/* Buttons */
-.cta,.btn{
-  display:inline-flex; align-items:center; gap:10px;
-  min-height:var(--btnH);
-  border-radius:12px;
-}
-.cta{
-  background:linear-gradient(135deg,var(--brand),var(--accent)); color:#001219; font-weight:700;
-  padding:12px 18px;
-  box-shadow:0 8px 22px rgba(77,189,255,.35), 0 0 0 0 rgba(255,125,191,.0);
-  transition:transform .15s ease, box-shadow .3s ease;
-}
+.cta,.btn{ display:inline-flex; align-items:center; gap:10px; min-height:var(--btnH); border-radius:12px; }
+.cta{ background:linear-gradient(135deg,var(--brand),var(--accent)); color:#001219; font-weight:700; padding:12px 18px; box-shadow:0 8px 22px rgba(77,189,255,.35); transition:transform .15s, box-shadow .3s; }
 .cta:hover{ transform:translateY(-2px); box-shadow:0 14px 36px rgba(77,189,255,.45), 0 0 24px 6px rgba(255,125,191,.15); }
-.btn{
-  border:1px solid rgba(255,255,255,.12); padding:12px 16px; background:rgba(255,255,255,.04);
-  transition:transform .2s ease, background .2s, border-color .2s;
-}
+.btn{ border:1px solid rgba(255,255,255,.12); padding:12px 16px; background:rgba(255,255,255,.04); transition:transform .2s, background .2s, border-color .2s; }
 .btn:hover{ transform:translateY(-2px); background:rgba(255,255,255,.06); border-color:rgba(255,255,255,.2); }
 
-/* ===== MOBILE HEADER ===== */
+/* Mobile header */
 .hamburger{ display:none; position:relative; width:40px; height:40px; border-radius:10px; border:1px solid rgba(255,255,255,.12); background:rgba(255,255,255,.04); cursor:pointer; }
-.hamburger span{ position:absolute; left:9px; right:9px; height:2px; background:#fff; border-radius:2px; transition:transform .2s ease, opacity .2s ease, top .2s ease; }
+.hamburger span{ position:absolute; left:9px; right:9px; height:2px; background:#fff; border-radius:2px; transition:transform .2s, opacity .2s, top .2s; }
 .hamburger span:nth-child(1){ top:12px; } .hamburger span:nth-child(2){ top:19px; } .hamburger span:nth-child(3){ top:26px; }
 .hamburger.is-open span:nth-child(1){ top:19px; transform:rotate(45deg); } .hamburger.is-open span:nth-child(2){ opacity:0; }
 .hamburger.is-open span:nth-child(3){ top:19px; transform:rotate(-45deg); }
-
-/* Drawer OFF by default */
 .mnav{ display:none; }
 
-/* Mobile ≤900px */
-@media (max-width: 900px){
+@media (max-width:900px){
   .nav-desktop{ display:none; }
   .nav-cta > .btn, .nav-cta > .cta{ display:none; }
   .hamburger{ display:inline-block; }
-  .mnav{
-    position:sticky; top:80px; z-index:49;
-    display:grid; gap:10px; padding:14px 20px;
-    background:rgba(11,15,26,.95); border-bottom:1px solid rgba(255,255,255,.08);
-  }
-  .mnav a{
-    padding:12px; border:1px solid rgba(255,255,255,.08);
-    border-radius:12px; text-align:center; background:rgba(255,255,255,.04);
-  }
+  .mnav{ position:sticky; top:80px; z-index:49; display:grid; gap:10px; padding:14px 20px; background:rgba(11,15,26,.95); border-bottom:1px solid rgba(255,255,255,.08); }
+  .mnav a{ padding:12px; border:1px solid rgba(255,255,255,.08); border-radius:12px; text-align:center; background:rgba(255,255,255,.04); }
 }
+@media (min-width:901px){ #mobileNav{ display:none!important; } #menuBtn{ display:none!important; } }
 
-/* Desktop ≥901px */
-@media (min-width: 901px){
-  #mobileNav{ display:none !important; }
-  #menuBtn{ display:none !important; }
-}
-
-/* ===== OFFER BAR ===== */
+/* Offer bar */
 .offerbar{ position:sticky; top:80px; z-index:48; background:linear-gradient(90deg, rgba(77,189,255,.15), rgba(255,125,191,.15)); border-top:1px solid rgba(255,255,255,.08); border-bottom:1px solid rgba(255,255,255,.08); }
 .offerwrap{ max-width:1100px; margin:0 auto; padding:10px 20px; display:flex; align-items:center; gap:12px; justify-content:center; flex-wrap:wrap; }
 .offertext{ font-weight:800; letter-spacing:.3px; }
@@ -124,68 +76,38 @@ a{ color:inherit; text-decoration:none; }
 .pulse::before{ content:""; position:absolute; inset:-6px; border-radius:12px; box-shadow:0 0 0 0 rgba(77,189,255,.6); animation:pulse 1.8s infinite; }
 @keyframes pulse{ 0%{ box-shadow:0 0 0 0 rgba(77,189,255,.45) } 70%{ box-shadow:0 0 0 18px rgba(77,189,255,0) } 100%{ box-shadow:0 0 0 0 rgba(77,189,255,0) } }
 
-/* ===== HERO ===== */
-.hero{
-  min-height:calc(var(--vh, 1vh) * 100 - 156px);
-  padding:88px 0 28px;
-  text-align:center; display:flex; flex-direction:column; justify-content:center;
-}
+/* Hero */
+.hero{ min-height:calc(var(--vh, 1vh) * 100 - 156px); padding:88px 0 28px; text-align:center; display:flex; flex-direction:column; justify-content:center; }
 .kicker{ color:var(--accent); font-weight:700; letter-spacing:.12em; text-transform:uppercase; font-size:13px; }
 .h1{ font-family:Poppins,Inter,system-ui; font-size:clamp(34px, 5vw, 48px); line-height:1.05; margin:16px 0; }
 .h1 strong{ color:var(--brand); text-shadow:0 0 24px rgba(77,189,255,.35); }
 .sub{ font-size:18px; color:var(--muted); max-width:780px; margin:0 auto; }
 .buttons{ display:flex; justify-content:center; gap:12px; margin-top:22px; flex-wrap:wrap; }
 
-/* ===== LIVE REVENUE TICKER ===== */
+/* Live revenue ticker */
 .revwrap{ margin-top:24px; display:flex; flex-direction:column; align-items:center; gap:10px; }
-.revtile{
-  position:relative; padding:16px 18px; border-radius:16px; background:rgba(255,255,255,.04);
-  border:1px solid rgba(255,255,255,.08); box-shadow:inset 0 0 0 1px rgba(77,189,255,.08), 0 8px 28px rgba(0,0,0,.18);
-}
+.revtile{ position:relative; padding:16px 18px; border-radius:16px; background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08); box-shadow:inset 0 0 0 1px rgba(77,189,255,.08), 0 8px 28px rgba(0,0,0,.18); }
 .revlabel{ font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); text-align:center; }
-.revnum{
-  font-family:Poppins,Inter,system-ui; font-weight:800; font-size:clamp(26px, 6.2vw, 44px);
-  letter-spacing:1px; text-align:center; color:#a7e1ff; text-shadow:0 0 18px rgba(77,189,255,.25);
-}
+.revnum{ font-family:Poppins,Inter,system-ui; font-weight:800; font-size:clamp(26px, 6.2vw, 44px); letter-spacing:1px; text-align:center; color:#a7e1ff; text-shadow:0 0 18px rgba(77,189,255,.25); }
 .revhint{ color:var(--muted); font-size:13px; text-align:center; }
 .revnum .blink{ animation:blink 1.3s ease infinite; }
 @keyframes blink{ 0%,65%{ opacity:1 } 66%,100%{ opacity:.35 } }
 
 /* Toasts */
-.toasts{
-  position:fixed; right:18px; top:calc(80px + 54px + 14px);
-  display:flex; flex-direction:column; gap:10px; z-index:60;
-}
-.toast{
-  background:rgba(17,24,39,.9); border:1px solid rgba(255,255,255,.1); color:#e6f6ff;
-  padding:10px 12px; border-radius:12px; display:flex; align-items:center; gap:10px;
-  box-shadow:0 10px 28px rgba(0,0,0,.35); transform:translateX(14px); opacity:0;
-  transition:transform .25s ease, opacity .25s ease;
-}
+.toasts{ position:fixed; right:18px; top:calc(80px + 54px + 14px); display:flex; flex-direction:column; gap:10px; z-index:60; }
+.toast{ background:rgba(17,24,39,.9); border:1px solid rgba(255,255,255,.1); color:#e6f6ff; padding:10px 12px; border-radius:12px; display:flex; align-items:center; gap:10px; box-shadow:0 10px 28px rgba(0,0,0,.35); transform:translateX(14px); opacity:0; transition:transform .25s, opacity .25s; }
 .toast.show{ transform:translateX(0); opacity:1; }
 .toast .amt{ font-weight:800; color:#9ae6ff; }
 .toast .tag{ font-weight:700; color:#ffb3d6; }
-@media (max-width: 900px){
-  .toasts{ right:10px; top:auto; bottom:16px; left:10px; align-items:flex-start; }
-  .toast{ transform:translateY(10px); }
-  .toast.show{ transform:translateY(0); }
-}
+@media (max-width:900px){ .toasts{ right:10px; top:auto; bottom:16px; left:10px; align-items:flex-start; } .toast{ transform:translateY(10px); } .toast.show{ transform:translateY(0); } }
 
-/* ===== INTERACTIVE COPY BOXES ===== */
-.copybox{
-  position:relative; background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.06); border-radius:16px; padding:20px; text-align:center;
-  box-shadow:inset 0 0 0 1px rgba(77,189,255,.08), 0 6px 24px rgba(0,0,0,.18);
-  transition:transform .25s ease, box-shadow .25s ease, border-color .25s ease, background .25s;
-}
-.copybox::after{
-  content:""; position:absolute; inset:-1px; border-radius:inherit;
-  background:radial-gradient(140px 140px at var(--mx,50%) var(--my,50%), rgba(77,189,255,.18), rgba(255,125,191,.12) 32%, transparent 60%);
-  opacity:0; transition:opacity .25s; pointer-events:none;
-}
+/* Interactive copy boxes */
+.copybox{ position:relative; background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.06); border-radius:16px; padding:20px; text-align:center; box-shadow:inset 0 0 0 1px rgba(77,189,255,.08), 0 6px 24px rgba(0,0,0,.18); transition:transform .25s, box-shadow .25s, border-color .25s, background .25s; }
+.copybox::after{ content:""; position:absolute; inset:-1px; border-radius:inherit; background:radial-gradient(140px 140px at var(--mx,50%) var(--my,50%), rgba(77,189,255,.18), rgba(255,125,191,.12) 32%, transparent 60%); opacity:0; transition:opacity .25s; pointer-events:none; }
 .copybox:hover{ transform:translateY(-6px); box-shadow:0 14px 44px rgba(77,189,255,.18), 0 0 60px rgba(255,125,191,.14); }
 .copybox:hover::after{ opacity:1; }
 
-/* ===== GRIDS / TEXT STYLES ===== */
+/* Grids + text */
 .grid-3{ display:grid; grid-template-columns:repeat(3,1fr); gap:18px; }
 .grid-2{ display:grid; grid-template-columns:repeat(2,1fr); gap:18px; }
 .card h4{ margin:0 0 8px; font-size:16px; color:var(--accent); }
@@ -196,12 +118,12 @@ a{ color:inherit; text-decoration:none; }
 .kpi .big{ font-weight:800; font-size:28px; color:var(--accent); }
 .tag{ display:inline-block; padding:6px 10px; border-radius:999px; background:rgba(77,189,255,.15); color:var(--brand); font-weight:600; font-size:12px; }
 
-/* RESULTS flair */
+/* Results flair */
 .popstat .big{ font-size:32px; }
 .ribbon{ position:relative; }
 .ribbon::before{ content:""; position:absolute; inset:-1px; border-radius:16px; background:linear-gradient(135deg, rgba(77,189,255,.22), rgba(255,125,191,.22)); filter:blur(18px); opacity:.35; z-index:-1; }
 
-/* TESTIMONIALS */
+/* Testimonials */
 .carousel{ position:relative; }
 .carTrack{ display:grid; grid-auto-flow:column; grid-auto-columns:100%; overflow:hidden; }
 .testi{ margin:0 4px; text-align:left; }
@@ -212,33 +134,29 @@ a{ color:inherit; text-decoration:none; }
 .stars{ color:#ffd166; letter-spacing:2px; font-size:14px; }
 .pill{ display:inline-block; margin-top:8px; padding:6px 10px; border-radius:999px; background:rgba(77,189,255,.15); color:#8bdcff; font-weight:700; font-size:12px; }
 .carBtn{ position:absolute; top:50%; transform:translateY(-50%); background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.12); color:#fff; width:34px; height:34px; border-radius:10px; }
-.carBtn.prev{ left:-6px; }
-.carBtn.next{ right:-6px; }
+.carBtn.prev{ left:-6px; } .carBtn.next{ right:-6px; }
 
 /* Included section last row centered */
 #included .last-row{ display:grid; grid-template-columns:repeat(2, minmax(0, 1fr)); gap:18px; justify-content:center; max-width:740px; margin:16px auto 0; }
 
 /* FAQ */
 details.copybox{ text-align:left; padding:0; }
-details.copybox summary{
-  list-style:none; cursor:pointer; padding:16px 20px; font-weight:700; color:var(--text);
-  border-bottom:1px solid rgba(255,255,255,.06);
-}
+details.copybox summary{ list-style:none; cursor:pointer; padding:16px 20px; font-weight:700; color:var(--text); border-bottom:1px solid rgba(255,255,255,.06); }
 details.copybox summary::-webkit-details-marker{ display:none; }
 details.copybox > p{ margin:0; padding:14px 20px 18px; color:var(--muted); }
 details.copybox[open]{ box-shadow:0 14px 44px rgba(77,189,255,.14), 0 0 60px rgba(255,125,191,.10); }
 
-/* FOOTER */
+/* Footer */
 .footer{ padding:32px 0 56px; border-top:1px solid rgba(255,255,255,.06); color:var(--muted); font-size:14px; text-align:center; }
 
-/* ===== RESPONSIVE ===== */
-@media (max-width: 900px){
+/* Responsive */
+@media (max-width:900px){
   .grid-3,.grid-2,.kpis{ grid-template-columns:1fr; }
   .carBtn{ display:none; }
   .carTrack{ scroll-snap-type:x mandatory; overflow-x:auto; }
   .testi{ scroll-snap-align:center; }
 }
-@media (max-width: 768px){
+@media (max-width:768px){
   .container{ padding:0 16px; }
   .hero{ min-height: calc(var(--vh, 1vh) * 100 - 136px); padding:64px 0 20px; }
   .h1{ font-size: clamp(28px, 6vw, 36px); }
@@ -249,32 +167,29 @@ details.copybox[open]{ box-shadow:0 14px 44px rgba(77,189,255,.14), 0 0 60px rgb
   .offerwrap .btn{ padding:10px 12px; font-weight:700; }
   #calModal > div{ height:88%; width:96%; }
 }
-@media (max-width: 430px){
+@media (max-width:430px){
   .h1{ font-size: clamp(24px, 8vw, 30px); }
   .sub{ font-size:15px; }
   .buttons{ gap:10px; }
   .cta,.btn{ width:100%; justify-content:center; }
-  .copybox::after{
-    background:radial-gradient(110px 110px at var(--mx,50%) var(--my,50%), rgba(77,189,255,.16), rgba(255,125,191,.10) 32%, transparent 60%);
-  }
+  .copybox::after{ background:radial-gradient(110px 110px at var(--mx,50%) var(--my,50%), rgba(77,189,255,.16), rgba(255,125,191,.10) 32%, transparent 60%); }
 }
-/* iOS safe area */
 @supports(padding:max(0px)){ .offerbar{ padding-bottom:max(0px, env(safe-area-inset-bottom)); } }
-/* Safety */
 html,body{ height:auto; overflow-x:hidden; }
 #offerModal[style*="display: none"], #calModal[style*="display: none"]{ pointer-events:none; }
 input, textarea, button, .btn, .cta{ touch-action:manipulation; }
 </style>
+
+<!-- Plausible (your snippet: outbound links + tagged events) -->
+<script defer data-domain="onlyfanschatters.co" src="https://plausible.io/js/script.outbound-links.tagged-events.js"></script>
+<script>window.plausible = window.plausible || function(){ (window.plausible.q = window.plausible.q || []).push(arguments) }</script>
 </head>
 <body>
 
 <header class="header">
   <div class="container nav">
-    <div class="logo">
-      <img src="assets/logo.png" alt="Agency logo">
-    </div>
+    <div class="logo"><img src="assets/logo.png" alt="Agency logo"></div>
 
-    <!-- Desktop nav -->
     <nav class="navlinks nav-desktop">
       <a href="#how">How it works</a>
       <a href="#pricing">Pricing</a>
@@ -287,14 +202,12 @@ input, textarea, button, .btn, .cta{ touch-action:manipulation; }
       <a class="btn" id="bookCall">Book a Call 📅</a>
       <a class="cta" href="https://t.me/AlexanderSterlingOFM" target="_blank" rel="noopener">Apply on Telegram 💬</a>
 
-      <!-- Mobile hamburger -->
       <button id="menuBtn" class="hamburger" aria-label="Menu" aria-controls="mobileNav" aria-expanded="false">
         <span></span><span></span><span></span>
       </button>
     </div>
   </div>
 
-  <!-- Mobile drawer -->
   <nav id="mobileNav" class="mnav" hidden>
     <a href="#how">How it works</a>
     <a href="#pricing">Pricing</a>
@@ -306,7 +219,6 @@ input, textarea, button, .btn, .cta{ touch-action:manipulation; }
   </nav>
 </header>
 
-<!-- OFFER BAR -->
 <div class="offerbar">
   <div class="offerwrap">
     <span class="offertext">🔥 <strong>No fee on your current earnings</strong> — we only get paid on the <em>extra revenue</em> we bring you.</span>
@@ -315,7 +227,6 @@ input, textarea, button, .btn, .cta{ touch-action:manipulation; }
   </div>
 </div>
 
-<!-- HERO -->
 <section class="hero container">
   <div class="kicker">💬 OnlyFans Chatting Agency</div>
   <h1 class="h1">We <strong>chat, convert & grow</strong> your page 🚀</h1>
@@ -325,7 +236,6 @@ input, textarea, button, .btn, .cta{ touch-action:manipulation; }
     <a class="btn" id="bookCallHero">Book a Call 📅</a>
   </div>
 
-  <!-- LIVE REVENUE TICKER -->
   <div class="revwrap" aria-live="polite">
     <div class="revtile">
       <div class="revlabel">Live revenue earned</div>
@@ -335,7 +245,6 @@ input, textarea, button, .btn, .cta{ touch-action:manipulation; }
   </div>
 </section>
 
-<!-- How -->
 <section class="section container" id="how">
   <span class="tag">How it works</span>
   <div class="grid-3" style="margin-top:16px">
@@ -349,7 +258,6 @@ input, textarea, button, .btn, .cta{ touch-action:manipulation; }
   </div>
 </section>
 
-<!-- Why -->
 <section class="section container" id="why">
   <span class="tag">Why creators choose Chatters</span>
   <div class="grid-3" style="margin-top:16px">
@@ -359,7 +267,6 @@ input, textarea, button, .btn, .cta{ touch-action:manipulation; }
   </div>
 </section>
 
-<!-- Effective -->
 <section class="section container" id="effective">
   <span class="tag">Why our chat is so effective</span>
   <div class="grid-2" style="margin-top:16px">
@@ -379,7 +286,6 @@ input, textarea, button, .btn, .cta{ touch-action:manipulation; }
   </div>
 </section>
 
-<!-- Standout -->
 <section class="section container" id="standout">
   <span class="tag">What makes us stand out</span>
   <div class="grid-3" style="margin-top:16px">
@@ -389,7 +295,6 @@ input, textarea, button, .btn, .cta{ touch-action:manipulation; }
   </div>
 </section>
 
-<!-- Pricing -->
 <section class="section container" id="pricing">
   <span class="tag">Pricing</span>
   <div class="grid-2" style="margin-top:16px">
@@ -406,7 +311,6 @@ input, textarea, button, .btn, .cta{ touch-action:manipulation; }
   </div>
 </section>
 
-<!-- Included -->
 <section class="section container" id="included">
   <span class="tag">What’s included</span>
   <div class="grid-3" style="margin-top:16px">
@@ -423,7 +327,6 @@ input, textarea, button, .btn, .cta{ touch-action:manipulation; }
   </div>
 </section>
 
-<!-- Platforms -->
 <section class="section container" id="platforms" aria-labelledby="platforms-heading">
   <span id="platforms-heading" class="tag">Platforms we chat on</span>
   <div class="grid-2" style="margin-top:16px; align-items:center">
@@ -436,7 +339,6 @@ input, textarea, button, .btn, .cta{ touch-action:manipulation; }
   </div>
 </section>
 
-<!-- Results -->
 <section class="section container" id="results">
   <span class="tag">📈 Recent Results</span>
   <div class="kpis">
@@ -451,7 +353,6 @@ input, textarea, button, .btn, .cta{ touch-action:manipulation; }
   </div>
 </section>
 
-<!-- Testimonials -->
 <section class="section container" id="testimonials">
   <span class="tag">What creators & partners say</span>
   <div class="carousel" style="margin-top:16px">
@@ -515,28 +416,27 @@ input, textarea, button, .btn, .cta{ touch-action:manipulation; }
   </div>
 </section>
 
-<!-- About -->
 <section class="section container" id="about">
   <span class="tag">About us</span>
   <div class="grid-2" style="margin-top:16px">
     <div class="feature copybox" style="text-align:left">
       <h3>Built by chatters, not marketers</h3>
-      <p>We started as a small UK team, covering chats for creators who demanded premium tone and boundaries. We partnered with US chatters to cover all time zones, refined our scripts, trained relentlessly—and today we manage for <strong>0.01%-tier creators</strong> you’re already watching.</p>
-      <p>Our edge is simple: <em>native tone + intent-led sales.</em> We don’t spam. We build genuine connection, protect your brand, and turn fans into long-term payers.</p>
+      <p>We started as a small UK team, partnered with US chatters to cover all time zones—and today we manage for <strong>0.01%-tier creators</strong> you’re already watching.</p>
+      <p>Our edge: <em>native tone + intent-led sales.</em> We build genuine connection, protect your brand, and turn fans into long-term payers.</p>
     </div>
     <div class="feature copybox" style="text-align:left">
       <h3>UK & USA only</h3>
-      <p>Every chatter is UK or USA-based, vetted, and trained on compliance, boundaries, and persona voice. Clear approvals, weekly KPI reviews, and live reporting keep you fully in control.</p>
+      <p>Every chatter is UK or USA-based, vetted, and trained on compliance, boundaries, and persona voice. Weekly KPI reviews and live reporting keep you fully in control.</p>
     </div>
   </div>
 </section>
 
-<!-- Apply -->
 <section class="section container" id="apply">
   <span class="tag">Work With Us</span>
   <h3 style="margin:10px 0 8px;text-align:center">Apply in 60 seconds ⏱️</h3>
   <p class="sub" style="text-align:center">Fill this out and we’ll reply the same day.</p>
-  <form id="leadForm" name="apply" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/#apply">
+
+  <form id="leadForm" name="apply" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/?submitted=1#apply">
     <input type="hidden" name="form-name" value="apply">
     <p style="display:none"><label>Don’t fill this out: <input name="bot-field"></label></p>
 
@@ -557,48 +457,23 @@ input, textarea, button, .btn, .cta{ touch-action:manipulation; }
   </form>
 </section>
 
-<!-- FAQ -->
 <section class="section container faq" id="faq">
   <span class="tag">❓ FAQ</span>
   <div style="display:grid; gap:12px; margin-top:16px">
-    <details class="copybox">
-      <summary>💰 What % do you take?</summary>
-      <p>Performance-only: <strong>0% on current earnings</strong>. We take <strong>22% of additional earnings</strong> above your verified 30-day baseline.</p>
-    </details>
-    <details class="copybox">
-      <summary>🆓 Does it matter if I have a free page?</summary>
-      <p>Free, paid, or hybrid—we optimize either. On free, we focus on PPV sequencing, bundles, and whale care; on paid, we balance renewals with high-margin PPVs.</p>
-    </details>
-    <details class="copybox">
-      <summary>⚡ How quickly can you onboard?</summary>
-      <p><strong>Same-day</strong> possible. Typical setup is 1–3 days for persona sheets, boundaries, scripts, and PPV calendar.</p>
-    </details>
-    <details class="copybox">
-      <summary>👥 I already have a team—can you work with them?</summary>
-      <p>Yes. We can slot in as overflow, nights/weekends, or take full coverage. Tone stays consistent via shared scripts & QA.</p>
-    </details>
-    <details class="copybox">
-      <summary>🔐 Do you need my login?</summary>
-      <p>We use secure seat access where possible, with approval rules and hard boundaries agreed upfront.</p>
-    </details>
-    <details class="copybox">
-      <summary>🧾 How do you prove “additional earnings”?</summary>
-      <p>Baseline against your trailing 30-day revenue. Uplift tracked weekly across subs, renewals, PPV, and tips.</p>
-    </details>
-    <details class="copybox">
-      <summary>🔄 Can I leave anytime?</summary>
-      <p>No lock-in. We earn only when we grow you. Cancel anytime with notice so we can hand over scripts and notes cleanly.</p>
-    </details>
-    <details class="copybox">
-      <summary>🧰 Which platforms?</summary>
-      <p>We support major subscription chat platforms (see the logos above in “Platforms we chat on”).</p>
-    </details>
+    <details class="copybox"><summary>💰 What % do you take?</summary><p>Performance-only: <strong>0% on current earnings</strong>. We take <strong>22% of additional earnings</strong> above your verified 30-day baseline.</p></details>
+    <details class="copybox"><summary>🆓 Does it matter if I have a free page?</summary><p>Free, paid, or hybrid—we optimize either. On free, we focus on PPV sequencing, bundles, and whale care; on paid, we balance renewals with high-margin PPVs.</p></details>
+    <details class="copybox"><summary>⚡ How quickly can you onboard?</summary><p><strong>Same-day</strong> possible. Typical setup is 1–3 days for persona sheets, boundaries, scripts, and PPV calendar.</p></details>
+    <details class="copybox"><summary>👥 I already have a team—can you work with them?</summary><p>Yes. We can slot in as overflow, nights/weekends, or take full coverage. Tone stays consistent via shared scripts & QA.</p></details>
+    <details class="copybox"><summary>🔐 Do you need my login?</summary><p>We use secure seat access where possible, with approval rules and hard boundaries agreed upfront.</p></details>
+    <details class="copybox"><summary>🧾 How do you prove “additional earnings”?</summary><p>Baseline against your trailing 30-day revenue. Uplift tracked weekly across subs, renewals, PPV, and tips.</p></details>
+    <details class="copybox"><summary>🔄 Can I leave anytime?</summary><p>No lock-in. We earn only when we grow you. Cancel anytime with notice so we can hand over scripts and notes cleanly.</p></details>
+    <details class="copybox"><summary>🧰 Which platforms?</summary><p>We support major subscription chat platforms (see the logos above in “Platforms we chat on”).</p></details>
   </div>
 </section>
 
 <footer class="footer">© <span id="year"></span> Chatters. All rights reserved.</footer>
 
-<!-- OFFER MODAL -->
+<!-- Offer Modal -->
 <div id="offerModal" style="position:fixed; inset:0; background:rgba(0,0,0,.6); display:none; align-items:center; justify-content:center; z-index:9999">
   <div class="offerCard copybox" style="text-align:left; background:#0b0f1a; border:1px solid rgba(255,255,255,.1); border-radius:18px; max-width:720px; width:92%; padding:22px; box-shadow:0 30px 80px rgba(0,0,0,.55)">
     <h3>Performance-Only Pricing 💥</h3>
@@ -615,7 +490,7 @@ input, textarea, button, .btn, .cta{ touch-action:manipulation; }
   </div>
 </div>
 
-<!-- CALENDLY MODAL -->
+<!-- Calendly Modal -->
 <div id="calModal" style="position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;z-index:9998">
   <div style="background:#0b0f1a;border:1px solid rgba(255,255,255,.08);border-radius:16px;max-width:900px;width:95%;height:80%;position:relative;box-shadow:0 20px 60px rgba(0,0,0,.5)">
     <button id="closeCal" style="position:absolute;top:10px;right:10px;background:rgba(255,255,255,.08);color:#fff;border:none;border-radius:10px;padding:8px 10px;cursor:pointer">Close</button>
@@ -623,35 +498,45 @@ input, textarea, button, .btn, .cta{ touch-action:manipulation; }
   </div>
 </div>
 
-<!-- Toast container -->
 <div class="toasts" id="toasts" aria-live="polite" aria-atomic="true"></div>
 
 <script>
 // Year
 document.getElementById('year').textContent = new Date().getFullYear();
 
-// Glow follow
-function attachGlow(el){
+// Show success + Plausible event after Netlify form redirect
+if (new URLSearchParams(location.search).get('submitted') === '1') {
+  document.getElementById('msg').style.display = 'block';
+  window.plausible && plausible('Form Submitted');
+}
+
+// Glow follow on cards
+Array.from(document.querySelectorAll('.copybox')).forEach(el=>{
   el.addEventListener('pointermove', e=>{
     const r = el.getBoundingClientRect();
     el.style.setProperty('--mx', `${e.clientX - r.left}px`);
     el.style.setProperty('--my', `${e.clientY - r.top}px`);
   });
-}
-Array.from(document.querySelectorAll('.copybox')).forEach(attachGlow);
+});
 
 // KPI animation
-function animateCounts(){
-  document.querySelectorAll('.popstat').forEach(box=>{
-    const target = parseFloat(box.dataset.target||'0');
-    const num = box.querySelector('.count'); if(!num) return;
-    const t0 = performance.now(), dur = 1100;
-    function step(t){ const p = Math.min(1,(t-t0)/dur); num.textContent = Math.floor(target*p); if(p<1) requestAnimationFrame(step); }
-    requestAnimationFrame(step);
-  });
-}
-const kpiObserver = new IntersectionObserver((ents)=>{ ents.forEach(en=>{ if(en.isIntersecting){ animateCounts(); kpiObserver.disconnect(); } }); },{threshold:.2});
-document.querySelectorAll('#results .kpi').forEach(el=>kpiObserver.observe(el));
+(function(){
+  const kpiObserver = new IntersectionObserver((ents)=>{
+    ents.forEach(en=>{
+      if(en.isIntersecting){
+        document.querySelectorAll('.popstat').forEach(box=>{
+          const target = parseFloat(box.dataset.target||'0');
+          const num = box.querySelector('.count'); if(!num) return;
+          const t0 = performance.now(), dur = 1100;
+          const step = (t)=>{ const p = Math.min(1,(t-t0)/dur); num.textContent = Math.floor(target*p); if(p<1) requestAnimationFrame(step); };
+          requestAnimationFrame(step);
+        });
+        kpiObserver.disconnect();
+      }
+    });
+  },{threshold:.2});
+  document.querySelectorAll('#results .kpi').forEach(el=>kpiObserver.observe(el));
+})();
 
 // Testimonials carousel
 (function(){
@@ -660,7 +545,7 @@ document.querySelectorAll('#results .kpi').forEach(el=>kpiObserver.observe(el));
   const next = document.querySelector('#testimonials .next');
   if(!track) return;
   let index = 0; const slides = track.children.length;
-  function go(i){ index = (i+slides)%slides; track.style.transform = `translateX(-${index*100}%)`; }
+  const go = (i)=>{ index = (i+slides)%slides; track.style.transform = `translateX(-${index*100}%)`; };
   prev?.addEventListener('click', ()=>go(index-1));
   next?.addEventListener('click', ()=>go(index+1));
   setInterval(()=>go(index+1), 7000);
@@ -673,73 +558,61 @@ const closeOffer = ()=> offerModal.style.display='none';
 document.getElementById('learnOffer')?.addEventListener('click', openOffer);
 document.getElementById('closeOffer')?.addEventListener('click', closeOffer);
 ['claimOffer','applyOfferBtn'].forEach(id=>{
-  const el = document.getElementById(id);
-  if(el){
-    el.addEventListener('click', (e)=>{
-      e.preventDefault();
-      closeOffer();
-      const form = document.querySelector('#apply'); form?.scrollIntoView({behavior:'smooth', block:'start'});
-      setTimeout(()=>{ if(location.hash !== '#apply') location.hash = '#apply'; }, 350);
-    });
-  }
+  document.getElementById(id)?.addEventListener('click', (e)=>{
+    e.preventDefault(); closeOffer();
+    document.querySelector('#apply')?.scrollIntoView({behavior:'smooth', block:'start'});
+    setTimeout(()=>{ if(location.hash!=='#apply') location.hash='#apply'; }, 350);
+    window.plausible && plausible('Click: Claim Offer');
+  });
 });
 
 // Smooth-scroll
-function goTo(id){ const el = document.querySelector(id); if(!el) return; el.scrollIntoView({behavior:'smooth', block:'start'}); setTimeout(()=>{ if(location.hash!==id) location.hash=id; }, 450); }
 Array.from(document.querySelectorAll('a[href^="#"]')).forEach(a=>{
-  a.addEventListener('click',(e)=>{ const href = a.getAttribute('href'); if(href && href.startsWith('#')){ e.preventDefault(); goTo(href); } });
+  a.addEventListener('click',(e)=>{
+    const href = a.getAttribute('href'); if(!href) return;
+    e.preventDefault();
+    const el = document.querySelector(href); if(!el) return;
+    el.scrollIntoView({behavior:'smooth', block:'start'});
+    setTimeout(()=>{ if(location.hash!==href) location.hash=href; }, 450);
+  });
 });
 
-// Calendly modal openers
+// Calendly modal openers + events
 const calModal = document.getElementById('calModal');
-const openCal = ()=> calModal.style.display='flex';
-['bookCall','bookCallHero','bookCallCTA','bookCallMobile'].forEach(id=> document.getElementById(id)?.addEventListener('click', openCal));
+const openCal = ()=> { calModal.style.display='flex'; window.plausible && plausible('Click: Book Call'); };
+['bookCall','bookCallHero','bookCallCTA','bookCallMobile'].forEach(id=>{
+  document.getElementById(id)?.addEventListener('click', openCal);
+});
 document.getElementById('closeCal').addEventListener('click', ()=> calModal.style.display='none');
 
 // Mobile menu
 const menuBtn = document.getElementById('menuBtn');
 const mobileNav = document.getElementById('mobileNav');
-function closeMenu(){
-  if(!mobileNav) return;
-  mobileNav.hidden = true;
-  menuBtn?.classList.remove('is-open');
-  menuBtn?.setAttribute('aria-expanded','false');
-}
+function closeMenu(){ if(!mobileNav) return; mobileNav.hidden = true; menuBtn?.classList.remove('is-open'); menuBtn?.setAttribute('aria-expanded','false'); }
 menuBtn?.addEventListener('click', ()=>{
-  const open = mobileNav.hidden;
-  mobileNav.hidden = !open;
-  menuBtn.classList.toggle('is-open', open);
-  menuBtn.setAttribute('aria-expanded', String(open));
+  const open = mobileNav.hidden; mobileNav.hidden = !open;
+  menuBtn.classList.toggle('is-open', open); menuBtn.setAttribute('aria-expanded', String(open));
 });
 mobileNav?.querySelectorAll('a').forEach(a=> a.addEventListener('click', ()=> closeMenu()));
-document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') closeMenu(); });
-window.addEventListener('resize', ()=>{ if(window.innerWidth > 900) closeMenu(); });
-document.getElementById('bookCallMobile')?.addEventListener('click', ()=>{ closeMenu(); document.getElementById('calModal').style.display='flex'; });
+document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') closeMenu(); });
+window.addEventListener('resize', ()=>{ if(window.innerWidth>900) closeMenu(); });
+document.getElementById('bookCallMobile')?.addEventListener('click', ()=>{ closeMenu(); calModal.style.display='flex'; });
 
-/* ===== LIVE REVENUE TICKER — EVENTS-ONLY INCREMENTS + 60s RANGE ENFORCEMENT ===== */
+// Track Telegram clicks (redundant to outbound-links but good as a goal)
+document.querySelectorAll('a[href^="https://t.me/"]').forEach(el=>{
+  el.addEventListener('click', ()=> window.plausible && plausible('Click: Telegram'));
+});
+
+/* ===== LIVE REVENUE TICKER — events-only increments + 60s range enforcement ===== */
 (function(){
-  const el = document.getElementById('revNum');
-  if(!el) return;
-
-  const BASE = 12389493.29; // starting value
-  const KEYS = { lastAt:'rev_last_at', total:'rev_total' };
-
-  // Load persisted total or base
+  const el = document.getElementById('revNum'); if(!el) return;
+  const BASE = 12389493.29; const KEYS = { total:'rev_total' };
   let total = Number(localStorage.getItem(KEYS.total) || BASE.toFixed(2));
-
-  // Render $ with blinking decimal dot
-  const render = (val)=>{
-    const parts = Number(val).toFixed(2).split('.');
-    const intPart = Number(parts[0]).toLocaleString('en-US');
-    el.innerHTML = `$${intPart}<span class="blink">.</span>${parts[1]}`;
-  };
+  const render = (val)=>{ const p = Number(val).toFixed(2).split('.'); el.innerHTML = `$${Number(p[0]).toLocaleString('en-US')}<span class="blink">.</span>${p[1]}`; };
   render(total);
 
-  // Toast plumbing
   const toasts = document.getElementById('toasts');
   const fmtUSD = (n)=> n.toLocaleString('en-US',{style:'currency',currency:'USD'});
-
-  // Event catalog
   const events = [
     { tag:'PPV opened', emoji:'📩', min:15,  max:75,  weight:6 },
     { tag:'Tip',        emoji:'💸', min:20,  max:250, weight:4 },
@@ -747,122 +620,30 @@ document.getElementById('bookCallMobile')?.addEventListener('click', ()=>{ close
     { tag:'Renewal',    emoji:'♻️', min:5,   max:25,  weight:5 },
     { tag:'Whale gift', emoji:'🐳', min:200, max:800, weight:1 },
   ];
-
-  // Rolling 60s ledger of event amounts
   const ledger = [];
-  const nowMs = ()=> Date.now();
-  const trimLedger = ()=>{
-    const cutoff = nowMs() - 60_000;
-    while (ledger.length && ledger[0].t < cutoff) ledger.shift();
-  };
-  const sum60 = ()=> { trimLedger(); return ledger.reduce((s,e)=> s+e.amt, 0); };
+  const trimLedger = ()=>{ const cutoff = Date.now()-60_000; while(ledger.length && ledger[0].t < cutoff) ledger.shift(); };
+  const sum60 = ()=>{ trimLedger(); return ledger.reduce((s,e)=> s+e.amt, 0); };
+  const pick = (arr)=>{ const tw = arr.reduce((a,b)=> a+b.weight,0); let r=Math.random()*tw; for(const e of arr){ r-=e.weight; if(r<=0) return e; } return arr[0]; };
+  const randAmt = (min,max)=>{ let v = Math.floor(Math.random()*(max-min+1))+min; if(Math.random()<.15 && v>10) v = v-1+0.99; return v; };
 
-  // Weighted pick + random amount
-  function pick(arr){
-    const tw = arr.reduce((a,b)=> a+b.weight, 0);
-    let r = Math.random()*tw;
-    for(const e of arr){ r -= e.weight; if(r <= 0) return e; }
-    return arr[0];
-  }
-  function randAmt(min,max){
-    let v = Math.floor(Math.random()*(max-min+1))+min;
-    if(Math.random() < 0.15 && v > 10) v = v - 1 + 0.99; // occasional .99 flair
-    return v;
-  }
-
-  // Create a toast and (only then) add to total
-  function makeToast(forced){
+  function toast(forced){
     trimLedger();
-    let s = sum60();
+    const CAP=200, s=sum60(); if(!forced && s>=CAP) return;
+    let e = pick(events); let amt = randAmt(e.min,e.max);
+    if(s+amt>CAP){ const room=Math.max(5,CAP-s); if(room<5) return; amt=room; if(amt<=40 && e.tag==='Whale gift') e={tag:'PPV opened',emoji:'📩'}; }
 
-    // If at 60s cap, skip (unless forcing for MIN)
-    const CAP = 200;
-    if(!forced && s >= CAP) return;
+    const node=document.createElement('div'); node.className='toast';
+    node.innerHTML = `<span>${e.emoji}</span><span class="tag">${e.tag}</span><span class="amt">+${fmtUSD(amt)}</span>`;
+    toasts.prepend(node); requestAnimationFrame(()=> node.classList.add('show'));
 
-    // Choose event & amount
-    let e = pick(events);
-    let amt = randAmt(e.min, e.max);
-
-    // Respect the cap: trim amt so s + amt ≤ CAP
-    if (s + amt > CAP) {
-      const room = Math.max(5, CAP - s);
-      if (room < 5) return;
-      amt = room;
-      if (amt <= 40 && e.tag === 'Whale gift') e = { tag:'PPV opened', emoji:'📩' };
-    }
-
-    // Build toast
-    const node = document.createElement('div');
-    node.className = 'toast';
-    node.innerHTML = `
-      <span>${e.emoji || '💬'}</span>
-      <span class="tag">${e.tag}</span>
-      <span class="amt">+${fmtUSD(amt)}</span>
-    `;
-    toasts.prepend(node);
-    requestAnimationFrame(()=> node.classList.add('show'));
-
-    // Update totals ONLY here
-    total += amt;
-    render(total);
-    localStorage.setItem(KEYS.total, String(total));
-    localStorage.setItem(KEYS.lastAt, String(Date.now()));
-
-    // Record for 60s window
-    ledger.push({ t: Date.now(), amt });
-
-    // Cleanup
-    setTimeout(()=>{
-      node.classList.remove('show');
-      setTimeout(()=> node.remove(), 350);
-    }, 4200);
-
-    // Limit visible toasts
-    while(toasts.children.length > 4) toasts.lastElementChild?.remove();
+    total += amt; render(total); localStorage.setItem(KEYS.total, String(total));
+    ledger.push({t:Date.now(),amt});
+    setTimeout(()=>{ node.classList.remove('show'); setTimeout(()=> node.remove(), 350); }, 4200);
+    while(toasts.children.length>4) toasts.lastElementChild?.remove();
   }
 
-  // Random scheduler (8–16s) but throttled by the 60s CAP
-  function scheduleRandom(){
-    const delay = Math.floor(8000 + Math.random()*8000);
-    setTimeout(()=>{
-      if (document.visibilityState === 'visible' && sum60() < 200) {
-        makeToast(false);
-      }
-      scheduleRandom();
-    }, delay);
-  }
-  scheduleRandom();
-
-  // Safety watchdog every 12s: ensure ≥ $30 in the last 60s
-  setInterval(()=>{
-    const MIN = 30, MAX = 200;
-    const s = sum60();
-    if (s < MIN) {
-      const neededMin = Math.max(5, MIN - s);
-      const neededMax = Math.min(MAX - s, neededMin + 30);
-      const amt = Math.max(5, Math.floor(neededMin + Math.random()*(Math.max(neededMax-neededMin, 1))));
-      const pv = { tag:'PPV opened', emoji:'📩' };
-      const node = document.createElement('div');
-      node.className = 'toast';
-      node.innerHTML = `
-        <span>${pv.emoji}</span>
-        <span class="tag">${pv.tag}</span>
-        <span class="amt">+${fmtUSD(amt)}</span>
-      `;
-      toasts.prepend(node);
-      requestAnimationFrame(()=> node.classList.add('show'));
-
-      total += amt; render(total);
-      localStorage.setItem(KEYS.total, String(total));
-      ledger.push({ t: Date.now(), amt });
-
-      setTimeout(()=>{
-        node.classList.remove('show');
-        setTimeout(()=> node.remove(), 350);
-      }, 3800);
-      while(toasts.children.length > 4) toasts.lastElementChild?.remove();
-    }
-  }, 12_000);
+  (function loop(){ setTimeout(()=>{ if(document.visibilityState==='visible' && sum60()<200) toast(false); loop(); }, Math.floor(8000+Math.random()*8000)); })();
+  setInterval(()=>{ const MIN=30, MAX=200, s=sum60(); if(s<MIN){ const neededMin=Math.max(5,MIN-s), neededMax=Math.min(MAX-s,neededMin+30); const amt=Math.max(5, Math.floor(neededMin + Math.random()*Math.max(neededMax-neededMin,1))); const e={tag:'PPV opened',emoji:'📩'}; const node=document.createElement('div'); node.className='toast'; node.innerHTML=`<span>${e.emoji}</span><span class="tag">${e.tag}</span><span class="amt">+${fmtUSD(amt)}</span>`; toasts.prepend(node); requestAnimationFrame(()=> node.classList.add('show')); total+=amt; render(total); localStorage.setItem(KEYS.total, String(total)); ledger.push({t:Date.now(),amt}); setTimeout(()=>{ node.classList.remove('show'); setTimeout(()=> node.remove(), 350); }, 3800); while(toasts.children.length>4) toasts.lastElementChild?.remove(); } }, 12_000);
 })();
 
 // Mobile 100vh fix
