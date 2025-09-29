@@ -27,6 +27,73 @@
 <meta name="twitter:description" content="Performance-only pricing, whale handling, PPV growth, same-day onboarding.">
 <meta name="twitter:image" content="https://onlyfanschatters.co/assets/og-cover.jpg">
 
+<!-- Organization + Website JSON-LD -->
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"Organization",
+  "name":"Chatters",
+  "url":"https://onlyfanschatters.co/",
+  "logo":"https://onlyfanschatters.co/assets/logo.png",
+  "sameAs":["https://t.me/AlexanderSterlingOFM"],
+  "foundingLocation":"United Kingdom",
+  "areaServed":["GB","US","CA","AU","EU"]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"WebSite",
+  "url":"https://onlyfanschatters.co/",
+  "name":"OnlyFans Chatting Agency",
+  "potentialAction":{
+    "@type":"ContactAction",
+    "target":"https://t.me/AlexanderSterlingOFM",
+    "name":"Apply on Telegram"
+  }
+}
+</script>
+
+<!-- FAQ JSON-LD (matches on-page FAQ) -->
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"FAQPage",
+  "mainEntity":[
+    {
+      "@type":"Question",
+      "name":"What % do you take?",
+      "acceptedAnswer":{"@type":"Answer","text":"Performance-only: 0% on current earnings. We take 22% of additional earnings above your verified 30-day baseline."}
+    },
+    {
+      "@type":"Question",
+      "name":"Does it matter if I have a free page?",
+      "acceptedAnswer":{"@type":"Answer","text":"We optimize free, paid, or hybrid pages. On free, we focus on PPV sequencing, bundles, and whale care; on paid, we balance renewals with high-margin PPVs."}
+    },
+    {
+      "@type":"Question",
+      "name":"How quickly can you onboard?",
+      "acceptedAnswer":{"@type":"Answer","text":"Same day is possible. Typical setup is 1–3 days for persona sheets, boundaries, scripts, and a PPV calendar."}
+    },
+    {
+      "@type":"Question",
+      "name":"I already have a team—can you work with them?",
+      "acceptedAnswer":{"@type":"Answer","text":"Yes. We can cover overflow, nights/weekends, or take full coverage with tone consistency via shared scripts and QA."}
+    },
+    {
+      "@type":"Question",
+      "name":"Do you need my login?",
+      "acceptedAnswer":{"@type":"Answer","text":"We use secure seat access where possible, with approval rules and hard boundaries agreed upfront."}
+    },
+    {
+      "@type":"Question",
+      "name":"How do you prove “additional earnings”?",
+      "acceptedAnswer":{"@type":"Answer","text":"We baseline against your trailing 30-day revenue and track uplift weekly across subs, renewals, PPV, and tips."}
+    }
+  ]
+}
+</script>
+
 <style>
 :root{ --brand:#4dbdff; --accent:#ff7dbf; --bg:#0b0f1a; --text:#e8f1f8; --muted:#a9bdd1; --btnH:44px; }
 html{ scroll-behavior:smooth; } *{ box-sizing:border-box; }
@@ -216,14 +283,14 @@ input, textarea, button, .btn, .cta{ touch-action:manipulation; }
 <!-- HERO -->
 <section class="hero container">
   <div class="kicker">💬 OnlyFans Chatting Agency</div>
-  <h1 class="h1">We <strong>chat, convert & grow</strong> your page 🚀</h1>
-  <p class="sub">Premium 24/7 chatting for models & agencies. We increase PPV sales, boost retention, and maximize revenue while keeping your boundaries safe.</p>
+  <h1 class="h1">OnlyFans chatters that <strong>convert & grow</strong> 🚀</h1>
+  <p class="sub">Premium 24/7 chatting for models & agencies. We increase PPV sales, boost retention, and maximize revenue—while keeping your boundaries safe.</p>
   <div class="buttons">
     <a class="cta" href="#apply">Work With Us 🤝</a>
     <a class="btn" id="bookCallHero">Book a Call 📅</a>
   </div>
 
-  <!-- LIVE REVENUE TICKER -->
+  <!-- LIVE REVENUE TICKER (local only) -->
   <div class="revwrap" aria-live="polite">
     <div class="revtile">
       <div class="revlabel">Live revenue earned</div>
@@ -326,10 +393,10 @@ input, textarea, button, .btn, .cta{ touch-action:manipulation; }
   <span id="platforms-heading" class="tag">Platforms we chat on</span>
   <div class="grid-2" style="margin-top:16px; align-items:center">
     <div class="feature copybox" style="display:flex;gap:12px;align-items:center;justify-content:center">
-      <img src="assets/logo-onlyfans.png" alt="Supported platform 1" style="height:36px">
+      <img src="assets/logo-onlyfans.png" alt="OnlyFans logo" style="height:36px">
     </div>
     <div class="feature copybox" style="display:flex;gap:12px;align-items:center;justify-content:center">
-      <img src="assets/logo-fansly.png" alt="Supported platform 2" style="height:36px">
+      <img src="assets/logo-fansly.png" alt="Fansly logo" style="height:36px">
     </div>
   </div>
 </section>
@@ -593,10 +660,11 @@ document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') closeMenu(); })
 window.addEventListener('resize', ()=>{ if(window.innerWidth>900) closeMenu(); });
 document.getElementById('bookCallMobile')?.addEventListener('click', ()=>{ closeMenu(); calModal.style.display='flex'; });
 
-// Track Telegram clicks
-document.querySelectorAll('a[href^="https://t.me/"]').forEach(el=>{
-  el.addEventListener('click', ()=> window.plausible && plausible('Click: Telegram'));
-});
+// Plausible goals (optional)
+document.querySelectorAll('#bookCall,#bookCallHero,#bookCallCTA,#bookCallMobile')
+  .forEach(b=>b.addEventListener('click',()=> window.plausible && plausible('Book Call')));
+document.querySelectorAll('a[href^="https://t.me/"]')
+  .forEach(b=>b.addEventListener('click',()=> window.plausible && plausible('Apply Telegram')));
 
 /* ===== LOCAL-ONLY LIVE REVENUE TICKER (no server) ===== */
 (function(){
