@@ -185,20 +185,32 @@ a{ color:inherit; text-decoration:none; }
 .kpi .big{ font-weight:800; font-size:28px; color:var(--accent); }
 .tag{ display:inline-block; padding:6px 10px; border-radius:999px; background:rgba(77,189,255,.15); color:var(--brand); font-weight:600; font-size:12px; }
 
-/* Testimonials etc */
+/* Testimonials / Carousel (upgraded) */
 .popstat .big{ font-size:32px; }
 .ribbon{ position:relative; }
 .ribbon::before{ content:""; position:absolute; inset:-1px; border-radius:16px; background:linear-gradient(135deg, rgba(77,189,255,.22), rgba(255,125,191,.22)); filter:blur(18px); opacity:.35; z-index:-1; }
-.carousel{ position:relative; } .carTrack{ display:grid; grid-auto-flow:column; grid-auto-columns:100%; overflow:hidden; }
-.testi{ margin:0 4px; text-align:left; } .testi .row{ display:flex; gap:12px; align-items:center; margin-bottom:8px; }
+.carousel{ position:relative; }
+.carTrack{ display:grid; grid-auto-flow:column; grid-auto-columns:100%; overflow:hidden; transition:transform .35s ease; }
+.testi{ margin:0 4px; text-align:left; }
+.testi .row{ display:flex; gap:12px; align-items:center; margin-bottom:8px; }
 .avatar{ width:40px; height:40px; border-radius:999px; object-fit:cover; border:1px solid rgba(255,255,255,.15); }
-.name{ font-weight:700; } .role{ opacity:.7; font-weight:600; margin-left:6px; font-size:12px; }
-.stars{ color:#ffd166; letter-spacing:2px; font-size:14px; } .pill{ display:inline-block; margin-top:8px; padding:6px 10px; border-radius:999px; background:rgba(77,189,255,.15); color:#8bdcff; font-weight:700; font-size:12px; }
-.carBtn{ position:absolute; top:50%; transform:translateY(-50%); background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.12); color:#fff; width:34px; height:34px; border-radius:10px; }
-.carBtn.prev{ left:-6px; } .carBtn.next{ right:-6px; }
-
-/* Included last row centered */
-#included .last-row{ display:grid; grid-template-columns:repeat(2, minmax(0, 1fr)); gap:18px; justify-content:center; max-width:740px; margin:16px auto 0; }
+.name{ font-weight:700; }
+.role{ opacity:.7; font-weight:600; margin-left:6px; font-size:12px; }
+.stars{ color:#ffd166; letter-spacing:2px; font-size:14px; }
+.pill{ display:inline-block; margin-top:8px; padding:6px 10px; border-radius:999px; background:rgba(77,189,255,.15); color:#8bdcff; font-weight:700; font-size:12px; }
+/* Always show buttons */
+.carBtn{ position:absolute; top:50%; transform:translateY(-50%); background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.12); color:#fff; width:36px; height:36px; border-radius:10px; display:grid; place-items:center; z-index:2; }
+.carBtn.prev{ left:-6px; }
+.carBtn.next{ right:-6px; }
+/* Dots */
+.carDots{ display:flex; gap:8px; justify-content:center; margin-top:12px; flex-wrap:wrap; }
+.carDot{ width:9px; height:9px; border-radius:999px; background:rgba(255,255,255,.22); border:1px solid rgba(255,255,255,.3); cursor:pointer; }
+.carDot.active{ background:linear-gradient(135deg,var(--brand),var(--accent)); border-color:transparent; box-shadow:0 0 0 4px rgba(77,189,255,.18); }
+/* Mobile swipe */
+@media (max-width:900px){
+  .carTrack{ scroll-snap-type:x mandatory; overflow-x:auto; }
+  .testi{ scroll-snap-align:center; }
+}
 
 /* FAQ */
 details.copybox{ text-align:left; padding:0; }
@@ -211,7 +223,7 @@ details.copybox[open]{ box-shadow:0 14px 44px rgba(77,189,255,.14), 0 0 60px rgb
 .footer{ padding:32px 0 56px; border-top:1px solid rgba(255,255,255,.06); color:var(--muted); font-size:14px; text-align:center; }
 
 /* Responsive */
-@media (max-width:900px){ .grid-3,.grid-2,.kpis{ grid-template-columns:1fr; } .carBtn{ display:none; } .carTrack{ scroll-snap-type:x mandatory; overflow-x:auto; } .testi{ scroll-snap-align:center; } }
+@media (max-width:900px){ .grid-3,.grid-2,.kpis{ grid-template-columns:1fr; } }
 @media (max-width:768px){
   .container{ padding:0 16px; }
   .hero{ min-height: calc(var(--vh, 1vh) * 100 - 136px); padding:64px 0 20px; }
@@ -421,63 +433,9 @@ input, textarea, button, .btn, .cta{ touch-action:manipulation; }
   <span class="tag">What creators & partners say</span>
   <div class="carousel" style="margin-top:16px">
     <button class="carBtn prev" aria-label="Previous">‹</button>
-    <div class="carTrack">
-      <!-- Existing 1 -->
-      <article class="testi copybox">
-        <div class="row">
-          <img class="avatar" src="assets/avatar-maya.jpg" alt="Maya" onerror="this.style.display='none'">
-          <div><div class="name">Maya L. <span class="role">Creator</span></div><div class="stars">★★★★★</div></div>
-        </div>
-        <p>“Day 2 they rebuilt my scripts. Week 1 PPV doubled. I finally feel like chats aren’t being wasted.”</p>
-        <div class="pill">+92% PPV in 30 days</div>
-      </article>
-      <!-- Existing 2 -->
-      <article class="testi copybox">
-        <div class="row">
-          <img class="avatar" src="assets/avatar-icon.png" alt="ICON Agency" onerror="this.style.display='none'">
-          <div><div class="name">BrightFox Media <span class="role">Agency Partner</span></div><div class="stars">★★★★★</div></div>
-        </div>
-        <p>“We plugged them in for night coverage. Tone matched perfectly, whales got concierge treatment, and revenue rose without extra content.”</p>
-        <div class="pill">1.8× weekend revenue</div>
-      </article>
-      <!-- Existing 3 -->
-      <article class="testi copybox">
-        <div class="row">
-          <img class="avatar" src="assets/avatar-aura.jpg" alt="Aria V." onerror="this.style.display='none'">
-          <div><div class="name">Aria V. <span class="role">Top 0.1% Creator</span></div><div class="stars">★★★★★</div></div>
-        </div>
-        <p>“They respect my boundaries and still sell. My fans feel seen, not spammed.”</p>
-        <div class="pill">-22% churn</div>
-      </article>
-      <!-- Existing 4 -->
-      <article class="testi copybox">
-        <div class="row">
-          <img class="avatar" src="assets/avatar-nicole.jpg" alt="Nicole Valentine" onerror="this.style.display='none'">
-          <div><div class="name">Nicole Valentine <span class="role">Model • Top Creator</span></div><div class="stars">★★★★★</div></div>
-        </div>
-        <p>“These chats finally sound like me. Fans are spending without me being online 24/7.”</p>
-        <div class="pill">+58% tips in 21 days</div>
-      </article>
-      <!-- Existing 5 -->
-      <article class="testi copybox">
-        <div class="row">
-          <img class="avatar" src="assets/avatar-icon.png" alt="ICON Agency" onerror="this.style.display='none'">
-          <div><div class="name">ICON Agency <span class="role">Agency Partner</span></div><div class="stars">★★★★★</div></div>
-        </div>
-        <p>“Plug-and-play night coverage. Tone matched, whales handled like VIPs, and revenue up without extra content.”</p>
-        <div class="pill">+34% weekend ARPPU</div>
-      </article>
-      <!-- Existing 6 -->
-      <article class="testi copybox">
-        <div class="row">
-          <img class="avatar" src="assets/avatar-aura.jpg" alt="Aura" onerror="this.style.display='none'">
-          <div><div class="name">Aura <span class="role">Creator</span></div><div class="stars">★★★★★</div></div>
-        </div>
-        <p>“Boundaries respected, sales up. Fans feel looked after—not spammed.”</p>
-        <div class="pill">-19% churn</div>
-      </article>
 
-      <!-- NEW 1: Nicole Valentine -->
+    <div class="carTrack" id="tTrack">
+      <!-- NEW 1 -->
       <article class="testi copybox">
         <div class="row">
           <img class="avatar" src="assets/avatar-nicole.jpg" alt="Nicole Valentine" onerror="this.style.display='none'">
@@ -487,7 +445,7 @@ input, textarea, button, .btn, .cta{ touch-action:manipulation; }
         <div class="pill">+64% monthly net</div>
       </article>
 
-      <!-- NEW 2: ICON Agency -->
+      <!-- NEW 2 -->
       <article class="testi copybox">
         <div class="row">
           <img class="avatar" src="assets/avatar-icon.png" alt="ICON Agency" onerror="this.style.display='none'">
@@ -497,7 +455,7 @@ input, textarea, button, .btn, .cta{ touch-action:manipulation; }
         <div class="pill">3.2× launch month</div>
       </article>
 
-      <!-- NEW 3: Aura -->
+      <!-- NEW 3 -->
       <article class="testi copybox">
         <div class="row">
           <img class="avatar" src="assets/avatar-aura.jpg" alt="Aura" onerror="this.style.display='none'">
@@ -507,7 +465,7 @@ input, textarea, button, .btn, .cta{ touch-action:manipulation; }
         <div class="pill">-24% churn in 30 days</div>
       </article>
 
-      <!-- NEW 4: BrightFox Media -->
+      <!-- NEW 4 -->
       <article class="testi copybox">
         <div class="row">
           <img class="avatar" src="assets/avatar-icon.png" alt="BrightFox Media" onerror="this.style.display='none'">
@@ -517,7 +475,7 @@ input, textarea, button, .btn, .cta{ touch-action:manipulation; }
         <div class="pill">+38% weekend ARPPU</div>
       </article>
 
-      <!-- NEW 5: Maya L. -->
+      <!-- NEW 5 -->
       <article class="testi copybox">
         <div class="row">
           <img class="avatar" src="assets/avatar-maya.jpg" alt="Maya L." onerror="this.style.display='none'">
@@ -527,7 +485,7 @@ input, textarea, button, .btn, .cta{ touch-action:manipulation; }
         <div class="pill">+118% PPV in 21 days</div>
       </article>
 
-      <!-- NEW 6: Aria V. -->
+      <!-- NEW 6 -->
       <article class="testi copybox">
         <div class="row">
           <img class="avatar" src="assets/avatar-aura.jpg" alt="Aria V." onerror="this.style.display='none'">
@@ -537,8 +495,64 @@ input, textarea, button, .btn, .cta{ touch-action:manipulation; }
         <div class="pill">+31% renewals</div>
       </article>
 
+      <!-- EXISTING 1..6 -->
+      <article class="testi copybox">
+        <div class="row">
+          <img class="avatar" src="assets/avatar-maya.jpg" alt="Maya" onerror="this.style.display='none'">
+          <div><div class="name">Maya L. <span class="role">Creator</span></div><div class="stars">★★★★★</div></div>
+        </div>
+        <p>“Day 2 they rebuilt my scripts. Week 1 PPV doubled. I finally feel like chats aren’t being wasted.”</p>
+        <div class="pill">+92% PPV in 30 days</div>
+      </article>
+
+      <article class="testi copybox">
+        <div class="row">
+          <img class="avatar" src="assets/avatar-icon.png" alt="ICON Agency" onerror="this.style.display='none'">
+          <div><div class="name">BrightFox Media <span class="role">Agency Partner</span></div><div class="stars">★★★★★</div></div>
+        </div>
+        <p>“We plugged them in for night coverage. Tone matched perfectly, whales got concierge treatment, and revenue rose without extra content.”</p>
+        <div class="pill">1.8× weekend revenue</div>
+      </article>
+
+      <article class="testi copybox">
+        <div class="row">
+          <img class="avatar" src="assets/avatar-aura.jpg" alt="Aria V." onerror="this.style.display='none'">
+          <div><div class="name">Aria V. <span class="role">Top 0.1% Creator</span></div><div class="stars">★★★★★</div></div>
+        </div>
+        <p>“They respect my boundaries and still sell. My fans feel seen, not spammed.”</p>
+        <div class="pill">-22% churn</div>
+      </article>
+
+      <article class="testi copybox">
+        <div class="row">
+          <img class="avatar" src="assets/avatar-nicole.jpg" alt="Nicole Valentine" onerror="this.style.display='none'">
+          <div><div class="name">Nicole Valentine <span class="role">Model • Top Creator</span></div><div class="stars">★★★★★</div></div>
+        </div>
+        <p>“These chats finally sound like me. Fans are spending without me being online 24/7.”</p>
+        <div class="pill">+58% tips in 21 days</div>
+      </article>
+
+      <article class="testi copybox">
+        <div class="row">
+          <img class="avatar" src="assets/avatar-icon.png" alt="ICON Agency" onerror="this.style.display='none'">
+          <div><div class="name">ICON Agency <span class="role">Agency Partner</span></div><div class="stars">★★★★★</div></div>
+        </div>
+        <p>“Plug-and-play night coverage. Tone matched, whales handled like VIPs, and revenue up without extra content.”</p>
+        <div class="pill">+34% weekend ARPPU</div>
+      </article>
+
+      <article class="testi copybox">
+        <div class="row">
+          <img class="avatar" src="assets/avatar-aura.jpg" alt="Aura" onerror="this.style.display='none'">
+          <div><div class="name">Aura <span class="role">Creator</span></div><div class="stars">★★★★★</div></div>
+        </div>
+        <p>“Boundaries respected, sales up. Fans feel looked after—not spammed.”</p>
+        <div class="pill">-19% churn</div>
+      </article>
     </div>
+
     <button class="carBtn next" aria-label="Next">›</button>
+    <div class="carDots" id="tDots" aria-label="Testimonials navigation"></div>
   </div>
 </section>
 
@@ -662,17 +676,56 @@ Array.from(document.querySelectorAll('.copybox')).forEach(el=>{
   document.querySelectorAll('#results .kpi').forEach(el=>kpiObserver.observe(el));
 })();
 
-// Testimonials carousel
+// Testimonials carousel (buttons + dots + auto + mobile swipe)
 (function(){
-  const track = document.querySelector('#testimonials .carTrack');
+  const track = document.getElementById('tTrack');
+  if(!track) return;
+
   const prev = document.querySelector('#testimonials .prev');
   const next = document.querySelector('#testimonials .next');
-  if(!track) return;
-  let index = 0; const slides = track.children.length;
-  const go = (i)=>{ index = (i+slides)%slides; track.style.transform = `translateX(-${index*100}%)`; };
-  prev?.addEventListener('click', ()=>go(index-1));
-  next?.addEventListener('click', ()=>go(index+1));
-  setInterval(()=>go(index+1), 7000);
+  const dotsWrap = document.getElementById('tDots');
+
+  const slides = Array.from(track.children);
+  let index = 0; // start on first card
+
+  // Build dots
+  slides.forEach((_, idx)=>{
+    const d = document.createElement('button');
+    d.className = 'carDot' + (idx===0?' active':'');
+    d.setAttribute('aria-label', `Go to slide ${idx+1}`);
+    d.addEventListener('click', ()=> go(idx));
+    dotsWrap.appendChild(d);
+  });
+  const dots = Array.from(dotsWrap.children);
+
+  function go(i){
+    index = (i + slides.length) % slides.length;
+    track.style.transform = `translateX(-${index*100}%)`;
+    dots.forEach((d,idx)=> d.classList.toggle('active', idx===index));
+  }
+
+  prev?.addEventListener('click', ()=> go(index-1));
+  next?.addEventListener('click', ()=> go(index+1));
+
+  // Auto-advance every 7s
+  let timer = setInterval(()=> go(index+1), 7000);
+  function resetTimer(){ clearInterval(timer); timer = setInterval(()=> go(index+1), 7000); }
+  ['click','touchstart','keydown'].forEach(ev=>{
+    document.getElementById('testimonials').addEventListener(ev, resetTimer, {passive:true});
+  });
+
+  // Keyboard arrows (when section in view)
+  document.addEventListener('keydown', (e)=>{
+    const sec = document.getElementById('testimonials');
+    const r = sec.getBoundingClientRect();
+    const inView = r.top < innerHeight && r.bottom > 0;
+    if(!inView) return;
+    if(e.key==='ArrowLeft') go(index-1);
+    if(e.key==='ArrowRight') go(index+1);
+  });
+
+  // Initialize
+  go(0);
 })();
 
 // Offer modal + routing to Apply
@@ -822,4 +875,3 @@ document.querySelectorAll('a[href^="https://t.me/"]')
 
 </body>
 </html>
-
