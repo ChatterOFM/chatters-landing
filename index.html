@@ -185,30 +185,37 @@ a{ color:inherit; text-decoration:none; }
 .kpi .big{ font-weight:800; font-size:28px; color:var(--accent); }
 .tag{ display:inline-block; padding:6px 10px; border-radius:999px; background:rgba(77,189,255,.15); color:var(--brand); font-weight:600; font-size:12px; }
 
-/* Testimonials / Carousel (upgraded) */
-.popstat .big{ font-size:32px; }
-.ribbon{ position:relative; }
-.ribbon::before{ content:""; position:absolute; inset:-1px; border-radius:16px; background:linear-gradient(135deg, rgba(77,189,255,.22), rgba(255,125,191,.22)); filter:blur(18px); opacity:.35; z-index:-1; }
+/* Testimonials / Carousel — single card with arrows + dots */
 .carousel{ position:relative; }
-.carTrack{ display:grid; grid-auto-flow:column; grid-auto-columns:100%; overflow:hidden; transition:transform .35s ease; }
-.testi{ margin:0 4px; text-align:left; }
+.carTrack{
+  display:grid;
+  grid-auto-flow:column;
+  grid-auto-columns:100%;
+  overflow:hidden;
+  transition:transform .35s ease;
+}
+.testi{ text-align:left; margin:0 4px; }
 .testi .row{ display:flex; gap:12px; align-items:center; margin-bottom:8px; }
 .avatar{ width:40px; height:40px; border-radius:999px; object-fit:cover; border:1px solid rgba(255,255,255,.15); }
 .name{ font-weight:700; }
 .role{ opacity:.7; font-weight:600; margin-left:6px; font-size:12px; }
 .stars{ color:#ffd166; letter-spacing:2px; font-size:14px; }
 .pill{ display:inline-block; margin-top:8px; padding:6px 10px; border-radius:999px; background:rgba(77,189,255,.15); color:#8bdcff; font-weight:700; font-size:12px; }
-/* Always show buttons */
-.carBtn{ position:absolute; top:50%; transform:translateY(-50%); background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.12); color:#fff; width:36px; height:36px; border-radius:10px; display:grid; place-items:center; z-index:2; }
+/* Always show buttons (desktop + mobile) */
+.carBtn{
+  position:absolute; top:50%; transform:translateY(-50%);
+  background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.12);
+  color:#fff; width:36px; height:36px; border-radius:10px; display:grid; place-items:center; z-index:2;
+}
 .carBtn.prev{ left:-6px; }
 .carBtn.next{ right:-6px; }
 /* Dots */
 .carDots{ display:flex; gap:8px; justify-content:center; margin-top:12px; flex-wrap:wrap; }
 .carDot{ width:9px; height:9px; border-radius:999px; background:rgba(255,255,255,.22); border:1px solid rgba(255,255,255,.3); cursor:pointer; }
 .carDot.active{ background:linear-gradient(135deg,var(--brand),var(--accent)); border-color:transparent; box-shadow:0 0 0 4px rgba(77,189,255,.18); }
-/* Mobile swipe */
+/* Mobile swipe snap */
 @media (max-width:900px){
-  .carTrack{ scroll-snap-type:x mandatory; overflow-x:auto; }
+  .carTrack{ scroll-snap-type:x mandatory; }
   .testi{ scroll-snap-align:center; }
 }
 
@@ -676,55 +683,55 @@ Array.from(document.querySelectorAll('.copybox')).forEach(el=>{
   document.querySelectorAll('#results .kpi').forEach(el=>kpiObserver.observe(el));
 })();
 
-// Testimonials carousel (buttons + dots + auto + mobile swipe)
+// Testimonials carousel — single card (arrows + dots + auto)
 (function(){
+  const sec = document.getElementById('testimonials');
   const track = document.getElementById('tTrack');
-  if(!track) return;
+  if(!sec || !track) return;
 
-  const prev = document.querySelector('#testimonials .prev');
-  const next = document.querySelector('#testimonials .next');
+  const prev = sec.querySelector('.prev');
+  const next = sec.querySelector('.next');
   const dotsWrap = document.getElementById('tDots');
-
   const slides = Array.from(track.children);
-  let index = 0; // start on first card
+
+  let index = 0;
+  const total = slides.length;
 
   // Build dots
-  slides.forEach((_, idx)=>{
+  dotsWrap.innerHTML = '';
+  for(let i=0;i<total;i++){
     const d = document.createElement('button');
-    d.className = 'carDot' + (idx===0?' active':'');
-    d.setAttribute('aria-label', `Go to slide ${idx+1}`);
-    d.addEventListener('click', ()=> go(idx));
+    d.className = 'carDot' + (i===0?' active':'');
+    d.setAttribute('aria-label', `Go to slide ${i+1}`);
+    d.addEventListener('click', ()=> go(i));
     dotsWrap.appendChild(d);
-  });
+  }
   const dots = Array.from(dotsWrap.children);
 
   function go(i){
-    index = (i + slides.length) % slides.length;
+    index = (i + total) % total;
     track.style.transform = `translateX(-${index*100}%)`;
     dots.forEach((d,idx)=> d.classList.toggle('active', idx===index));
   }
 
-  prev?.addEventListener('click', ()=> go(index-1));
-  next?.addEventListener('click', ()=> go(index+1));
+  prev.addEventListener('click', ()=> go(index-1));
+  next.addEventListener('click', ()=> go(index+1));
 
   // Auto-advance every 7s
   let timer = setInterval(()=> go(index+1), 7000);
   function resetTimer(){ clearInterval(timer); timer = setInterval(()=> go(index+1), 7000); }
-  ['click','touchstart','keydown'].forEach(ev=>{
-    document.getElementById('testimonials').addEventListener(ev, resetTimer, {passive:true});
-  });
+  ['click','touchstart','keydown'].forEach(ev=> sec.addEventListener(ev, resetTimer, {passive:true}));
 
-  // Keyboard arrows (when section in view)
+  // Arrow keys when section is visible
   document.addEventListener('keydown', (e)=>{
-    const sec = document.getElementById('testimonials');
     const r = sec.getBoundingClientRect();
-    const inView = r.top < innerHeight && r.bottom > 0;
-    if(!inView) return;
-    if(e.key==='ArrowLeft') go(index-1);
-    if(e.key==='ArrowRight') go(index+1);
+    if(r.top < innerHeight && r.bottom > 0){
+      if(e.key==='ArrowLeft') go(index-1);
+      if(e.key==='ArrowRight') go(index+1);
+    }
   });
 
-  // Initialize
+  // Init
   go(0);
 })();
 
