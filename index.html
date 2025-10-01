@@ -29,69 +29,15 @@
 
 <!-- Organization + Website JSON-LD -->
 <script type="application/ld+json">
-{
-  "@context":"https://schema.org",
-  "@type":"Organization",
-  "name":"Chatters",
-  "url":"https://onlyfanschatters.co/",
-  "logo":"https://onlyfanschatters.co/assets/logo.png",
-  "sameAs":["https://t.me/AlexanderSterlingOFM"],
-  "foundingLocation":"United Kingdom",
-  "areaServed":["GB","US","CA","AU","EU"]
-}
+{"@context":"https://schema.org","@type":"Organization","name":"Chatters","url":"https://onlyfanschatters.co/","logo":"https://onlyfanschatters.co/assets/logo.png","sameAs":["https://t.me/AlexanderSterlingOFM"],"foundingLocation":"United Kingdom","areaServed":["GB","US","CA","AU","EU"]}
 </script>
 <script type="application/ld+json">
-{
-  "@context":"https://schema.org",
-  "@type":"WebSite",
-  "url":"https://onlyfanschatters.co/",
-  "name":"OnlyFans Chatting Agency",
-  "potentialAction":{
-    "@type":"ContactAction",
-    "target":"https://t.me/AlexanderSterlingOFM",
-    "name":"Apply on Telegram"
-  }
-}
+{"@context":"https://schema.org","@type":"WebSite","url":"https://onlyfanschatters.co/","name":"OnlyFans Chatting Agency","potentialAction":{"@type":"ContactAction","target":"https://t.me/AlexanderSterlingOFM","name":"Apply on Telegram"}}
 </script>
 
 <!-- FAQ JSON-LD -->
 <script type="application/ld+json">
-{
-  "@context":"https://schema.org",
-  "@type":"FAQPage",
-  "mainEntity":[
-    {
-      "@type":"Question",
-      "name":"What % do you take?",
-      "acceptedAnswer":{"@type":"Answer","text":"Performance-only: 0% on current earnings. We take 22% of additional earnings above your verified 30-day baseline."}
-    },
-    {
-      "@type":"Question",
-      "name":"Does it matter if I have a free page?",
-      "acceptedAnswer":{"@type":"Answer","text":"We optimize free, paid, or hybrid pages. On free, we focus on PPV sequencing, bundles, and whale care; on paid, we balance renewals with high-margin PPVs."}
-    },
-    {
-      "@type":"Question",
-      "name":"How quickly can you onboard?",
-      "acceptedAnswer":{"@type":"Answer","text":"Same day is possible. Typical setup is 1–3 days for persona sheets, boundaries, scripts, and a PPV calendar."}
-    },
-    {
-      "@type":"Question",
-      "name":"I already have a team—can you work with them?",
-      "acceptedAnswer":{"@type":"Answer","text":"Yes. We can cover overflow, nights/weekends, or take full coverage with tone consistency via shared scripts and QA."}
-    },
-    {
-      "@type":"Question",
-      "name":"Do you need my login?",
-      "acceptedAnswer":{"@type":"Answer","text":"We use secure seat access where possible, with approval rules and hard boundaries agreed upfront."}
-    },
-    {
-      "@type":"Question",
-      "name":"How do you prove “additional earnings”?",
-      "acceptedAnswer":{"@type":"Answer","text":"We baseline against your trailing 30-day revenue and track uplift weekly across subs, renewals, PPV, and tips."}
-    }
-  ]
-}
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What % do you take?","acceptedAnswer":{"@type":"Answer","text":"Performance-only: 0% on current earnings. We take 22% of additional earnings above your verified 30-day baseline."}},{"@type":"Question","name":"Does it matter if I have a free page?","acceptedAnswer":{"@type":"Answer","text":"We optimize free, paid, or hybrid pages. On free, we focus on PPV sequencing, bundles, and whale care; on paid, we balance renewals with high-margin PPVs."}},{"@type":"Question","name":"How quickly can you onboard?","acceptedAnswer":{"@type":"Answer","text":"Same day is possible. Typical setup is 1–3 days for persona sheets, boundaries, scripts, and a PPV calendar."}},{"@type":"Question","name":"I already have a team—can you work with them?","acceptedAnswer":{"@type":"Answer","text":"Yes. We can cover overflow, nights/weekends, or take full coverage with tone consistency via shared scripts and QA."}},{"@type":"Question","name":"Do you need my login?","acceptedAnswer":{"@type":"Answer","text":"We use secure seat access where possible, with approval rules and hard boundaries agreed upfront."}},{"@type":"Question","name":"How do you prove “additional earnings”?","acceptedAnswer":{"@type":"Answer","text":"We baseline against your trailing 30-day revenue and track uplift weekly across subs, renewals, PPV, and tips."}}]}
 </script>
 
 <style>
@@ -185,12 +131,28 @@ a{ color:inherit; text-decoration:none; }
 .kpi .big{ font-weight:800; font-size:28px; color:var(--accent); }
 .tag{ display:inline-block; padding:6px 10px; border-radius:999px; background:rgba(77,189,255,.15); color:var(--brand); font-weight:600; font-size:12px; }
 
-/* Testimonials / Carousel — single card, FLEX + pixel shift (bullet-proof) */
-.carousel{ position:relative; }
+/* INCLUDED — make spacing even and bottom two centered */
+#included .grid-3{
+  display:grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap:18px;
+}
+#included .last-row{
+  display:grid;
+  grid-template-columns: repeat(2, minmax(220px, 1fr));
+  gap:18px;
+  margin-top:18px;
+  justify-items:center;
+}
+@media (max-width:600px){
+  #included .last-row{ grid-template-columns: 1fr; }
+}
+
+/* Testimonials / Carousel — single card, FLEX + pixel shift */
+.carousel{ position:relative; overflow:hidden; } /* overflow on wrapper */
 .carTrack{
   display:flex;
   flex-wrap:nowrap;
-  overflow:hidden;
   transition:transform .35s ease;
   will-change:transform;
 }
@@ -220,11 +182,6 @@ a{ color:inherit; text-decoration:none; }
 .carDots{ display:flex; gap:8px; justify-content:center; margin-top:12px; flex-wrap:wrap; }
 .carDot{ width:9px; height:9px; border-radius:999px; background:rgba(255,255,255,.22); border:1px solid rgba(255,255,255,.3); cursor:pointer; }
 .carDot.active{ background:linear-gradient(135deg,var(--brand),var(--accent)); border-color:transparent; box-shadow:0 0 0 4px rgba(77,189,255,.18); }
-/* Optional mobile snap */
-@media (max-width:900px){
-  .carTrack{ scroll-snap-type:x mandatory; }
-  .testi{ scroll-snap-align:center; }
-}
 
 /* FAQ */
 details.copybox{ text-align:left; padding:0; }
@@ -449,120 +406,19 @@ input, textarea, button, .btn, .cta{ touch-action:manipulation; }
     <button class="carBtn prev" aria-label="Previous">‹</button>
 
     <div class="carTrack" id="tTrack">
-      <!-- NEW 1 -->
-      <article class="testi copybox">
-        <div class="row">
-          <img class="avatar" src="assets/avatar-nicole.jpg" alt="Nicole Valentine" onerror="this.style.display='none'">
-          <div><div class="name">Nicole Valentine <span class="role">Model • Top Creator</span></div><div class="stars">★★★★★</div></div>
-        </div>
-        <p>“They rewrote my persona and fixed my PPV angles in a weekend. Fans actually reply—and buy—without me living in the DMs.”</p>
-        <div class="pill">+64% monthly net</div>
-      </article>
-
-      <!-- NEW 2 -->
-      <article class="testi copybox">
-        <div class="row">
-          <img class="avatar" src="assets/avatar-icon.png" alt="ICON Agency" onerror="this.style.display='none'">
-          <div><div class="name">ICON Agency <span class="role">Agency Partner</span></div><div class="stars">★★★★★</div></div>
-        </div>
-        <p>“Plugged them into a new creator launch. Tone was perfect from day one—VIPs got concierge-level care without discounts.”</p>
-        <div class="pill">3.2× launch month</div>
-      </article>
-
-      <!-- NEW 3 -->
-      <article class="testi copybox">
-        <div class="row">
-          <img class="avatar" src="assets/avatar-aura.jpg" alt="Aura" onerror="this.style.display='none'">
-          <div><div class="name">Aura <span class="role">Creator</span></div><div class="stars">★★★★★</div></div>
-        </div>
-        <p>“My boundaries are respected and sales still climbed. Whale tags + follow-ups feel natural, not pushy.”</p>
-        <div class="pill">-24% churn in 30 days</div>
-      </article>
-
-      <!-- NEW 4 -->
-      <article class="testi copybox">
-        <div class="row">
-          <img class="avatar" src="assets/avatar-icon.png" alt="BrightFox Media" onerror="this.style.display='none'">
-          <div><div class="name">BrightFox Media <span class="role">Agency Partner</span></div><div class="stars">★★★★★</div></div>
-        </div>
-        <p>“Night coverage became profit center coverage. The team sells without burning lists and sends clean weekly KPI notes.”</p>
-        <div class="pill">+38% weekend ARPPU</div>
-      </article>
-
-      <!-- NEW 5 -->
-      <article class="testi copybox">
-        <div class="row">
-          <img class="avatar" src="assets/avatar-maya.jpg" alt="Maya L." onerror="this.style.display='none'">
-          <div><div class="name">Maya L. <span class="role">Creator</span></div><div class="stars">★★★★★</div></div>
-        </div>
-        <p>“They turned my free page into a PPV machine. Scripts actually sound like me and fans come back to buy.”</p>
-        <div class="pill">+118% PPV in 21 days</div>
-      </article>
-
-      <!-- NEW 6 -->
-      <article class="testi copybox">
-        <div class="row">
-          <img class="avatar" src="assets/avatar-aura.jpg" alt="Aria V." onerror="this.style.display='none'">
-          <div><div class="name">Aria V. <span class="role">Top 0.1% Creator</span></div><div class="stars">★★★★★</div></div>
-        </div>
-        <p>“Renewals stopped slipping. Offers hit at the right time, whales get white-glove, and my brand voice is consistent.”</p>
-        <div class="pill">+31% renewals</div>
-      </article>
-
-      <!-- EXISTING 1..6 -->
-      <article class="testi copybox">
-        <div class="row">
-          <img class="avatar" src="assets/avatar-maya.jpg" alt="Maya" onerror="this.style.display='none'">
-          <div><div class="name">Maya L. <span class="role">Creator</span></div><div class="stars">★★★★★</div></div>
-        </div>
-        <p>“Day 2 they rebuilt my scripts. Week 1 PPV doubled. I finally feel like chats aren’t being wasted.”</p>
-        <div class="pill">+92% PPV in 30 days</div>
-      </article>
-
-      <article class="testi copybox">
-        <div class="row">
-          <img class="avatar" src="assets/avatar-icon.png" alt="ICON Agency" onerror="this.style.display='none'">
-          <div><div class="name">BrightFox Media <span class="role">Agency Partner</span></div><div class="stars">★★★★★</div></div>
-        </div>
-        <p>“We plugged them in for night coverage. Tone matched perfectly, whales got concierge treatment, and revenue rose without extra content.”</p>
-        <div class="pill">1.8× weekend revenue</div>
-      </article>
-
-      <article class="testi copybox">
-        <div class="row">
-          <img class="avatar" src="assets/avatar-aura.jpg" alt="Aria V." onerror="this.style.display='none'">
-          <div><div class="name">Aria V. <span class="role">Top 0.1% Creator</span></div><div class="stars">★★★★★</div></div>
-        </div>
-        <p>“They respect my boundaries and still sell. My fans feel seen, not spammed.”</p>
-        <div class="pill">-22% churn</div>
-      </article>
-
-      <article class="testi copybox">
-        <div class="row">
-          <img class="avatar" src="assets/avatar-nicole.jpg" alt="Nicole Valentine" onerror="this.style.display='none'">
-          <div><div class="name">Nicole Valentine <span class="role">Model • Top Creator</span></div><div class="stars">★★★★★</div></div>
-        </div>
-        <p>“These chats finally sound like me. Fans are spending without me being online 24/7.”</p>
-        <div class="pill">+58% tips in 21 days</div>
-      </article>
-
-      <article class="testi copybox">
-        <div class="row">
-          <img class="avatar" src="assets/avatar-icon.png" alt="ICON Agency" onerror="this.style.display='none'">
-          <div><div class="name">ICON Agency <span class="role">Agency Partner</span></div><div class="stars">★★★★★</div></div>
-        </div>
-        <p>“Plug-and-play night coverage. Tone matched, whales handled like VIPs, and revenue up without extra content.”</p>
-        <div class="pill">+34% weekend ARPPU</div>
-      </article>
-
-      <article class="testi copybox">
-        <div class="row">
-          <img class="avatar" src="assets/avatar-aura.jpg" alt="Aura" onerror="this.style.display='none'">
-          <div><div class="name">Aura <span class="role">Creator</span></div><div class="stars">★★★★★</div></div>
-        </div>
-        <p>“Boundaries respected, sales up. Fans feel looked after—not spammed.”</p>
-        <div class="pill">-19% churn</div>
-      </article>
+      <!-- 12 cards (keep as-is) -->
+      <article class="testi copybox"><div class="row"><img class="avatar" src="assets/avatar-nicole.jpg" alt="Nicole Valentine" onerror="this.style.display='none'"><div><div class="name">Nicole Valentine <span class="role">Model • Top Creator</span></div><div class="stars">★★★★★</div></div></div><p>“They rewrote my persona and fixed my PPV angles in a weekend. Fans actually reply—and buy—without me living in the DMs.”</p><div class="pill">+64% monthly net</div></article>
+      <article class="testi copybox"><div class="row"><img class="avatar" src="assets/avatar-icon.png" alt="ICON Agency" onerror="this.style.display='none'"><div><div class="name">ICON Agency <span class="role">Agency Partner</span></div><div class="stars">★★★★★</div></div></div><p>“Plugged them into a new creator launch. Tone was perfect from day one—VIPs got concierge-level care without discounts.”</p><div class="pill">3.2× launch month</div></article>
+      <article class="testi copybox"><div class="row"><img class="avatar" src="assets/avatar-aura.jpg" alt="Aura" onerror="this.style.display='none'"><div><div class="name">Aura <span class="role">Creator</span></div><div class="stars">★★★★★</div></div></div><p>“My boundaries are respected and sales still climbed. Whale tags + follow-ups feel natural, not pushy.”</p><div class="pill">-24% churn in 30 days</div></article>
+      <article class="testi copybox"><div class="row"><img class="avatar" src="assets/avatar-icon.png" alt="BrightFox Media" onerror="this.style.display='none'"><div><div class="name">BrightFox Media <span class="role">Agency Partner</span></div><div class="stars">★★★★★</div></div></div><p>“Night coverage became profit center coverage. The team sells without burning lists and sends clean weekly KPI notes.”</p><div class="pill">+38% weekend ARPPU</div></article>
+      <article class="testi copybox"><div class="row"><img class="avatar" src="assets/avatar-maya.jpg" alt="Maya L." onerror="this.style.display='none'"><div><div class="name">Maya L. <span class="role">Creator</span></div><div class="stars">★★★★★</div></div></div><p>“They turned my free page into a PPV machine. Scripts actually sound like me and fans come back to buy.”</p><div class="pill">+118% PPV in 21 days</div></article>
+      <article class="testi copybox"><div class="row"><img class="avatar" src="assets/avatar-aura.jpg" alt="Aria V." onerror="this.style.display='none'"><div><div class="name">Aria V. <span class="role">Top 0.1% Creator</span></div><div class="stars">★★★★★</div></div></div><p>“Renewals stopped slipping. Offers hit at the right time, whales get white-glove, and my brand voice is consistent.”</p><div class="pill">+31% renewals</div></article>
+      <article class="testi copybox"><div class="row"><img class="avatar" src="assets/avatar-maya.jpg" alt="Maya" onerror="this.style.display='none'"><div><div class="name">Maya L. <span class="role">Creator</span></div><div class="stars">★★★★★</div></div></div><p>“Day 2 they rebuilt my scripts. Week 1 PPV doubled. I finally feel like chats aren’t being wasted.”</p><div class="pill">+92% PPV in 30 days</div></article>
+      <article class="testi copybox"><div class="row"><img class="avatar" src="assets/avatar-icon.png" alt="ICON Agency" onerror="this.style.display='none'"><div><div class="name">BrightFox Media <span class="role">Agency Partner</span></div><div class="stars">★★★★★</div></div></div><p>“We plugged them in for night coverage. Tone matched perfectly, whales got concierge treatment, and revenue rose without extra content.”</p><div class="pill">1.8× weekend revenue</div></article>
+      <article class="testi copybox"><div class="row"><img class="avatar" src="assets/avatar-aura.jpg" alt="Aria V." onerror="this.style.display='none'"><div><div class="name">Aria V. <span class="role">Top 0.1% Creator</span></div><div class="stars">★★★★★</div></div></div><p>“They respect my boundaries and still sell. My fans feel seen, not spammed.”</p><div class="pill">-22% churn</div></article>
+      <article class="testi copybox"><div class="row"><img class="avatar" src="assets/avatar-nicole.jpg" alt="Nicole Valentine" onerror="this.style.display='none'"><div><div class="name">Nicole Valentine <span class="role">Model • Top Creator</span></div><div class="stars">★★★★★</div></div></div><p>“These chats finally sound like me. Fans are spending without me being online 24/7.”</p><div class="pill">+58% tips in 21 days</div></article>
+      <article class="testi copybox"><div class="row"><img class="avatar" src="assets/avatar-icon.png" alt="ICON Agency" onerror="this.style.display='none'"><div><div class="name">ICON Agency <span class="role">Agency Partner</span></div><div class="stars">★★★★★</div></div></div><p>“Plug-and-play night coverage. Tone matched, whales handled like VIPs, and revenue up without extra content.”</p><div class="pill">+34% weekend ARPPU</div></article>
+      <article class="testi copybox"><div class="row"><img class="avatar" src="assets/avatar-aura.jpg" alt="Aura" onerror="this.style.display='none'"><div><div class="name">Aura <span class="role">Creator</span></div><div class="stars">★★★★★</div></div></div><p>“Boundaries respected, sales up. Fans feel looked after—not spammed.”</p><div class="pill">-19% churn</div></article>
     </div>
 
     <button class="carBtn next" aria-label="Next">›</button>
@@ -690,7 +546,7 @@ Array.from(document.querySelectorAll('.copybox')).forEach(el=>{
   document.querySelectorAll('#results .kpi').forEach(el=>kpiObserver.observe(el));
 })();
 
-// Testimonials carousel — 1 card, pixel-based shifting (no rounding bugs)
+// Testimonials carousel — pixel-based by viewport width
 (function(){
   const sec = document.getElementById('testimonials');
   const track = document.getElementById('tTrack');
@@ -699,20 +555,19 @@ Array.from(document.querySelectorAll('.copybox')).forEach(el=>{
   const prev = sec.querySelector('.prev');
   const next = sec.querySelector('.next');
   const dotsWrap = document.getElementById('tDots');
-  const slides = Array.from(track.children);
+  const slides = Array.from(track.querySelectorAll('.testi')); // only slides
 
   let index = 0;
   const total = slides.length;
-  let slideW = 0;
+  let viewportW = 0;
 
   function measure(){
-    const first = slides[0];
-    slideW = first ? first.getBoundingClientRect().width : track.getBoundingClientRect().width;
-    if(!slideW || !isFinite(slideW)) slideW = track.getBoundingClientRect().width;
+    // use the carousel viewport width (the visible area)
+    viewportW = sec.querySelector('.carousel').getBoundingClientRect().width || track.getBoundingClientRect().width;
     render();
   }
 
-  // Build dots once
+  // Build dots
   dotsWrap.innerHTML = '';
   for(let i=0;i<total;i++){
     const d = document.createElement('button');
@@ -724,14 +579,10 @@ Array.from(document.querySelectorAll('.copybox')).forEach(el=>{
   const dots = Array.from(dotsWrap.children);
 
   function render(){
-    track.style.transform = `translate3d(-${index * slideW}px,0,0)`;
+    track.style.transform = `translate3d(-${index * viewportW}px,0,0)`;
     dots.forEach((d,idx)=> d.classList.toggle('active', idx===index));
   }
-
-  function go(i){
-    index = (i + total) % total;
-    render();
-  }
+  function go(i){ index = (i + total) % total; render(); }
 
   prev.addEventListener('click', ()=> go(index-1));
   next.addEventListener('click', ()=> go(index+1));
@@ -741,13 +592,15 @@ Array.from(document.querySelectorAll('.copybox')).forEach(el=>{
   function resetTimer(){ clearInterval(timer); timer = setInterval(()=> go(index+1), 7000); }
   ['click','touchstart','keydown'].forEach(ev=> sec.addEventListener(ev, resetTimer, {passive:true}));
 
-  // Re-measure on resize & when fonts/images settle
+  // Re-measure robustly
   window.addEventListener('resize', measure);
   window.addEventListener('load', measure);
   document.fonts && document.fonts.ready && document.fonts.ready.then(measure);
+  setTimeout(measure, 50); // after first paint
+  setTimeout(measure, 500); // after images settle
 
-  // Init after a tick to let layout paint
-  setTimeout(measure, 0);
+  // Init
+  measure(); go(0);
 })();
 
 // Offer modal + routing to Apply
@@ -897,3 +750,4 @@ document.querySelectorAll('a[href^="https://t.me/"]')
 
 </body>
 </html>
+
