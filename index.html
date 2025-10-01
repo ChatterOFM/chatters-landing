@@ -578,9 +578,8 @@ Array.from(document.querySelectorAll('.copybox')).forEach(el=>{
   window.addEventListener('resize', measure);
   window.addEventListener('load', measure);
   document.fonts && document.fonts.ready && document.fonts.ready.then(measure);
-  setTimeout(m
-easure, 50);
-  setTimeout(measure, 500);
+setTimeout(measure, 50);   // after first paint
+setTimeout(measure, 500);  // after images settle
 
   // Init
   measure(); go(0);
