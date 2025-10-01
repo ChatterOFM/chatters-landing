@@ -131,28 +131,21 @@ a{ color:inherit; text-decoration:none; }
 .kpi .big{ font-weight:800; font-size:28px; color:var(--accent); }
 .tag{ display:inline-block; padding:6px 10px; border-radius:999px; background:rgba(77,189,255,.15); color:var(--brand); font-weight:600; font-size:12px; }
 
-/* INCLUDED — v7 layout: 3 even columns + bottom two centered */
-#included .grid-3{
+/* INCLUDED — v7 exact: 6-column master grid
+   - First 6 cards span 2 columns (3 per row)
+   - Last 2 cards span 3 columns (50/50 row) */
+#included .included-grid{
   display:grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(6, 1fr);
   gap:22px;
   align-items:stretch;
 }
-#included .grid-3 .card.copybox{ height:100%; }
-#included .last-row{
-  display:grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap:22px;
-  align-items:stretch;
-}
-#included .last-row .card.copybox{ height:100%; }
-#included .last-row .card.copybox:nth-child(1){ grid-column:2; } /* center left */
-#included .last-row .card.copybox:nth-child(2){ grid-column:3; } /* center right */
+#included .span2{ grid-column: span 2; }
+#included .span3{ grid-column: span 3; }
+#included .copybox{ height:100%; }
 @media (max-width:900px){
-  #included .grid-3{ grid-template-columns:1fr; }
-  #included .last-row{ grid-template-columns:1fr; }
-  #included .last-row .card.copybox:nth-child(1),
-  #included .last-row .card.copybox:nth-child(2){ grid-column:auto; }
+  #included .included-grid{ grid-template-columns: 1fr; }
+  #included .span2, #included .span3{ grid-column: auto; }
 }
 
 /* Testimonials / Carousel — single card, FLEX + pixel shift */
@@ -344,20 +337,20 @@ input, textarea, button, .btn, .cta{ touch-action:manipulation; }
   </div>
 </section>
 
-<!-- Included -->
+<!-- Included (v7 exact layout via 6-col grid) -->
 <section class="section container" id="included">
   <span class="tag">What’s included</span>
-  <div class="grid-3" style="margin-top:16px">
-    <div class="card copybox"><h4>⏳ Save time</h4><p>We handle chats, upsells, and re-engagement so you can create.</p></div>
-    <div class="card copybox"><h4>🛡️ Risk-free</h4><p>Pay from uplift only. If we don’t grow you, we don’t get paid.</p></div>
-    <div class="card copybox"><h4>📈 Earn more</h4><p>PPV systems, offer timing, and whale flows increase ARPPU.</p></div>
-    <div class="card copybox"><h4>🧭 Account management</h4><p>Dedicated manager + weekly strategy and KPI reviews.</p></div>
-    <div class="card copybox"><h4>🔒 100% secure</h4><p>Seat access, approval rules, and hard boundary enforcement.</p></div>
-    <div class="card copybox"><h4>🎓 Content guides & training</h4><p>Creator playbooks, scripting, and PPV calendars that convert.</p></div>
-  </div>
-  <div class="last-row">
-    <div class="card copybox"><h4>🕑 24/7 chatting</h4><p>UK & USA-based teams across time zones for nonstop coverage.</p></div>
-    <div class="card copybox"><h4>🤝 24/7 guaranteed support</h4><p>Priority response SLA for creators and partner agencies.</p></div>
+  <div class="included-grid" style="margin-top:16px">
+    <!-- First 6: span 2 (3 per row) -->
+    <div class="card copybox span2"><h4>⏳ Save time</h4><p>We handle chats, upsells, and re-engagement so you can create.</p></div>
+    <div class="card copybox span2"><h4>🛡️ Risk-free</h4><p>Pay from uplift only. If we don’t grow you, we don’t get paid.</p></div>
+    <div class="card copybox span2"><h4>📈 Earn more</h4><p>PPV systems, offer timing, and whale flows increase ARPPU.</p></div>
+    <div class="card copybox span2"><h4>🧭 Account management</h4><p>Dedicated manager + weekly strategy and KPI reviews.</p></div>
+    <div class="card copybox span2"><h4>🔒 100% secure</h4><p>Seat access, approval rules, and hard boundary enforcement.</p></div>
+    <div class="card copybox span2"><h4>🎓 Content guides & training</h4><p>Creator playbooks, scripting, and PPV calendars that convert.</p></div>
+    <!-- Bottom 2: span 3 (50/50 full row) -->
+    <div class="card copybox span3"><h4>🕑 24/7 chatting</h4><p>UK & USA-based teams across time zones for nonstop coverage.</p></div>
+    <div class="card copybox span3"><h4>🤝 24/7 guaranteed support</h4><p>Priority response SLA for creators and partner agencies.</p></div>
   </div>
 </section>
 
@@ -396,7 +389,7 @@ input, textarea, button, .btn, .cta{ touch-action:manipulation; }
     <button class="carBtn prev" aria-label="Previous">‹</button>
 
     <div class="carTrack" id="tTrack">
-      <!-- (12 testimonial cards) -->
+      <!-- 12 testimonial cards (unchanged) -->
       <article class="testi copybox"><div class="row"><img class="avatar" src="assets/avatar-nicole.jpg" alt="Nicole Valentine" onerror="this.style.display='none'"><div><div class="name">Nicole Valentine <span class="role">Model • Top Creator</span></div><div class="stars">★★★★★</div></div></div><p>“They rewrote my persona and fixed my PPV angles in a weekend. Fans actually reply—and buy—without me living in the DMs.”</p><div class="pill">+64% monthly net</div></article>
       <article class="testi copybox"><div class="row"><img class="avatar" src="assets/avatar-icon.png" alt="ICON Agency" onerror="this.style.display='none'"><div><div class="name">ICON Agency <span class="role">Agency Partner</span></div><div class="stars">★★★★★</div></div></div><p>“Plugged them into a new creator launch. Tone was perfect from day one—VIPs got concierge-level care without discounts.”</p><div class="pill">3.2× launch month</div></article>
       <article class="testi copybox"><div class="row"><img class="avatar" src="assets/avatar-aura.jpg" alt="Aura" onerror="this.style.display='none'"><div><div class="name">Aura <span class="role">Creator</span></div><div class="stars">★★★★★</div></div></div><p>“My boundaries are respected and sales still climbed. Whale tags + follow-ups feel natural, not pushy.”</p><div class="pill">-24% churn in 30 days</div></article>
@@ -585,7 +578,8 @@ Array.from(document.querySelectorAll('.copybox')).forEach(el=>{
   window.addEventListener('resize', measure);
   window.addEventListener('load', measure);
   document.fonts && document.fonts.ready && document.fonts.ready.then(measure);
-  setTimeout(measure, 50);
+  setTimeout(m
+easure, 50);
   setTimeout(measure, 500);
 
   // Init
@@ -739,3 +733,4 @@ document.querySelectorAll('a[href^="https://t.me/"]')
 
 </body>
 </html>
+
